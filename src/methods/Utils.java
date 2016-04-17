@@ -2,8 +2,6 @@ package methods;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Font;
-import java.awt.FontMetrics;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
@@ -20,21 +18,18 @@ import java.util.Scanner;
 import java.util.Set;
 
 import javax.swing.ImageIcon;
-import javax.swing.JComponent;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import defaults.TextLinkDefaults;
 
-public class Utills {
+public class Utils {
 	public static Document openXML(String path) {
 		DocumentBuilderFactory f = null;
 		DocumentBuilder builder = null;
@@ -51,7 +46,7 @@ public class Utills {
 		}
 
 		try {
-			doc = builder.parse(Utills.class.getResource(path).openStream());
+			doc = builder.parse(Utils.class.getResource(path).openStream());
 		} catch (SAXException | IOException e1) {
 			e1.printStackTrace();
 		}
@@ -84,7 +79,7 @@ public class Utills {
 	}
 
 	public static ImageIcon createImageIcon(String path) {
-		java.net.URL imgURL = Utills.class.getResource(path);
+		java.net.URL imgURL = Utils.class.getResource(path);
 		if (imgURL != null) {
 			return new ImageIcon(imgURL);
 		} else {
@@ -156,7 +151,7 @@ public class Utills {
 			FileWriter fw = new java.io.FileWriter(file);
 
 			String vbs = "";
-			Scanner in = new Scanner(Utills.class.getResource("resources/text/script.txt").openStream());
+			Scanner in = new Scanner(Utils.class.getResource("resources/text/script.txt").openStream());
 			while (in.hasNext())
 				vbs += in.nextLine() + "\r\n";
 			in.close();
@@ -181,37 +176,37 @@ public class Utills {
 	}
 
 	public static String getLicenceKey() {
-		Document doc = Utills.openXMLAbsolutePath(Utills.getFilePath() + "/config");
+		Document doc = Utils.openXMLAbsolutePath(Utils.getFilePath() + "/config");
 		NodeList n = doc.getElementsByTagName("key");
 		return n.item(0).getTextContent();
 	}
 
 	public static String getLicenceUserName() {
-		Document doc = Utills.openXMLAbsolutePath(Utills.getFilePath() + "/config");
+		Document doc = Utils.openXMLAbsolutePath(Utils.getFilePath() + "/config");
 		NodeList n = doc.getElementsByTagName("username");
 		return n.item(0).getTextContent();
 	}
 
 	public static String getVersion() {
-		Document doc = Utills.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.VERSION));
+		Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.VERSION));
 		NodeList n = doc.getElementsByTagName("version");
 		return n.item(0).getTextContent();
 	}
 
 	public static String getVersionDate() {
-		Document doc = Utills.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.VERSION));
+		Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.VERSION));
 		NodeList n = doc.getElementsByTagName("date");
 		return n.item(0).getTextContent();
 	}
 
 	public static String getAppServer() {
-		Document doc = Utills.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.SERVER));
+		Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.SERVER));
 		NodeList n = doc.getElementsByTagName("app");
 		return n.item(0).getTextContent();
 	}
 
 	public static Boolean getCheckUpdatesAuto() {
-		Document doc = Utills.openXMLAbsolutePath(Utills.getFilePath() + "/config");
+		Document doc = Utils.openXMLAbsolutePath(Utils.getFilePath() + "/config");
 		NodeList n = doc.getElementsByTagName("checkUpdatesAuto");
 		if (n.item(0).getTextContent().equals("true"))
 			return true;

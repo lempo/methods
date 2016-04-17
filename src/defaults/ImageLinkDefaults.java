@@ -31,7 +31,13 @@ public class ImageLinkDefaults {
 		MAIN_MENU_ABOUT_ROLLOVER, 
 		MAIN_MENU_HELP_ROLLOVER, 
 		MAIN_MENU_TASKS_ROLLOVER,
-		LOGO;
+		LOGO,
+		INCREASE,
+		DECREASE_HORIZONTAL,
+		DECREASE,
+		INCREASE_HORIZONTAL,
+		ARROW,
+		CIRCLE_ARROW;
 	}
 
 	private Map<Key, String> links;
@@ -55,6 +61,12 @@ public class ImageLinkDefaults {
 		links.put(Key.MAIN_MENU_HELP_ROLLOVER, "resources/image/help_rollover.png");
 		links.put(Key.MAIN_MENU_TASKS_ROLLOVER, "resources/image/tasks_rollover.png");
 		links.put(Key.LOGO, "resources/image/logo.png");
+		links.put(Key.INCREASE, "resources/image/increase.png");
+		links.put(Key.DECREASE_HORIZONTAL, "resources/image/decrease_horizontal.png");
+		links.put(Key.DECREASE, "resources/image/decrease.png");
+		links.put(Key.INCREASE_HORIZONTAL, "resources/image/increase_horizontal.png");
+		links.put(Key.ARROW, "resources/image/arrow.png");
+		links.put(Key.CIRCLE_ARROW, "resources/image/circleArrow.png");
 	}
 
 	public String getLink(Key key) {
