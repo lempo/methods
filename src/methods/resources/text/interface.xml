@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <interface>
+<string key="sex" value="Пол"/>
+<string key="age" value="Возраст"/>
+<string key="male" value="мужчина"/>
+<string key="female" value="женщина"/>
 <string key="pause" value="ПАУЗА"/>
 <string key="answers" value="ПРАВИЛЬНЫЕ_ОТВЕТЫ"/>
 <string key="words" value="СЛОВА:"/>
@@ -25,7 +29,7 @@
 <string key="enter" value="Вход"/>
 <string key="enter2" value="Войти"/>
 <string key="save" value="Сохранить"/>
-<string key="name_surname_patronymic" value="ФИО"/>
+<string key="name" value="Имя или псевдоним"/>
 <string key="rule_users" value="Управление пользователями"/>
 <string key="task_groups" value="ГРУППЫ УПРАЖНЕНИЙ"/>
 <string key="task_number" value="ЗАДАНИЕ №"/>

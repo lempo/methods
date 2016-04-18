@@ -20,6 +20,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -59,7 +60,8 @@ public class Methods extends JFrame {
 	private MethodGroup[] methodGroups;
 	private Test[] tests;
 
-	private int currentMethodGroup = 0;
+	private int currentTestGroup = 0;
+	private int currentTest = 0;
 
 	private int iconsSpace = 10;
 
@@ -744,8 +746,7 @@ public class Methods extends JFrame {
 		actualPanel.repaint();
 	}
 
-	private void showMethods(int i) {
-		// TODO Auto-generated method stub
+	private void showTests(int i) {
 		menuPanel.setX1(0);
 		menuPanel.setX2(0);
 		menuPanel.repaint();
@@ -796,10 +797,18 @@ public class Methods extends JFrame {
 					k.getNamedItem("className").getNodeValue(), k.getNamedItem("rolloverImage").getNodeValue());
 
 			icon = Utils.createImageIcon(tests[j].getImage());
-			testsLabels[j] = new CustomLabel();
+
+			testsLabels[j] = new JLabel(
+					"<html><div style='font: 19pt Arial Narrow; color: rgb(115, 84, 73); text-align: center; margin-bottom: 5px; margin-top: 5px;'>"
+							+ tests[j].getName().toUpperCase()
+							+ "</div><div style='font: 12pt Arial Narrow; color: rgb(115, 84, 73); text-align: left;'>"
+							+ tests[j].getShortText() + "</div></html>");
 			testsLabels[j].setIcon(icon);
 			testsLabels[j].setHorizontalTextPosition(JLabel.CENTER);
 			testsLabels[j].setVerticalTextPosition(JLabel.BOTTOM);
+			testsLabels[j].setVerticalAlignment(SwingConstants.TOP);
+			testsLabels[j]
+					.setPreferredSize(new Dimension(icon.getIconWidth() + 120, (int) (icon.getIconHeight() + 100)));
 			testsLabels[j].setName(Integer.toString(j));
 			testsLabels[j].addMouseListener(l);
 			testsLabels[j].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -831,6 +840,76 @@ public class Methods extends JFrame {
 				actualPanel.add(testsLabels[i * 3 + j], c);
 			}
 		}
+
+		actualPanel.revalidate();
+		actualPanel.repaint();
+	}
+
+	public void showTest(int i) {
+		// TODO
+		currentMethod = "showTest";
+		paramTypes = new Class[] { int.class };
+		args = new Object[] { i };
+
+		JLabel heading = new JLabel();
+		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(70, 110, 122);'>"
+				+ tests[i].getName().toUpperCase() + "</div></html>";
+		heading.setText(t);
+		ImageIcon icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.ARROW));
+		heading.setIcon(icon);
+		heading.setIconTextGap(20);
+		heading.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		heading.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				showTests(currentTestGroup);
+			}
+		});
+
+		headerPanel.removeAll();
+		headerPanel.add(Box.createHorizontalStrut(20));
+		headerPanel.add(heading);
+		heading.setAlignmentY(BOTTOM_ALIGNMENT);
+		headerPanel.add(Box.createHorizontalGlue());
+		headerPanel.revalidate();
+		headerPanel.repaint();
+
+		actualPanel.removeAll();
+		actualPanel.setLayout(new GridBagLayout());
+
+		String s = tests[i].getClassName();
+		Class c;
+		Class[] intArgsClass = new Class[] { Methods.class, int.class, int.class, Test.class };
+		Integer h = new Integer((int) (height * 0.75));
+		Integer w = new Integer(970);
+		Object[] intArgs = new Object[] { methods, w, h, tests[i] };
+		
+		Constructor intArgsConstructor = null;
+		AbstractTest p = null;
+		try {
+			c = Class.forName(s);
+			intArgsConstructor = c.getConstructor(intArgsClass);
+			p = (AbstractTest) Utils.createObject(intArgsConstructor, intArgs);
+		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e1) {
+			e1.printStackTrace();
+		}
+		
+		GridBagConstraints c1 = new GridBagConstraints();
+
+		c1.anchor = GridBagConstraints.WEST;
+		c1.fill = GridBagConstraints.NONE;
+		c1.gridheight = 1;
+		c1.gridwidth = GridBagConstraints.REMAINDER;
+		c1.gridx = 0;
+		c1.gridy = 0;
+		c1.insets = new Insets(30, 0, 0, 0);
+		c1.ipadx = 0;
+		c1.ipady = 0;
+		c1.weightx = 0.0;
+		c1.weighty = 0.0;
+
+		actualPanel.add(p, c1);
+		showedTest = p;
 
 		actualPanel.revalidate();
 		actualPanel.repaint();
@@ -1055,8 +1134,8 @@ public class Methods extends JFrame {
 		public void mouseClicked(MouseEvent e) {
 			JLabel l = (JLabel) e.getSource();
 			int i = Integer.parseInt(l.getName());
-			currentMethodGroup = i;
-			showMethods(i);
+			currentTestGroup = i;
+			showTests(i);
 		}
 
 		@Override
@@ -1085,13 +1164,14 @@ public class Methods extends JFrame {
 		public void mouseReleased(MouseEvent arg0) {
 		}
 	}
-	
+
 	class TestsMouseListener implements MouseListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			JLabel l = (JLabel) e.getSource();
 			int i = Integer.parseInt(l.getName());
-			// TODO show test
+			currentTest = i;
+			showTest(i);
 		}
 
 		@Override
