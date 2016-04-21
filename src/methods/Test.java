@@ -8,7 +8,6 @@ public class Test extends JPanel {
 	private String image;
 	private String shortText;
 	private String longText;
-	private String longLongText;
 	private String bigImage;
 	private String className;
 	private String rolloverImage;
@@ -17,14 +16,13 @@ public class Test extends JPanel {
 
 	}
 
-	public Test(String name, String image, String shortText, String longText, String longLongText, String bigImage,
-			String className, String rolloverImage) {
+	public Test(String name, String image, String shortText, String longText, String bigImage, String className,
+			String rolloverImage) {
 		super();
 		this.name = name;
 		this.image = image;
 		this.shortText = shortText;
 		this.longText = longText;
-		this.longLongText = longLongText;
 		this.bigImage = bigImage;
 		this.className = className;
 		this.rolloverImage = rolloverImage;
@@ -84,13 +82,5 @@ public class Test extends JPanel {
 
 	public void setBigImage(String bigImage) {
 		this.bigImage = bigImage;
-	}
-
-	public String getLongLongText() {
-		return longLongText;
-	}
-
-	public void setLongLongText(String longLongText) {
-		this.longLongText = longLongText;
 	}
 }

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <interface>
+<string key="test_time" value="Время прохождения"/>
+<string key="test_date" value="Дата проведения теста"/>
+<string key="print_results" value="Распечатать результаты"/>
+<string key="test_results" value="Результаты теста"/>
+<string key="table" value="Таблица"/>
+<string key="finish_test" value="Завершить тест"/>
 <string key="sex" value="Пол"/>
 <string key="age" value="Возраст"/>
 <string key="male" value="мужчина"/>

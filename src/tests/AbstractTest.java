@@ -8,6 +8,9 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -19,6 +22,7 @@ import javax.swing.JTextPane;
 
 import component.CustomTextField;
 import customui.ButtonCustomUI;
+import defaults.ImageLinkDefaults;
 import defaults.InterfaceTextDefaults;
 import methods.Methods;
 import methods.Test;
@@ -32,6 +36,8 @@ public abstract class AbstractTest extends JPanel {
 	protected String userName = "";
 	protected String userSex = "";
 	protected int userAge;
+	protected Date testDate;
+	protected long testTime;
 
 	protected Test test;
 
@@ -190,7 +196,7 @@ public abstract class AbstractTest extends JPanel {
 
 		c.gridy = 2;
 		add(sexLabel, c);
-		
+
 		c.gridy = 3;
 		add(ageLabel, c);
 
@@ -199,12 +205,12 @@ public abstract class AbstractTest extends JPanel {
 		c.insets = new Insets(10, 20, 0, 0);
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		add(nameTextField, c);
-		
+
 		c.gridy = 3;
 		add(ageTextField, c);
-		
+
 		c.gridy = 2;
-		c.gridwidth = 1;		
+		c.gridwidth = 1;
 		add(maleButton, c);
 
 		c.gridx = 3;
@@ -224,6 +230,97 @@ public abstract class AbstractTest extends JPanel {
 
 	public void showStandartResults() {
 		// TODO
+		JLabel heading = new JLabel();
+		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
+				+ InterfaceTextDefaults.getInstance().getDefault("test_results").toUpperCase() + "</div></html>";
+		heading.setText(t);
+
+		JButton print = new JButton(InterfaceTextDefaults.getInstance().getDefault("print_results"));
+		print.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
+		print.setBorder(null);
+		print.setOpaque(false);
+		print.setPreferredSize(new Dimension(200, 35));
+		print.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		print.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showResults();
+			}
+		});
+
+		JLabel repeat = new JLabel();
+		repeat.setIcon(Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.REPEAT)));
+
+		JLabel leftCol = new JLabel();
+		t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
+				+ InterfaceTextDefaults.getInstance().getDefault("name") + ": <br>"
+				+ InterfaceTextDefaults.getInstance().getDefault("sex") + ": <br>"
+				+ InterfaceTextDefaults.getInstance().getDefault("age") + ": <br>"
+				+ InterfaceTextDefaults.getInstance().getDefault("test_date") + ": <br>"
+				+ InterfaceTextDefaults.getInstance().getDefault("test_time") + ": <br>"
+				+ "</div></html>";
+		leftCol.setText(t);
+		
+		JLabel rightCol = new JLabel();
+		
+		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+		t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
+				+ userName + "<br>"
+				+ userSex + "<br>"
+				+ userAge + "<br>"
+				+ format.format(testDate) + "<br>"
+				+ (testTime / 1000 / 60 / 10 == 0? "0" + testTime / 1000 / 60 : testTime / 1000 / 60 ) 
+				+ ":" + ((testTime / 1000 % 60) / 10 == 0? "0" + (testTime / 1000 % 60) : (testTime / 1000 % 60) ) +"<br>"
+				+ "</div></html>";
+		rightCol.setText(t);
+		
+		removeAll();
+		setLayout(new GridBagLayout());
+
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.anchor = GridBagConstraints.WEST;
+		c.fill = GridBagConstraints.NONE;
+		c.gridheight = 1;
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.insets = new Insets(0, 20, 100, 0);
+		c.ipadx = 0;
+		c.ipady = 0;
+		c.weightx = 1.0;
+		c.weighty = 0.0;
+		add(heading, c);
+
+		c.gridx = 1;
+		c.gridy = 1;
+		c.insets = new Insets(10, 200, 0, 0);
+		c.gridwidth = 1;
+		add(leftCol, c);
+
+		c.gridx = 2;
+		c.gridy = 1;
+		c.insets = new Insets(10, 20, 0, 0);
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		add(rightCol, c);
+
+		c.anchor = GridBagConstraints.WEST;
+		c.gridheight = GridBagConstraints.NONE;
+		c.gridx = 1;
+		c.gridy = 4;
+		c.insets = new Insets(40, 40, 0, 0);
+		c.weighty = 1.0;
+		add(repeat, c);
+
+		c.anchor = GridBagConstraints.CENTER;
+		c.gridheight = GridBagConstraints.REMAINDER;
+		c.gridx = 4;
+		c.gridy = 4;
+		c.insets = new Insets(40, 0, 0, 0);
+		c.weighty = 1.0;
+		add(print, c);
+		
+		revalidate();
+		repaint();
 	}
 
 	public abstract void showInfo();

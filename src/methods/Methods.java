@@ -317,11 +317,15 @@ public class Methods extends JFrame {
 
 	public void showGroups() {
 
+		menuPanel.revalidate();
+		menuPanel.repaint();
 		menuPanel.setX1(width - iconsSpace * 5 - exitLabel.getWidth() - helpLabel.getWidth() - tasksLabel.getWidth()
 				- aboutLabel.getWidth() - 3);
 		menuPanel.setX2(
 				width - iconsSpace * 5 - exitLabel.getWidth() - helpLabel.getWidth() - aboutLabel.getWidth() + 3);
 		menuPanel.repaint();
+		
+		System.out.println(exitLabel.getWidth());
 
 		currentMethod = "showGroups";
 		paramTypes = new Class[] {};
@@ -353,7 +357,7 @@ public class Methods extends JFrame {
 
 		text.setOpaque(false);
 		p.add(text);
-		text.setPreferredSize(new Dimension((int) (width * 0.9), 175));
+		text.setPreferredSize(new Dimension((int) (width * 0.9), 150));
 		p.setUI(new PanelCustomUI(true));
 
 		Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.GROUPS));
@@ -370,8 +374,7 @@ public class Methods extends JFrame {
 			k = n.item(i).getAttributes();
 			methodGroups[i] = new MethodGroup(k.getNamedItem("name").getNodeValue(),
 					k.getNamedItem("text").getNodeValue(), k.getNamedItem("image").getNodeValue(),
-					k.getNamedItem("bigImage").getNodeValue(), k.getNamedItem("rolloverImage").getNodeValue(),
-					k.getNamedItem("toolTipText").getNodeValue());
+					k.getNamedItem("rolloverImage").getNodeValue(), k.getNamedItem("toolTipText").getNodeValue());
 
 			icon = Utils.createImageIcon(methodGroups[i].getImage());
 			groups[i] = new CustomLabel();
@@ -394,29 +397,36 @@ public class Methods extends JFrame {
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.CENTER;
-		c.fill = GridBagConstraints.NONE;
+		c.fill = GridBagConstraints.BOTH;
 		c.gridheight = 1;
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(38, 20, 0, 20);
+		c.insets = new Insets(30, 0, 0, 0);
 		c.ipadx = 0;
 		c.ipady = 0;
 		c.weightx = 1.0;
-		c.weighty = 0.0;
+		c.weighty = 1.0;
 
+		int rowsNum = (int) Math.ceil((double) groups.length / 3);
+		JPanel[] rows = new JPanel[rowsNum];
 		int i;
-		for (i = 0; i < Math.ceil((double) groups.length / 3); i++) {
+		for (i = 0; i < rowsNum; i++) {
+			rows[i] = new JPanel();
+			rows[i].setOpaque(false);
+			rows[i].setLayout(new BoxLayout(rows[i], BoxLayout.X_AXIS));
 			for (int j = 0; j < 3; j++) {
 				if ((i * 3 + j) == groups.length)
 					break;
-				c.gridx = j;
-				c.gridy = i;
-
-				actualPanel.add(groups[i * 3 + j], c);
+				rows[i].add(Box.createHorizontalGlue());
+				rows[i].add(groups[i * 3 + j]);
 			}
+			rows[i].add(Box.createHorizontalGlue());
+			c.gridy = i;
+			actualPanel.add(rows[i], c);
 		}
 
+		c.fill = GridBagConstraints.NONE;
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.gridx = 0;
 		c.gridy = i;
@@ -793,22 +803,23 @@ public class Methods extends JFrame {
 			k = n1.item(j).getAttributes();
 			tests[j] = new Test(k.getNamedItem("name").getNodeValue(), k.getNamedItem("image").getNodeValue(),
 					k.getNamedItem("shortText").getNodeValue(), k.getNamedItem("longText").getNodeValue(),
-					k.getNamedItem("longLongText").getNodeValue(), k.getNamedItem("bigImage").getNodeValue(),
-					k.getNamedItem("className").getNodeValue(), k.getNamedItem("rolloverImage").getNodeValue());
+					k.getNamedItem("bigImage").getNodeValue(), k.getNamedItem("className").getNodeValue(),
+					k.getNamedItem("rolloverImage").getNodeValue());
 
 			icon = Utils.createImageIcon(tests[j].getImage());
 
 			testsLabels[j] = new JLabel(
-					"<html><div style='font: 19pt Arial Narrow; color: rgb(115, 84, 73); text-align: center; margin-bottom: 5px; margin-top: 5px;'>"
+					"<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155); text-align: center; margin-bottom: 5px; margin-top: 5px;'>"
 							+ tests[j].getName().toUpperCase()
-							+ "</div><div style='font: 12pt Arial Narrow; color: rgb(115, 84, 73); text-align: left;'>"
+							+ "</div><div style='font: 16pt Arial Narrow; color: black; text-align: left;'>"
 							+ tests[j].getShortText() + "</div></html>");
 			testsLabels[j].setIcon(icon);
 			testsLabels[j].setHorizontalTextPosition(JLabel.CENTER);
 			testsLabels[j].setVerticalTextPosition(JLabel.BOTTOM);
 			testsLabels[j].setVerticalAlignment(SwingConstants.TOP);
 			testsLabels[j]
-					.setPreferredSize(new Dimension(icon.getIconWidth() + 120, (int) (icon.getIconHeight() + 100)));
+					.setPreferredSize(new Dimension(icon.getIconWidth() + 190, (int) (icon.getIconHeight() + 100)));
+			testsLabels[j].setMaximumSize(new Dimension(icon.getIconWidth() + 190, (int) (icon.getIconHeight() + 100)));
 			testsLabels[j].setName(Integer.toString(j));
 			testsLabels[j].addMouseListener(l);
 			testsLabels[j].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -819,26 +830,32 @@ public class Methods extends JFrame {
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.CENTER;
-		c.fill = GridBagConstraints.NONE;
+		c.fill = GridBagConstraints.BOTH;
 		c.gridheight = 1;
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(38, 20, 0, 20);
+		c.insets = new Insets(30, 0, 0, 0);
 		c.ipadx = 0;
 		c.ipady = 0;
 		c.weightx = 1.0;
-		c.weighty = 0.0;
+		c.weighty = 1.0;
 
-		for (i = 0; i < Math.ceil((double) testsLabels.length / 3); i++) {
-			for (int j = 0; j < Math.min(3, testsLabels.length); j++) {
+		int rowsNum = (int) Math.ceil((double) testsLabels.length / 3);
+		JPanel[] rows = new JPanel[rowsNum];
+		for (i = 0; i < rowsNum; i++) {
+			rows[i] = new JPanel();
+			rows[i].setOpaque(false);
+			rows[i].setLayout(new BoxLayout(rows[i], BoxLayout.X_AXIS));
+			for (int j = 0; j < 3; j++) {
 				if ((i * 3 + j) == testsLabels.length)
 					break;
-				c.gridx = j;
-				c.gridy = i;
-
-				actualPanel.add(testsLabels[i * 3 + j], c);
+				rows[i].add(Box.createHorizontalGlue());
+				rows[i].add(testsLabels[i * 3 + j]);
 			}
+			rows[i].add(Box.createHorizontalGlue());
+			c.gridy = i;
+			actualPanel.add(rows[i], c);
 		}
 
 		actualPanel.revalidate();
@@ -883,7 +900,7 @@ public class Methods extends JFrame {
 		Integer h = new Integer((int) (height * 0.75));
 		Integer w = new Integer(970);
 		Object[] intArgs = new Object[] { methods, w, h, tests[i] };
-		
+
 		Constructor intArgsConstructor = null;
 		AbstractTest p = null;
 		try {
@@ -893,7 +910,7 @@ public class Methods extends JFrame {
 		} catch (ClassNotFoundException | NoSuchMethodException | SecurityException e1) {
 			e1.printStackTrace();
 		}
-		
+
 		GridBagConstraints c1 = new GridBagConstraints();
 
 		c1.anchor = GridBagConstraints.WEST;

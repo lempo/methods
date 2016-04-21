@@ -22,7 +22,6 @@ public class CustomPanel extends JPanel {
 		Graphics2D g = (Graphics2D) gr;
 		g.setColor(color);
 		g.fillRoundRect(x1, 5, x2 - x1, 100, 10, 10);
-		
 	}
 
 	public void setX1(int x1) {
@@ -31,5 +30,13 @@ public class CustomPanel extends JPanel {
 
 	public void setX2(int x2) {
 		this.x2 = x2;
+	}
+
+	public int getX1() {
+		return x1;
+	}
+
+	public int getX2() {
+		return x2;
 	}
 }

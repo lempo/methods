@@ -5,16 +5,13 @@ public class MethodGroup {
 	private String text;
 	private String toolTipText;
 	private String image;
-	private String bigImage;
 	private String rolloverImage;
 
-	public MethodGroup(String name, String text, String image, String bigImage, String rolloverImage,
-			String toolTipText) {
+	public MethodGroup(String name, String text, String image, String rolloverImage, String toolTipText) {
 		super();
 		this.name = name;
 		this.text = text.replace("!linebreak!", "<br/>");
 		this.image = image;
-		this.bigImage = bigImage;
 		this.rolloverImage = rolloverImage;
 		this.toolTipText = toolTipText.replace("!linebreak!", "<br/>");
 	}
@@ -41,14 +38,6 @@ public class MethodGroup {
 
 	public void setImage(String image) {
 		this.image = image;
-	}
-
-	public String getBigImage() {
-		return bigImage;
-	}
-
-	public void setBigImage(String bigImage) {
-		this.bigImage = bigImage;
 	}
 
 	public String getRolloverImage() {

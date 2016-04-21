@@ -37,7 +37,9 @@ public class ImageLinkDefaults {
 		DECREASE,
 		INCREASE_HORIZONTAL,
 		ARROW,
-		CIRCLE_ARROW;
+		CIRCLE_ARROW,
+		BEGIN,
+		REPEAT;
 	}
 
 	private Map<Key, String> links;
@@ -67,6 +69,8 @@ public class ImageLinkDefaults {
 		links.put(Key.INCREASE_HORIZONTAL, "resources/image/increase_horizontal.png");
 		links.put(Key.ARROW, "resources/image/arrow.png");
 		links.put(Key.CIRCLE_ARROW, "resources/image/circleArrow.png");
+		links.put(Key.BEGIN, "resources/image/begin.png");
+		links.put(Key.REPEAT, "resources/image/repeat.png");
 	}
 
 	public String getLink(Key key) {
