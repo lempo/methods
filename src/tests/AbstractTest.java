@@ -18,10 +18,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 import component.CustomTextField;
 import customui.ButtonCustomUI;
+import customui.ScrollBarCustomUI;
 import defaults.ImageLinkDefaults;
 import defaults.InterfaceTextDefaults;
 import methods.Methods;
@@ -34,7 +36,7 @@ public abstract class AbstractTest extends JPanel {
 	protected long startTime;
 
 	protected String userName = "";
-	protected String userSex = "";
+	protected String userSex = InterfaceTextDefaults.getInstance().getDefault("male");
 	protected int userAge;
 	protected Date testDate;
 	protected long testTime;
@@ -43,6 +45,8 @@ public abstract class AbstractTest extends JPanel {
 
 	protected int width;
 	protected int height;
+
+	protected JPanel resultsPanel;
 
 	public AbstractTest(Methods methods, int width, int height, Test test) {
 		super();
@@ -154,10 +158,6 @@ public abstract class AbstractTest extends JPanel {
 		group.add(maleButton);
 		group.add(femaleButton);
 
-		RadioListener r = new RadioListener();
-		maleButton.addActionListener(r);
-		femaleButton.addActionListener(r);
-
 		JButton start = new JButton(InterfaceTextDefaults.getInstance().getDefault("begin_task"));
 		start.setUI(new ButtonCustomUI(new Color(38, 166, 154)));
 		start.setBorder(null);
@@ -166,6 +166,13 @@ public abstract class AbstractTest extends JPanel {
 		start.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				userName = nameTextField.getText().trim();
+				if (ageTextField.getText().trim() == "")
+					userAge = Math.min(9001, Integer.parseInt(ageTextField.getText().trim().replaceAll("[^0-9]", "")));
+				else
+					userAge = 0;
+				if (femaleButton.isSelected())
+					userSex = InterfaceTextDefaults.getInstance().getDefault("female");
 				showTest();
 			}
 		});
@@ -230,6 +237,11 @@ public abstract class AbstractTest extends JPanel {
 
 	public void showStandartResults() {
 		// TODO
+
+		resultsPanel = new JPanel();
+		resultsPanel.setOpaque(false);
+		resultsPanel.setLayout(new GridBagLayout());
+
 		JLabel heading = new JLabel();
 		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("test_results").toUpperCase() + "</div></html>";
@@ -256,23 +268,19 @@ public abstract class AbstractTest extends JPanel {
 				+ InterfaceTextDefaults.getInstance().getDefault("sex") + ": <br>"
 				+ InterfaceTextDefaults.getInstance().getDefault("age") + ": <br>"
 				+ InterfaceTextDefaults.getInstance().getDefault("test_date") + ": <br>"
-				+ InterfaceTextDefaults.getInstance().getDefault("test_time") + ": <br>"
-				+ "</div></html>";
+				+ InterfaceTextDefaults.getInstance().getDefault("test_time") + ": <br>" + "</div></html>";
 		leftCol.setText(t);
-		
+
 		JLabel rightCol = new JLabel();
-		
+
 		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-		t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
-				+ userName + "<br>"
-				+ userSex + "<br>"
-				+ userAge + "<br>"
-				+ format.format(testDate) + "<br>"
-				+ (testTime / 1000 / 60 / 10 == 0? "0" + testTime / 1000 / 60 : testTime / 1000 / 60 ) 
-				+ ":" + ((testTime / 1000 % 60) / 10 == 0? "0" + (testTime / 1000 % 60) : (testTime / 1000 % 60) ) +"<br>"
+		t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>" + userName + "<br>" + userSex
+				+ "<br>" + userAge + "<br>" + format.format(testDate) + "<br>"
+				+ (testTime / 1000 / 60 / 10 == 0 ? "0" + testTime / 1000 / 60 : testTime / 1000 / 60) + ":"
+				+ ((testTime / 1000 % 60) / 10 == 0 ? "0" + (testTime / 1000 % 60) : (testTime / 1000 % 60)) + "<br>"
 				+ "</div></html>";
 		rightCol.setText(t);
-		
+
 		removeAll();
 		setLayout(new GridBagLayout());
 
@@ -284,41 +292,54 @@ public abstract class AbstractTest extends JPanel {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(0, 20, 100, 0);
+		c.insets = new Insets(0, 20, 40, 0);
 		c.ipadx = 0;
 		c.ipady = 0;
 		c.weightx = 1.0;
 		c.weighty = 0.0;
 		add(heading, c);
 
-		c.gridx = 1;
-		c.gridy = 1;
 		c.insets = new Insets(10, 200, 0, 0);
 		c.gridwidth = 1;
-		add(leftCol, c);
+		resultsPanel.add(leftCol, c);
 
-		c.gridx = 2;
-		c.gridy = 1;
+		c.gridx = 1;
+		c.gridy = 0;
 		c.insets = new Insets(10, 20, 0, 0);
 		c.gridwidth = GridBagConstraints.REMAINDER;
-		add(rightCol, c);
+		resultsPanel.add(rightCol, c);
+
+		JScrollPane scroll = new JScrollPane(resultsPanel);
+		scroll.setPreferredSize(new Dimension((int) (width * 0.9), (int) (height * 0.7)));
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scroll.setBorder(null);
+		scroll.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
+		scroll.setOpaque(false);
+		scroll.getViewport().setOpaque(false);
+
+		c.anchor = GridBagConstraints.CENTER;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.insets = new Insets(0, 0, 0, 0);
+		add(scroll, c);
 
 		c.anchor = GridBagConstraints.WEST;
-		c.gridheight = GridBagConstraints.NONE;
-		c.gridx = 1;
-		c.gridy = 4;
+		c.gridheight = GridBagConstraints.REMAINDER;
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 2;
 		c.insets = new Insets(40, 40, 0, 0);
 		c.weighty = 1.0;
 		add(repeat, c);
 
-		c.anchor = GridBagConstraints.CENTER;
-		c.gridheight = GridBagConstraints.REMAINDER;
-		c.gridx = 4;
-		c.gridy = 4;
-		c.insets = new Insets(40, 0, 0, 0);
-		c.weighty = 1.0;
+		c.anchor = GridBagConstraints.EAST;
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridx = 1;
+		c.gridy = 2;
+		c.insets = new Insets(40, 0, 0, 40);
 		add(print, c);
-		
+
 		revalidate();
 		repaint();
 	}
@@ -331,18 +352,4 @@ public abstract class AbstractTest extends JPanel {
 
 	public abstract void showSettings();
 
-	class RadioListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			switch (e.getActionCommand()) {
-			case "male":
-				// TODO
-				break;
-			case "female":
-				// TODO
-				break;
-			}
-		}
-	}
 }

@@ -12,7 +12,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -28,7 +33,7 @@ import methods.Utils;
 
 public class Shulte extends AbstractTest {
 
-	private final int tableNum = 1;
+	private final int tableNum = 5;
 	private final int n = 5;
 	private final int cellSize = 75;
 	private final int borderSize = 3;
@@ -50,9 +55,21 @@ public class Shulte extends AbstractTest {
 
 	private void generateTable(int[][] table) {
 		// TODO
-		for (int i = 0; i < table.length; i++)
-			for (int j = 0; j < table[0].length; j++)
-				table[i][j] = i * table.length + j + 1;
+		
+		Random rnd = new Random(new Date().getTime());
+		
+		int tyk1, tyk2;
+		for (int i = 1; i <= n*n;)
+		while(true) {
+			tyk1 = rnd.nextInt(n);
+			tyk2 = rnd.nextInt(n);
+			if (table[tyk1][tyk2] != 0) break;
+			else {
+				table[tyk1][tyk2] = i;
+				i++;
+				break;
+			}
+		}
 	}
 
 	private void showTable(int next) {
@@ -177,6 +194,59 @@ public class Shulte extends AbstractTest {
 	public void showResults() {
 		// TODO Auto-generated method stub
 		showStandartResults();
+		
+		float resultER = 0;
+		for(int i = 0; i < times.length; i++)
+			resultER += times[i];
+		resultER /= times.length;
+		resultER /= 1000;
+		
+		float resultVR = times[0] / resultER / 1000;
+		float resultPU = times[3] / resultER / 1000;
+		
+		JLabel leftCol = new JLabel();
+		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
+				+ InterfaceTextDefaults.getInstance().getDefault("results_ER") + ": <br>"
+				+ InterfaceTextDefaults.getInstance().getDefault("results_VR") + ": <br>"
+				+ InterfaceTextDefaults.getInstance().getDefault("results_PU") + ": <br>" + "</div></html>";
+		leftCol.setText(t);
+
+		JLabel rightCol = new JLabel();
+
+		DecimalFormat df = new DecimalFormat("#.##");
+		t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>" 
+				+ df.format(resultER) + "<br>" 
+				+ df.format(resultVR) + "<br>" 
+				+ df.format(resultPU) + "<br>"
+				+ "</div></html>";
+		rightCol.setText(t);
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.anchor = GridBagConstraints.WEST;
+		c.fill = GridBagConstraints.NONE;
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.ipadx = 0;
+		c.ipady = 0;
+		c.weightx = 1.0;
+		c.weighty = 0.0;
+		
+		
+		c.insets = new Insets(10, 200, 0, 0);
+		c.gridwidth = 1;
+		resultsPanel.add(leftCol, c);
+
+		c.gridx = 1;
+		
+		c.insets = new Insets(10, 20, 0, 0);
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		resultsPanel.add(rightCol, c);
+		
+		this.revalidate();
+		this.repaint();
+
 	}
 
 	@Override

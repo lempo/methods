@@ -324,8 +324,6 @@ public class Methods extends JFrame {
 		menuPanel.setX2(
 				width - iconsSpace * 5 - exitLabel.getWidth() - helpLabel.getWidth() - aboutLabel.getWidth() + 3);
 		menuPanel.repaint();
-		
-		System.out.println(exitLabel.getWidth());
 
 		currentMethod = "showGroups";
 		paramTypes = new Class[] {};

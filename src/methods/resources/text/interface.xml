@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <interface>
+<string key="results_ER" value="Эффективность работы"/>
+<string key="results_VR" value="Степень врабатываемости"/>
+<string key="results_PU" value="Психическая устойчивость"/>
 <string key="test_time" value="Время прохождения"/>
 <string key="test_date" value="Дата проведения теста"/>
 <string key="print_results" value="Распечатать результаты"/>
