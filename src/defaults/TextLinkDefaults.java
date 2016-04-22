@@ -26,7 +26,9 @@ public class TextLinkDefaults {
 		INTERFACE,
 		FIGURES,
 		VERSION,
-		SERVER;
+		SERVER,
+		TAYLOR,
+		AUDIT;
 	}
 
 	private Map<Key, String> links;
@@ -47,6 +49,8 @@ public class TextLinkDefaults {
 		links.put(Key.FIGURES, "resources/text/figures/");
 		links.put(Key.VERSION, "resources/text/version.xml");
 		links.put(Key.SERVER, "resources/text/server.xml");
+		links.put(Key.TAYLOR, "resources/text/tests/taylor.xml");
+		links.put(Key.AUDIT, "resources/text/tests/audit.xml");
 	}
 
 	public String getLink(Key key) {

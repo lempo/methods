@@ -16,13 +16,13 @@ import methods.Utils;
 
 public class ScrollBarCustomUI extends BasicScrollBarUI {
 
-	private int trackColorR = 239;
-	private int trackColorG = 235;
-	private int trackColorB = 233;
+	private int trackColorR = 231;
+	private int trackColorG = 248;
+	private int trackColorB = 247;
 
-	private int thumbColorR = 215;
-	private int thumbColorG = 204;
-	private int thumbColorB = 200;
+	private int thumbColorR = 166;
+	private int thumbColorG = 216;
+	private int thumbColorB = 212;
 
 	@Override
 	protected JButton createDecreaseButton(int orientation) {

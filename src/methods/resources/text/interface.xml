@@ -94,6 +94,7 @@
 <string key="no" value="Нет"/>
 <string key="finalize" value="Завершить"/>
 <string key="continue" value="Продолжить"/>
+<string key="next" value="Далее"/>
 <string key="sound_level" value="ГРОМКОСТЬ ЗВУКА"/>
 <string key="coincidences_easy_question" value="Совпадают ли карточки по цвету фигур?"/>
 <string key="coincidences_middle_question" value="Совпадают ли карточки по цвету и форме фигур?"/>

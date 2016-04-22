@@ -222,9 +222,8 @@ public class Methods extends JFrame {
 		windowPanel.add(Box.createHorizontalGlue());
 
 		float space = (float) (width * 0.032);
-		// TODO resize
-		// if (resized)
-		// space *= 1.05;
+		if (resized)
+			space *= 1.05;
 
 		windowPanel.add(hideLabel);
 		hideLabel.setAlignmentY(BOTTOM_ALIGNMENT);
@@ -241,7 +240,7 @@ public class Methods extends JFrame {
 	}
 
 	private void createMainMenu() {
-		menuPanel = new CustomPanel(new Color(55, 71, 79));
+		menuPanel = new CustomPanel(new Color(171, 137, 128));
 		menuPanel.setOpaque(false);
 
 		exitLabel = new JLabel();
@@ -277,7 +276,7 @@ public class Methods extends JFrame {
 		tasksLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		int logoSpace = 289;
-		logoSpace = (int) Math.round(width * 0.28);
+		logoSpace = (int) Math.round(width * 0.58);
 
 		menuPanel.setPreferredSize(new Dimension(width, (int) Math.round(height * 0.076)));
 		menuPanel.setLayout(new BoxLayout(menuPanel, BoxLayout.X_AXIS));
@@ -319,10 +318,10 @@ public class Methods extends JFrame {
 
 		menuPanel.revalidate();
 		menuPanel.repaint();
-		menuPanel.setX1(width - iconsSpace * 5 - exitLabel.getWidth() - helpLabel.getWidth() - tasksLabel.getWidth()
-				- aboutLabel.getWidth() - 3);
-		menuPanel.setX2(
-				width - iconsSpace * 5 - exitLabel.getWidth() - helpLabel.getWidth() - aboutLabel.getWidth() + 3);
+		menuPanel.setX1(width - iconsSpace * 5 - exitLabel.getIcon().getIconWidth() - helpLabel.getIcon().getIconWidth()
+				- tasksLabel.getIcon().getIconWidth() - aboutLabel.getIcon().getIconWidth() - 3);
+		menuPanel.setX2(width - iconsSpace * 5 - exitLabel.getIcon().getIconWidth() - helpLabel.getIcon().getIconWidth()
+				- aboutLabel.getIcon().getIconWidth() + 3);
 		menuPanel.repaint();
 
 		currentMethod = "showGroups";
@@ -330,7 +329,7 @@ public class Methods extends JFrame {
 		args = new Object[] {};
 
 		JLabel heading = new JLabel();
-		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(70, 110, 122);'>"
+		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("task_groups") + "</div></html>";
 		heading.setText(t);
 
@@ -437,8 +436,9 @@ public class Methods extends JFrame {
 	}
 
 	public void showAbout() {
-		menuPanel.setX1(width - iconsSpace * 3 - exitLabel.getWidth() - aboutLabel.getWidth() - 3);
-		menuPanel.setX2(width - iconsSpace * 3 - exitLabel.getWidth() + 3);
+		menuPanel.setX1(
+				width - iconsSpace * 3 - exitLabel.getIcon().getIconWidth() - aboutLabel.getIcon().getIconWidth() - 3);
+		menuPanel.setX2(width - iconsSpace * 3 - exitLabel.getIcon().getIconWidth() + 3);
 		menuPanel.repaint();
 
 		currentMethod = "showAbout";
@@ -460,7 +460,7 @@ public class Methods extends JFrame {
 
 		showedTest = null;
 		JLabel heading = new JLabel();
-		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(70, 110, 122);'>"
+		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("about") + "</div></html>";
 		heading.setText(t);
 		ImageIcon icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.ARROW));
@@ -673,9 +673,10 @@ public class Methods extends JFrame {
 	}
 
 	public void showHelp() {
-		menuPanel.setX1(
-				width - iconsSpace * 4 - exitLabel.getWidth() - helpLabel.getWidth() - aboutLabel.getWidth() - 3);
-		menuPanel.setX2(width - iconsSpace * 4 - exitLabel.getWidth() - aboutLabel.getWidth() + 3);
+		menuPanel.setX1(width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth() - helpLabel.getIcon().getIconWidth()
+				- aboutLabel.getIcon().getIconWidth() - 3);
+		menuPanel.setX2(
+				width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth() - aboutLabel.getIcon().getIconWidth() + 3);
 		menuPanel.repaint();
 
 		currentMethod = "showHelp";
@@ -684,7 +685,7 @@ public class Methods extends JFrame {
 
 		showedTest = null;
 		JLabel heading = new JLabel();
-		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(70, 110, 122);'>"
+		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("help") + "</div></html>";
 		heading.setText(t);
 		ImageIcon icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.ARROW));
@@ -706,7 +707,7 @@ public class Methods extends JFrame {
 		headerPanel.repaint();
 
 		JLabel faq = new JLabel();
-		String t1 = "<html><div style='font: 22pt Arial Narrow; color: rgb(115, 84, 73); padding-left: 17px;'><span style='font-weight: bold;'>?&nbsp;&nbsp;&nbsp;</span>"
+		String t1 = "<html><div style='font: 22pt Arial Narrow; color: rgb(51, 185, 175); padding-left: 17px;'><span style='font-weight: bold;'>?&nbsp;&nbsp;&nbsp;</span>"
 				+ InterfaceTextDefaults.getInstance().getDefault("faq") + "</div></html>";
 		faq.setText(t1);
 
@@ -766,7 +767,7 @@ public class Methods extends JFrame {
 		showedTest = null;
 
 		JLabel heading = new JLabel();
-		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(70, 110, 122);'>"
+		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ methodGroups[i].getName().toUpperCase() + "</div></html>";
 		heading.setText(t);
 		ImageIcon icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.ARROW));
@@ -861,13 +862,12 @@ public class Methods extends JFrame {
 	}
 
 	public void showTest(int i) {
-		// TODO
 		currentMethod = "showTest";
 		paramTypes = new Class[] { int.class };
 		args = new Object[] { i };
 
 		JLabel heading = new JLabel();
-		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(70, 110, 122);'>"
+		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ tests[i].getName().toUpperCase() + "</div></html>";
 		heading.setText(t);
 		ImageIcon icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.ARROW));
@@ -982,7 +982,6 @@ public class Methods extends JFrame {
 				System.exit(0);
 				break;
 			case "restore":
-				// TODO resize
 				resize();
 				break;
 			case "hide":
@@ -1055,14 +1054,14 @@ public class Methods extends JFrame {
 			JLabel l = (JLabel) e.getSource();
 			switch (l.getName()) {
 			case "exit":
-				// TODO logout
+				// TODO logout, dialog
 				break;
 			case "help":
+				// TODO dialog
 				showHelp();
-				// TODO help
 				break;
 			case "about":
-				// TODO about
+				// TODO dialog
 				showAbout();
 				break;
 			case "tasks":

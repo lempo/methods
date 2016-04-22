@@ -167,7 +167,7 @@ public abstract class AbstractTest extends JPanel {
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				userName = nameTextField.getText().trim();
-				if (ageTextField.getText().trim() == "")
+				if (!ageTextField.getText().trim().equals("") && (ageTextField.getText().length() < 5))
 					userAge = Math.min(9001, Integer.parseInt(ageTextField.getText().trim().replaceAll("[^0-9]", "")));
 				else
 					userAge = 0;
