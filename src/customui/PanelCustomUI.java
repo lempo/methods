@@ -20,6 +20,12 @@ public class PanelCustomUI extends BasicPanelUI {
 	public PanelCustomUI(boolean fill) {
 		this.fill = fill;
 	}
+	
+	public PanelCustomUI(boolean fill, Color color, Color borderColor) {
+		this.fill = fill;
+		back = color;
+		border = borderColor;
+	}
 
 	@Override
 	public void paint(Graphics g, JComponent c) {
@@ -28,9 +34,9 @@ public class PanelCustomUI extends BasicPanelUI {
 		if (fill) {
 			((Graphics2D) g).setStroke(new BasicStroke(3));
 			g.setColor(back);
-			g.fillRoundRect(area.x, area.y, area.width, area.height, 8, 8);
+			g.fillRoundRect(area.x + 1, area.y + 1, area.width, area.height, 8, 8);
 		}
 		g.setColor(border);
-		g.drawRoundRect(area.x, area.y, area.width - 1, area.height - 1, 8, 8);
+		g.drawRoundRect(area.x + 1, area.y + 1, area.width - 3, area.height - 3, 8, 8);
 	}
 }

@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import customui.BorderButtonCustomUI;
 import customui.ButtonCustomUI;
 import defaults.InterfaceTextDefaults;
 import defaults.TextLinkDefaults;
@@ -77,7 +78,7 @@ public class Taylor extends AbstractTest {
 	public void showTest() {
 		// TODO Auto-generated method stub
 		
-		yesButton.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
+		yesButton.setUI(new BorderButtonCustomUI(new Color(144, 106, 96)));
 		yesButton.setBorder(null);
 		yesButton.setOpaque(false);
 		yesButton.setPreferredSize(new Dimension(200, 35));
@@ -99,7 +100,7 @@ public class Taylor extends AbstractTest {
 			}
 		});
 		
-		noButton.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
+		noButton.setUI(new BorderButtonCustomUI(new Color(144, 106, 96)));
 		noButton.setBorder(null);
 		noButton.setOpaque(false);
 		noButton.setPreferredSize(new Dimension(200, 35));
@@ -192,17 +193,15 @@ public class Taylor extends AbstractTest {
 			
 			String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
 					+ d.item(0).getTextContent() + ": <br>" + "</div></html>";
-			leftCol.setText(t);
-				
-			
+			leftCol.setText(t);			
 			
 			t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
 					+ summ + "<br>";			
-			if (summ >= 41 && summ <= 50) t += d.item(1).getTextContent();
-			if (summ >= 26 && summ <= 40) t += d.item(2).getTextContent();
-			if (summ >= 16 && summ <= 25) t += d.item(3).getTextContent();
-			if (summ >= 6 && summ <= 15) t += d.item(4).getTextContent();
-			if (summ >= 0 && summ <= 5) t += d.item(5).getTextContent();
+			if (summ >= 41 && summ <= 50) t += d.item(1).getTextContent().toUpperCase();
+			if (summ >= 26 && summ <= 40) t += d.item(2).getTextContent().toUpperCase();
+			if (summ >= 16 && summ <= 25) t += d.item(3).getTextContent().toUpperCase();
+			if (summ >= 6 && summ <= 15) t += d.item(4).getTextContent().toUpperCase();
+			if (summ >= 0 && summ <= 5) t += d.item(5).getTextContent().toUpperCase();
 			t += "</div></html>";
 			rightCol.setText(t);
 		
