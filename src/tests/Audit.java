@@ -62,7 +62,6 @@ public class Audit extends AbstractTest {
 
 	@Override
 	public void showTest() {
-		// TODO Auto-generated method stub
 		nextButton.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
 		nextButton.setBorder(null);
 		nextButton.setOpaque(false);
@@ -81,8 +80,6 @@ public class Audit extends AbstractTest {
 							answer = i;
 							break;
 						}
-					
-					NodeList children = nodelist.item(currentQuestionNumber - 1).getChildNodes();
 					
 					summ += Integer.parseInt(nodelist.item(currentQuestionNumber - 1).getChildNodes().item(answer)
 							.getAttributes().getNamedItem("points").getNodeValue());
@@ -110,8 +107,6 @@ public class Audit extends AbstractTest {
 		c.weighty = 0.0;
 
 		question.setHorizontalAlignment(JLabel.CENTER);
-
-		// TODO Radio Buttons should be placed into a grid here
 
 		this.add(question, c);
 
@@ -167,18 +162,20 @@ public class Audit extends AbstractTest {
 		c.ipady = 0;
 		c.weightx = 0.0;
 		c.weighty = 0.0;
-
+		
 		for (int i = 0; i < optionsNum; i++) {
+			//TODO "if" statement needed to check for "comments" in xml and output a text pane if it exists
 			JRadioButton b = new JRadioButton("<html><div style='font: 18pt Arial Narrow; color: rgb(115, 84, 73);'>"
 					+ nodelist.item(currentQuestionNumber - 1).getChildNodes().item(i).getTextContent()
 					+ "</div></html>");
 			radioButtonList.add(b);
 			radioButtonGroup.add(b);
+			b.setOpaque(false);
 			c.gridy = i + 1;
 			this.add(b, c);
 		}
 
-		//radioButtonList.get(0).setSelected(true);
+		radioButtonList.get(0).setSelected(true);
 
 		this.revalidate();
 		this.repaint();
