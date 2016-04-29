@@ -194,8 +194,6 @@ public class Audit extends AbstractTest {
 				+ d.item(0).getTextContent() + ": <br>" + "</div></html>";
 		leftCol.setText(t);
 
-		System.out.println(summ);
-
 		t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>" + summ + "<br>";
 		t += "</div></html>";
 		rightCol.setText(t);

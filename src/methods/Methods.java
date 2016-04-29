@@ -1,6 +1,8 @@
 package methods;
 
+import java.awt.AWTEvent;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -9,6 +11,7 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.AWTEventListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -23,6 +26,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -37,6 +41,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextPane;
+import javax.swing.Popup;
+import javax.swing.PopupFactory;
 import javax.swing.SwingConstants;
 
 import org.w3c.dom.Document;
@@ -45,6 +51,7 @@ import org.w3c.dom.NodeList;
 
 import component.BgPanel;
 import component.CustomPanel;
+import component.MenuPanel;
 import component.CustomDialog;
 import component.CustomLabel;
 import customui.PanelCustomUI;
@@ -111,6 +118,9 @@ public class Methods extends JFrame {
 
 	Methods methods;
 
+	Popup popup = null;
+	MenuPanel popupMenuPanel;
+
 	public Methods() {
 		super("Methods");
 
@@ -121,6 +131,10 @@ public class Methods extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setUndecorated(true);
+		
+		InternalEventHandler internalEventHandler = new InternalEventHandler();
+		long eventMask = MouseEvent.MOUSE_PRESSED;
+		Toolkit.getDefaultToolkit().addAWTEventListener(internalEventHandler, eventMask);
 
 		draggingMouseListener = new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -755,7 +769,7 @@ public class Methods extends JFrame {
 		actualPanel.repaint();
 	}
 
-	private void showTests(int i) {
+	public void showTests(int i) {
 		menuPanel.setX1(0);
 		menuPanel.setX2(0);
 		menuPanel.repaint();
@@ -1066,6 +1080,19 @@ public class Methods extends JFrame {
 				break;
 			case "tasks":
 				// TODO tasks, popup
+				if (popup != null) {
+					popup.hide();
+				}
+				PopupFactory fac = new PopupFactory();
+				Point xy = tasksLabel.getLocationOnScreen();
+				MenuPanel p = new MenuPanel(popup, methods);
+				popupMenuPanel = p;
+				popup = fac
+						.getPopup(tasksLabel, p,
+								(int) ((int) xy.getX() - popupMenuPanel.getPreferredSize().getWidth()
+										+ tasksLabel.getWidth()),
+								(int) Math.round(xy.getY() + tasksLabel.getHeight() + height * 0.02));
+				popup.show();
 				break;
 			}
 		}
@@ -1213,5 +1240,27 @@ public class Methods extends JFrame {
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
 		}
+	}
+	
+	private class InternalEventHandler implements AWTEventListener {
+
+		@Override
+		public void eventDispatched(AWTEvent event) {
+			if (popup == null)
+				return;
+			if (MouseEvent.MOUSE_CLICKED == event.getID() && event.getSource() != tasksLabel) {
+				Set<Component> components = Utils.getAllComponents(popupMenuPanel);
+				boolean clickInPopup = false;
+				for (Component component : components) {
+					if (event.getSource() == component) {
+						clickInPopup = true;
+					}
+				}
+				if (!clickInPopup) {
+					popup.hide();
+				}
+			}
+		}
+
 	}
 }
