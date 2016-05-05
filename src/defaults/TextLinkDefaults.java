@@ -28,7 +28,9 @@ public class TextLinkDefaults {
 		VERSION,
 		SERVER,
 		TAYLOR,
-		AUDIT;
+		AUDIT,
+		MUNSTERBERG,
+		CORRECTION;
 	}
 
 	private Map<Key, String> links;
@@ -51,6 +53,8 @@ public class TextLinkDefaults {
 		links.put(Key.SERVER, "resources/text/server.xml");
 		links.put(Key.TAYLOR, "resources/text/tests/taylor.xml");
 		links.put(Key.AUDIT, "resources/text/tests/audit.xml");
+		links.put(Key.MUNSTERBERG, "resources/text/tests/munsterberg.xml");
+		links.put(Key.CORRECTION, "resources/text/tests/correction.xml");
 	}
 
 	public String getLink(Key key) {

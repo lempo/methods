@@ -193,6 +193,30 @@ public class Utils {
 		return n.item(0).getTextContent();
 	}
 
+	public static String getLastCheckUpdates() {
+		Document doc = Utils.openXMLAbsolutePath(Utils.getFilePath() + "/config");
+		NodeList n = doc.getElementsByTagName("lastCheck");
+		return n.item(0).getTextContent();
+	}
+
+	public static void setLastCheckUpdates(String d) {
+		String s = Utils.readFile(Utils.getFilePath() + "/config");
+		s = s.replaceAll("<lastCheck>.*</lastCheck>", "<lastCheck>" + d + "</lastCheck>");
+		Utils.writeFile(s, Utils.getFilePath() + "/config");
+	}
+	
+	public static void setLastDownloadUpdates(String d) {
+		String s = Utils.readFile(Utils.getFilePath() + "/config");
+		s = s.replaceAll("<lastDownload>.*</lastDownload>", "<lastDownload>" + d + "</lastDownload>");
+		Utils.writeFile(s, Utils.getFilePath() + "/config");
+	}
+
+	public static String getLastDownloadUpdates() {
+		Document doc = Utils.openXMLAbsolutePath(Utils.getFilePath() + "/config");
+		NodeList n = doc.getElementsByTagName("lastDownload");
+		return n.item(0).getTextContent();
+	}
+
 	public static String getVersionDate() {
 		Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.VERSION));
 		NodeList n = doc.getElementsByTagName("date");

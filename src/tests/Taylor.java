@@ -71,19 +71,18 @@ public class Taylor extends AbstractTest {
 	@Override
 	public void showInfo() {
 		showStandartInfo();
-
 	}
 	
 	@Override
 	public void showTest() {
 		// TODO Auto-generated method stub
 		
-		yesButton.setUI(new BorderButtonCustomUI(new Color(144, 106, 96)));
+		yesButton.setUI(new BorderButtonCustomUI(new Color(38, 166, 154)));
 		yesButton.setBorder(null);
 		yesButton.setOpaque(false);
-		yesButton.setPreferredSize(new Dimension(200, 35));
-		yesButton.setMinimumSize(new Dimension(200, 35));
-		yesButton.setMaximumSize(new Dimension(200, 35));
+		yesButton.setPreferredSize(new Dimension(200, 40));
+		yesButton.setMinimumSize(new Dimension(200, 40));
+		yesButton.setMaximumSize(new Dimension(200, 40));
 		yesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		yesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -100,12 +99,12 @@ public class Taylor extends AbstractTest {
 			}
 		});
 		
-		noButton.setUI(new BorderButtonCustomUI(new Color(144, 106, 96)));
+		noButton.setUI(new BorderButtonCustomUI(new Color(239, 83, 80)));
 		noButton.setBorder(null);
 		noButton.setOpaque(false);
-		noButton.setPreferredSize(new Dimension(200, 35));
-		noButton.setMinimumSize(new Dimension(200, 35));
-		noButton.setMaximumSize(new Dimension(200, 35));
+		noButton.setPreferredSize(new Dimension(200, 40));
+		noButton.setMinimumSize(new Dimension(200, 40));
+		noButton.setMaximumSize(new Dimension(200, 40));
 		noButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		noButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -248,7 +247,6 @@ public class Taylor extends AbstractTest {
 	@Override
 	public void showSettings() {
 		showStandartSettings();
-		
 	}
 
 }

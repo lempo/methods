@@ -44,11 +44,13 @@
 <string key="task_number" value="ЗАДАНИЕ №"/>
 <string key="begin_task" value="Начать упражнение"/>
 <string key="about" value="О ПРОГРАММЕ"/>
-<string key="key" value="КЛЮЧ"/>
-<string key="license" value="ЛИЦЕНЗИЯ"/>
+<string key="key" value="Лицензионный ключ"/>
+<string key="license" value="Зарегистрировано на имя"/>
 <string key="days_left" value="Осталось"/>
-<string key="version" value="ВЕРСИЯ ПРОГРАММЫ"/>
-<string key="from" value="ОТ"/>
+<string key="version" value="Версия программы"/>
+<string key="from" value="от"/>
+<string key="last_check_updates" value="Последняя проверка ообновлений"/>
+<string key="last_download_updates" value="Обновления были установлены"/>
 <string key="check_updates_auto" value="Проверять обновления автоматически"/>
 <string key="check_updates" value="Проверить обновления"/>
 <string key="help" value="ПОМОЩЬ"/>

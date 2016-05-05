@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><config>
 <username>ori</username>
 <key>asdf</key>
-<checkUpdatesAuto>false</checkUpdatesAuto></config>
+<checkUpdatesAuto>false</checkUpdatesAuto>
+<lastCheck>05.05.16</lastCheck>
+<lastDownload>26.03.2016</lastDownload>
+</config>

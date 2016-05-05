@@ -21,6 +21,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
+import component.CustomRadioButton;
 import component.CustomTextField;
 import customui.ButtonCustomUI;
 import customui.ScrollBarCustomUI;
@@ -74,7 +75,6 @@ public abstract class AbstractTest extends JPanel {
 				+ "</div></html>");
 		text.setOpaque(false);
 		text.setPreferredSize(new Dimension((int) (width * 0.6 - image.getWidth()), (int) (height * 0.5)));
-		System.out.println((int) (width * 0.85 - image.getWidth()));
 		// text.setPreferredSize(
 		// new Dimension(485, 700));
 
@@ -141,18 +141,11 @@ public abstract class AbstractTest extends JPanel {
 		CustomTextField ageTextField = new CustomTextField(20, "");
 		CustomTextField nameTextField = new CustomTextField(20, "");
 
-		JRadioButton maleButton = new JRadioButton(
-				"<html><div style='font: 18pt Arial Narrow; color: rgb(115, 84, 73);'>"
-						+ InterfaceTextDefaults.getInstance().getDefault("male") + "</div></html>");
+		JRadioButton maleButton = new CustomRadioButton(InterfaceTextDefaults.getInstance().getDefault("male"), true);
 		maleButton.setActionCommand("male");
-		maleButton.setSelected(true);
-		maleButton.setOpaque(false);
 
-		JRadioButton femaleButton = new JRadioButton(
-				"<html><div style='font: 18pt Arial Narrow; color: rgb(115, 84, 73);'>"
-						+ InterfaceTextDefaults.getInstance().getDefault("female") + "</div></html>");
+		JRadioButton femaleButton = new CustomRadioButton(InterfaceTextDefaults.getInstance().getDefault("female"), false);
 		femaleButton.setActionCommand("female");
-		femaleButton.setOpaque(false);
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(maleButton);

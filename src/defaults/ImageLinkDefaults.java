@@ -40,7 +40,9 @@ public class ImageLinkDefaults {
 		CIRCLE_ARROW,
 		BEGIN,
 		REPEAT,
-		MENU;
+		MENU,
+		RADIO,
+		RADIO_SELECTED;
 	}
 
 	private Map<Key, String> links;
@@ -73,6 +75,8 @@ public class ImageLinkDefaults {
 		links.put(Key.BEGIN, "resources/image/begin.png");
 		links.put(Key.REPEAT, "resources/image/repeat.png");
 		links.put(Key.MENU, "resources/image/menu");
+		links.put(Key.RADIO, "resources/image/radio_unselected.png");
+		links.put(Key.RADIO_SELECTED, "resources/image/radio_selected.png");
 	}
 
 	public String getLink(Key key) {

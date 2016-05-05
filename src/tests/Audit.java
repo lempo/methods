@@ -20,6 +20,7 @@ import javax.swing.JRadioButton;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import component.CustomRadioButton;
 import customui.ButtonCustomUI;
 import customui.PanelCustomUI;
 import defaults.InterfaceTextDefaults;
@@ -80,10 +81,10 @@ public class Audit extends AbstractTest {
 							answer = i;
 							break;
 						}
-					
+
 					summ += Integer.parseInt(nodelist.item(currentQuestionNumber - 1).getChildNodes().item(answer)
 							.getAttributes().getNamedItem("points").getNodeValue());
-							currentQuestionNumber++;
+					currentQuestionNumber++;
 					showQuestion();
 				}
 			}
@@ -142,7 +143,7 @@ public class Audit extends AbstractTest {
 			this.remove(radioButtonList.get(i));
 			radioButtonGroup.remove(radioButtonList.get(i));
 		}
-		
+
 		radioButtonList = new ArrayList<JRadioButton>();
 
 		this.revalidate();
@@ -162,12 +163,12 @@ public class Audit extends AbstractTest {
 		c.ipady = 0;
 		c.weightx = 0.0;
 		c.weighty = 0.0;
-		
+
 		for (int i = 0; i < optionsNum; i++) {
-			//TODO "if" statement needed to check for "comments" in xml and output a text pane if it exists
-			JRadioButton b = new JRadioButton("<html><div style='font: 18pt Arial Narrow; color: rgb(115, 84, 73);'>"
-					+ nodelist.item(currentQuestionNumber - 1).getChildNodes().item(i).getTextContent()
-					+ "</div></html>");
+			// TODO "if" statement needed to check for "comments" in xml and
+			// output a text pane if it exists
+			JRadioButton b = new CustomRadioButton(
+					nodelist.item(currentQuestionNumber - 1).getChildNodes().item(i).getTextContent(), false);
 			radioButtonList.add(b);
 			radioButtonGroup.add(b);
 			b.setOpaque(false);

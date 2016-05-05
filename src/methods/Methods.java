@@ -26,6 +26,9 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 
 import javax.imageio.ImageIO;
@@ -131,7 +134,7 @@ public class Methods extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setUndecorated(true);
-		
+
 		InternalEventHandler internalEventHandler = new InternalEventHandler();
 		long eventMask = MouseEvent.MOUSE_PRESSED;
 		Toolkit.getDefaultToolkit().addAWTEventListener(internalEventHandler, eventMask);
@@ -158,24 +161,26 @@ public class Methods extends JFrame {
 			}
 		};
 
-		composeWindow();
+		composeWindow(true);
 
 		showGroups();
 	}
 
-	private void composeWindow() {
+	private void composeWindow(boolean firstTime) {
 		panel = new BgPanel(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.BACKGROUND), width, height);
 
 		createWindowButtons();
 
 		createMainMenu();
 
-		headerPanel = new JPanel();
+		if (firstTime)
+			headerPanel = new JPanel();
 		headerPanel.setOpaque(false);
 		headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.X_AXIS));
 		headerPanel.setPreferredSize(new Dimension(width, 60));
 
-		actualPanel = new JPanel();
+		if (firstTime)
+			actualPanel = new JPanel();
 		actualPanel.setOpaque(false);
 		actualPanel
 				.setPreferredSize(new Dimension(width,
@@ -468,9 +473,13 @@ public class Methods extends JFrame {
 		String keyNumber = Utils.getLicenceKey();
 
 		// days left
-		int days = HTTPClient.daysLeft(keyNumber, name);
+		// int days = HTTPClient.daysLeft(keyNumber, name);
+		// TODO
+		int days = 10;
 
-		String from = HTTPClient.getFrom(keyNumber, name);
+		// String from = HTTPClient.getFrom(keyNumber, name);
+		// TODO
+		String from = "10.12.15";
 
 		showedTest = null;
 		JLabel heading = new JLabel();
@@ -505,9 +514,23 @@ public class Methods extends JFrame {
 		JLabel licenze = new JLabel();
 		t = "<html><div style='font: bold 14pt Arial Narrow; color: rgb(70, 110, 122);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("license")
-				+ ": <br><span style='font: 15pt Arial Narrow; color: rgb(115, 84, 73);'>" + name + " " + from
-				+ "</span></div></html>";
+				+ ": <span style='font: 15pt Arial Narrow; color: rgb(115, 84, 73);'>" + name + " "
+				+ InterfaceTextDefaults.getInstance().getDefault("from") + " " + from + "</span></div></html>";
 		licenze.setText(t);
+
+		JLabel lastCheckUpdates = new JLabel();
+		t = "<html><div style='font: bold 14pt Arial Narrow; color: rgb(70, 110, 122);'>"
+				+ InterfaceTextDefaults.getInstance().getDefault("last_check_updates")
+				+ ": <span style='font: 15pt Arial Narrow; color: rgb(115, 84, 73);'>" + Utils.getLastCheckUpdates()
+				+ "</span></div></html>";
+		lastCheckUpdates.setText(t);
+
+		JLabel lastDownloadUpdates = new JLabel();
+		t = "<html><div style='font: bold 14pt Arial Narrow; color: rgb(70, 110, 122);'>"
+				+ InterfaceTextDefaults.getInstance().getDefault("last_download_updates")
+				+ ": <span style='font: 15pt Arial Narrow; color: rgb(115, 84, 73);'>" + Utils.getLastDownloadUpdates()
+				+ "</span></div></html>";
+		lastDownloadUpdates.setText(t);
 
 		String day = InterfaceTextDefaults.getInstance().getDefault("day");
 		if (days % 10 == 1)
@@ -541,6 +564,8 @@ public class Methods extends JFrame {
 		checkUpdates.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		checkUpdates.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DateFormat format = new SimpleDateFormat("dd.MM.yy");
+				Utils.setLastCheckUpdates(format.format(new Date()));
 				// ask DB for updates
 				String location = HTTPClient.getVersion(dd);
 				if (location != null) {
@@ -552,6 +577,7 @@ public class Methods extends JFrame {
 							InterfaceTextDefaults.getInstance().getDefault("no"), true);
 					if (d1.getAnswer() == 1) {
 						try {
+							Utils.setLastDownloadUpdates(format.format(new Date()));
 							System.out.println(location);
 							Process proc = Runtime.getRuntime().exec("java -jar updater.jar " + location);
 							System.exit(0);
@@ -619,7 +645,7 @@ public class Methods extends JFrame {
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(40, 40, 0, 0);
+		c.insets = new Insets(20, 40, 0, 0);
 		c.ipadx = 0;
 		c.ipady = 0;
 		c.weightx = 1.0;
@@ -636,12 +662,13 @@ public class Methods extends JFrame {
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 1;
-		c.insets = new Insets(20, 40, 0, 0);
+		c.insets = new Insets(10, 40, 0, 0);
 		c.weightx = 0.0;
 
 		actualPanel.add(licenze, c);
 
 		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridheight = 2;
 		c.gridx = 1;
 		c.insets = new Insets(20, 0, 0, 0);
 
@@ -650,13 +677,27 @@ public class Methods extends JFrame {
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 2;
-		c.insets = new Insets(20, 40, 0, 0);
+		c.insets = new Insets(10, 40, 0, 0);
 
 		actualPanel.add(left, c);
 
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 3;
+		c.insets = new Insets(10, 40, 0, 0);
+
+		actualPanel.add(lastCheckUpdates, c);
+
+		c.gridwidth = 1;
+		c.gridx = 0;
+		c.gridy = 4;
+		c.insets = new Insets(30, 40, 0, 0);
+
+		actualPanel.add(lastDownloadUpdates, c);
+
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.gridx = 1;
-		c.gridy = 2;
+		c.gridy = 3;
 		c.insets = new Insets(20, 0, 0, 0);
 
 		actualPanel.add(checkAuto, c);
@@ -667,17 +708,18 @@ public class Methods extends JFrame {
 		sep.setPreferredSize(new Dimension((int) (scroll.getPreferredSize().getWidth() * 0.98), 1));
 
 		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 5;
 		c.insets = new Insets(20, 40, 0, 20);
+		c.gridheight = 1;
 
 		actualPanel.add(sep, c);
 
-		c.gridy = 4;
+		c.gridy = 6;
 		c.insets = new Insets(20, 40, 0, 0);
 
 		actualPanel.add(about, c);
 
-		c.gridy = 5;
+		c.gridy = 7;
 		c.insets = new Insets(0, 20, 0, 0);
 
 		actualPanel.add(scroll, c);
@@ -774,7 +816,7 @@ public class Methods extends JFrame {
 		menuPanel.setX2(0);
 		menuPanel.repaint();
 
-		currentMethod = "showMethods";
+		currentMethod = "showTests";
 		paramTypes = new Class[] { int.class };
 		args = new Object[] { i };
 
@@ -822,17 +864,17 @@ public class Methods extends JFrame {
 			icon = Utils.createImageIcon(tests[j].getImage());
 
 			testsLabels[j] = new JLabel(
-					"<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155); text-align: center; margin-bottom: 5px; margin-top: 5px;'>"
+					"<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155); text-align: left; margin-left:23px; margin-bottom: 5px; margin-top: 5px;'>"
 							+ tests[j].getName().toUpperCase()
-							+ "</div><div style='font: 16pt Arial Narrow; color: black; text-align: left;'>"
+							+ "</div><div style='font: 16pt Arial Narrow; color: black; text-align: left; margin-left:23px; '>"
 							+ tests[j].getShortText() + "</div></html>");
 			testsLabels[j].setIcon(icon);
 			testsLabels[j].setHorizontalTextPosition(JLabel.CENTER);
 			testsLabels[j].setVerticalTextPosition(JLabel.BOTTOM);
 			testsLabels[j].setVerticalAlignment(SwingConstants.TOP);
 			testsLabels[j]
-					.setPreferredSize(new Dimension(icon.getIconWidth() + 190, (int) (icon.getIconHeight() + 100)));
-			testsLabels[j].setMaximumSize(new Dimension(icon.getIconWidth() + 190, (int) (icon.getIconHeight() + 100)));
+					.setPreferredSize(new Dimension(icon.getIconWidth() + 200, (int) (icon.getIconHeight() + 100)));
+			testsLabels[j].setMaximumSize(new Dimension(icon.getIconWidth() + 200, (int) (icon.getIconHeight() + 100)));
 			testsLabels[j].setName(Integer.toString(j));
 			testsLabels[j].addMouseListener(l);
 			testsLabels[j].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -968,9 +1010,7 @@ public class Methods extends JFrame {
 		else
 			setBounds(50, 50, width, height);
 
-		panel = new BgPanel(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.BACKGROUND), width, height);
-
-		composeWindow();
+		composeWindow(false);
 
 		if (showedTest != null) {
 			actualPanel.revalidate();
@@ -1079,7 +1119,7 @@ public class Methods extends JFrame {
 				showAbout();
 				break;
 			case "tasks":
-				// TODO tasks, popup
+				// TODO dialog
 				if (popup != null) {
 					popup.hide();
 				}
@@ -1241,7 +1281,7 @@ public class Methods extends JFrame {
 		public void mouseReleased(MouseEvent arg0) {
 		}
 	}
-	
+
 	private class InternalEventHandler implements AWTEventListener {
 
 		@Override
