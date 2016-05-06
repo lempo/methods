@@ -166,7 +166,7 @@ public class Audit extends AbstractTest {
 
 		for (int i = 0; i < optionsNum; i++) {
 			// TODO "if" statement needed to check for "comments" in xml and
-			// output a text pane if it exists
+			// output a text pane if it exists, middle priority
 			JRadioButton b = new CustomRadioButton(
 					nodelist.item(currentQuestionNumber - 1).getChildNodes().item(i).getTextContent(), false);
 			radioButtonList.add(b);

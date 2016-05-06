@@ -12,12 +12,14 @@ import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import customui.BorderButtonCustomUI;
 import customui.ButtonCustomUI;
+import customui.PanelCustomUI;
 import defaults.InterfaceTextDefaults;
 import defaults.TextLinkDefaults;
 import methods.Methods;
@@ -75,7 +77,7 @@ public class Taylor extends AbstractTest {
 	
 	@Override
 	public void showTest() {
-		// TODO Auto-generated method stub
+		// TODO format, margins, high priority
 		
 		yesButton.setUI(new BorderButtonCustomUI(new Color(38, 166, 154)));
 		yesButton.setBorder(null);
@@ -185,32 +187,36 @@ public class Taylor extends AbstractTest {
 		JLabel leftCol = new JLabel();
 		JLabel rightCol = new JLabel();
 		
-		if (lies <= 6){
-			
-			
+		if (lies <= 6) {
 			NodeList d = doc.getElementsByTagName("d");
 			
-			String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
+			String t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
 					+ d.item(0).getTextContent() + ": <br>" + "</div></html>";
 			leftCol.setText(t);			
 			
-			t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
-					+ summ + "<br>";			
-			if (summ >= 41 && summ <= 50) t += d.item(1).getTextContent().toUpperCase();
-			if (summ >= 26 && summ <= 40) t += d.item(2).getTextContent().toUpperCase();
-			if (summ >= 16 && summ <= 25) t += d.item(3).getTextContent().toUpperCase();
-			if (summ >= 6 && summ <= 15) t += d.item(4).getTextContent().toUpperCase();
-			if (summ >= 0 && summ <= 5) t += d.item(5).getTextContent().toUpperCase();
+			t = "<html><div style='font: bold 20pt Arial; color: rgb(38, 166, 154);'>"
+					+ summ + "<br>";
 			t += "</div></html>";
 			rightCol.setText(t);
-		
 		}
-		else {
+		else { //TODO Repair this
 			NodeList l = doc.getElementsByTagName("lies");
-			String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
+			String t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ l.item(0).getTextContent() +"</div></html>";
 			leftCol.setText(t);
 		}
+		
+		String t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
+		NodeList d = doc.getElementsByTagName("d");
+		if (summ >= 41 && summ <= 50) t += d.item(1).getTextContent().toUpperCase();
+		if (summ >= 26 && summ <= 40) t += d.item(2).getTextContent().toUpperCase();
+		if (summ >= 16 && summ <= 25) t += d.item(3).getTextContent().toUpperCase();
+		if (summ >= 6 && summ <= 15) t += d.item(4).getTextContent().toUpperCase();
+		if (summ >= 0 && summ <= 5) t += d.item(5).getTextContent().toUpperCase();
+		t += "</div></html>";
+		JPanel conclusion = new JPanel();
+		conclusion.add(new JLabel(t));
+		conclusion.setUI(new PanelCustomUI(true));
 		
 		// TODO Discover why the text field resizes all the way to the right and doesn't fit into the window
 		
@@ -218,7 +224,7 @@ public class Taylor extends AbstractTest {
 		
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.fill = GridBagConstraints.NONE;
-		c.gridheight = GridBagConstraints.REMAINDER;
+		c.gridheight = 1;
 		c.gridx = 0;
 		c.gridy = 1;
 		c.ipadx = 0;
@@ -226,19 +232,28 @@ public class Taylor extends AbstractTest {
 		c.weightx = 1.0;
 		c.weighty = 0.0;
 		
-		c.insets = new Insets(10, 200, 0, 0);
+		c.insets = new Insets(10, 0, 0, 20);
+		c.anchor = GridBagConstraints.EAST;
 		c.gridwidth = 1;
-		leftCol.setPreferredSize(new Dimension(300, 350));
+		//leftCol.setPreferredSize(new Dimension(300, 350));
 		leftCol.setVerticalAlignment(JLabel.TOP);
 		resultsPanel.add(leftCol, c);
 
 		c.gridx = 1;
 		
+		c.anchor = GridBagConstraints.WEST;
 		c.insets = new Insets(10, 20, 0, 0);
 		c.gridwidth = 1;
-		rightCol.setPreferredSize(new Dimension(300, 350));
+		//rightCol.setPreferredSize(new Dimension(300, 350));
 		rightCol.setVerticalAlignment(JLabel.TOP);
 		resultsPanel.add(rightCol, c);
+		
+		c.anchor = GridBagConstraints.CENTER;
+		c.insets = new Insets(20, 0, 0, 0);
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 2;
+		resultsPanel.add(conclusion, c);
 		
 		this.revalidate();
 		this.repaint();

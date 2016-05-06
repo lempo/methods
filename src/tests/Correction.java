@@ -46,7 +46,7 @@ public class Correction extends AbstractTest {
 
 	@Override
 	public void showTest() {
-		// TODO
+		// TODO randomize letters, middle priority
 
 		this.removeAll();
 
@@ -102,10 +102,31 @@ public class Correction extends AbstractTest {
 			table.add(stringPanels[i], c);
 		}
 
-		c.gridheight = 1;
+		c.gridheight = 2;
 		c.gridx = 0;
 		c.gridy = 0;
 		this.add(table, c);
+		
+		JButton firstLetter = new JButton("Ê");
+		firstLetter.setUI(new ButtonCustomUI(new Color(38, 166, 154)));
+		firstLetter.setBorder(null);
+		firstLetter.setOpaque(false);
+		firstLetter.setPreferredSize(new Dimension(35, 35));
+		JButton secondLetter = new JButton("Ð");
+		secondLetter.setUI(new ButtonCustomUI(new Color(38, 166, 154)));
+		secondLetter.setBorder(null);
+		secondLetter.setOpaque(false);
+		secondLetter.setPreferredSize(new Dimension(35, 35));
+		
+		c.gridx = 1;
+		c.gridheight = 1;
+		c.anchor = GridBagConstraints.SOUTHEAST;
+		c.weighty = 1.0;
+		this.add(firstLetter, c);
+		
+		c.gridy = 1;
+		c.weighty = 0.0;
+		this.add(secondLetter, c);
 
 		JButton toResults = new JButton(InterfaceTextDefaults.getInstance().getDefault("finish_test"));
 		toResults.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
@@ -119,22 +140,23 @@ public class Correction extends AbstractTest {
 			}
 		});
 
-		c.anchor = GridBagConstraints.SOUTHEAST;
 		c.gridx = 1;
-		c.gridy = 1;
-		c.gridwidth = 1;
-		c.insets = new Insets(30, 0, 0, 0);
+		c.gridy = 2;
+		c.gridwidth = 2;
+		c.insets = new Insets(30, 0, 30, 0);
 
 		this.add(toResults, c);
 
 		this.revalidate();
 		this.repaint();
+		
+		//TODO Add timer
 
 	}
 
 	@Override
 	public void showResults() {
-		// TODO Auto-generated method stub
+		// TODO count and show results, later
 
 	}
 

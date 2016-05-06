@@ -61,7 +61,7 @@ public abstract class AbstractTest extends JPanel {
 	}
 
 	public void showStandartInfo() {
-		// TODO layout
+		// TODO layout and text into a scroll, middle priority
 		JLabel image = new JLabel();
 		ImageIcon icon = Utils.createImageIcon(test.getBigImage());
 		image.setIcon(icon);
@@ -126,7 +126,6 @@ public abstract class AbstractTest extends JPanel {
 	}
 
 	public void showStandartSettings() {
-		// TODO
 		JLabel heading = new JLabel();
 		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(115, 84, 73);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("settings") + "</div></html>";
@@ -144,7 +143,8 @@ public abstract class AbstractTest extends JPanel {
 		JRadioButton maleButton = new CustomRadioButton(InterfaceTextDefaults.getInstance().getDefault("male"), true);
 		maleButton.setActionCommand("male");
 
-		JRadioButton femaleButton = new CustomRadioButton(InterfaceTextDefaults.getInstance().getDefault("female"), false);
+		JRadioButton femaleButton = new CustomRadioButton(InterfaceTextDefaults.getInstance().getDefault("female"),
+				false);
 		femaleButton.setActionCommand("female");
 
 		ButtonGroup group = new ButtonGroup();
@@ -229,7 +229,6 @@ public abstract class AbstractTest extends JPanel {
 	}
 
 	public void showStandartResults() {
-		// TODO
 
 		resultsPanel = new JPanel();
 		resultsPanel.setOpaque(false);
@@ -256,7 +255,7 @@ public abstract class AbstractTest extends JPanel {
 		repeat.setIcon(Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.REPEAT)));
 
 		JLabel leftCol = new JLabel();
-		t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
+		t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("name") + ": <br>"
 				+ InterfaceTextDefaults.getInstance().getDefault("sex") + ": <br>"
 				+ InterfaceTextDefaults.getInstance().getDefault("age") + ": <br>"
@@ -267,7 +266,7 @@ public abstract class AbstractTest extends JPanel {
 		JLabel rightCol = new JLabel();
 
 		DateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-		t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>" + userName + "<br>" + userSex
+		t = "<html><div style='font: bold 20pt Arial; color: rgb(38, 166, 154);'>" + userName + "<br>" + userSex
 				+ "<br>" + userAge + "<br>" + format.format(testDate) + "<br>"
 				+ (testTime / 1000 / 60 / 10 == 0 ? "0" + testTime / 1000 / 60 : testTime / 1000 / 60) + ":"
 				+ ((testTime / 1000 % 60) / 10 == 0 ? "0" + (testTime / 1000 % 60) : (testTime / 1000 % 60)) + "<br>"
@@ -292,30 +291,36 @@ public abstract class AbstractTest extends JPanel {
 		c.weighty = 0.0;
 		add(heading, c);
 
-		c.insets = new Insets(10, 200, 0, 0);
+		c.insets = new Insets(10, 0, 0, 20);
+		c.anchor = GridBagConstraints.EAST;
 		c.gridwidth = 1;
 		resultsPanel.add(leftCol, c);
 
 		c.gridx = 1;
 		c.gridy = 0;
+		c.anchor = GridBagConstraints.WEST;
 		c.insets = new Insets(10, 20, 0, 0);
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		resultsPanel.add(rightCol, c);
 
-		JScrollPane scroll = new JScrollPane(resultsPanel);
-		scroll.setPreferredSize(new Dimension((int) (width * 0.9), (int) (height * 0.7)));
-		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		scroll.setBorder(null);
-		scroll.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
-		scroll.setOpaque(false);
-		scroll.getViewport().setOpaque(false);
+		resultsPanel.setPreferredSize(new Dimension(width, height / 2));
+
+		/*
+		 * JScrollPane scroll = new JScrollPane(resultsPanel);
+		 * scroll.setPreferredSize(new Dimension((int) (width * 0.9), (int)
+		 * (height * 0.7))); scroll.setHorizontalScrollBarPolicy(JScrollPane.
+		 * HORIZONTAL_SCROLLBAR_NEVER);
+		 * scroll.setVerticalScrollBarPolicy(JScrollPane.
+		 * VERTICAL_SCROLLBAR_AS_NEEDED); scroll.setBorder(null);
+		 * scroll.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
+		 * scroll.setOpaque(false); scroll.getViewport().setOpaque(false);
+		 */
 
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 1;
 		c.insets = new Insets(0, 0, 0, 0);
-		add(scroll, c);
+		add(resultsPanel, c);
 
 		c.anchor = GridBagConstraints.WEST;
 		c.gridheight = GridBagConstraints.REMAINDER;

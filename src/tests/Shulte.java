@@ -54,8 +54,6 @@ public class Shulte extends AbstractTest {
 	}
 
 	private void generateTable(int[][] table) {
-		// TODO
-		
 		Random rnd = new Random(new Date().getTime());
 		
 		int tyk1, tyk2;
@@ -87,7 +85,6 @@ public class Shulte extends AbstractTest {
 		table.repaint();
 
 		times[next] = new Date().getTime();
-		// TODO
 	}
 
 	@Override
@@ -97,7 +94,6 @@ public class Shulte extends AbstractTest {
 
 	@Override
 	public void showTest() {
-		// TODO Auto-generated method stub
 		progress = 1;
 		
 		removeAll();
@@ -192,6 +188,8 @@ public class Shulte extends AbstractTest {
 
 	@Override
 	public void showResults() {
+		// TODO format results, high priority
+		
 		showStandartResults();
 		
 		float resultER = 0;
@@ -284,7 +282,6 @@ public class Shulte extends AbstractTest {
 				if (tableCounter == tableNum) {
 					testTime = new Date().getTime() - testTime;
 					showResults();
-					// TODO show results
 					return;
 				}
 				progress = 1;

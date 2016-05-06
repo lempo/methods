@@ -35,9 +35,9 @@ public class Munsterberg extends AbstractTest {
 	
 	JLabel[][] letters;
 	
-	int SummCorrect = 0;
-	int SummSkipped = 0;
-	int SummWrong = 0;
+	int summCorrect = 0;
+	int summSkipped = 0;
+	int summWrong = 0;
 	
 	ArrayList<String> keys = new ArrayList<String>();
 	ArrayList<String> answers = new ArrayList<String>();
@@ -53,8 +53,7 @@ public class Munsterberg extends AbstractTest {
 
 	@Override
 	public void showTest() {
-		// TODO
-		
+	
 		this.removeAll();
 		
 		Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.MUNSTERBERG));
@@ -110,6 +109,8 @@ public class Munsterberg extends AbstractTest {
 			table.add(stringPanels[i], c);
 		}*/
 		
+		// TODO justify labels, low priority
+		
 		letters = new JLabel[stringNum][];
 		
 		for (int i = 0; i < stringNum; i++) {
@@ -164,11 +165,13 @@ public class Munsterberg extends AbstractTest {
 		
 		this.revalidate();
 		this.repaint();
+		
+		//TODO Add timer
 	}
 
 	@Override
 	public void showResults() {
-		// TODO Auto-generated method stub
+		// TODO output results, high priority
 
 		Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.MUNSTERBERG));
 		NodeList k = doc.getElementsByTagName("key");
@@ -199,12 +202,12 @@ public class Munsterberg extends AbstractTest {
 		for (String i : answers) {
 
 			if (keys.contains(i))  
-				SummCorrect++;
-			else SummWrong++;
+				summCorrect++;
+			else summWrong++;
 		}
 		for (String i : keys) {
 			if (!answers.contains(i))  
-				SummSkipped++;
+				summSkipped++;
 		}
 	}
 

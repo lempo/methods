@@ -474,11 +474,11 @@ public class Methods extends JFrame {
 
 		// days left
 		// int days = HTTPClient.daysLeft(keyNumber, name);
-		// TODO
+		// TODO replace, later
 		int days = 10;
 
 		// String from = HTTPClient.getFrom(keyNumber, name);
-		// TODO
+		// TODO replace, later
 		String from = "10.12.15";
 
 		showedTest = null;
@@ -1108,18 +1108,18 @@ public class Methods extends JFrame {
 			JLabel l = (JLabel) e.getSource();
 			switch (l.getName()) {
 			case "exit":
-				// TODO logout, dialog
+				// TODO logout, dialog, later
 				break;
 			case "help":
-				// TODO dialog
+				// TODO dialog, later
 				showHelp();
 				break;
 			case "about":
-				// TODO dialog
+				// TODO dialog, later
 				showAbout();
 				break;
 			case "tasks":
-				// TODO dialog
+				// TODO dialog, later
 				if (popup != null) {
 					popup.hide();
 				}

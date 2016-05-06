@@ -16,10 +16,18 @@ import javax.swing.plaf.basic.BasicGraphicsUtils;
 
 public class BorderButtonCustomUI extends BasicButtonUI {
 	private Color borderColor = null;
+	private Color textColor = null;
+	private Font font = new Font("Arial Narrow", Font.BOLD, 17);
 
 	public BorderButtonCustomUI(Color borderColor) {
 		super();
 		this.borderColor = borderColor;
+	}
+
+	public BorderButtonCustomUI(Color borderColor, Color textColor) {
+		super();
+		this.borderColor = borderColor;
+		this.textColor = textColor;
 	}
 
 	@Override
@@ -39,11 +47,40 @@ public class BorderButtonCustomUI extends BasicButtonUI {
 	@Override
 	protected void paintText(Graphics g, JComponent c, Rectangle textRect, String text) {
 		AbstractButton b = (AbstractButton) c;
-		Font f = new Font("Arial Narrow", Font.BOLD, 17);
-		g.setFont(f);
-		FontMetrics fm = g.getFontMetrics(f);
+		g.setFont(font);
+		FontMetrics fm = g.getFontMetrics(font);
 
-		g.setColor(borderColor);
-		BasicGraphicsUtils.drawString(g, text.toUpperCase(), -1, textRect.x - 4, textRect.y + fm.getAscent() - 3);
+		if (textColor != null)
+			g.setColor(textColor);
+		else
+			g.setColor(borderColor);
+
+		int w = (int) fm.getStringBounds(b.getText(), b.getGraphics()).getWidth();
+		Rectangle area = new Rectangle();
+		SwingUtilities.calculateInnerArea(b, area);
+		int b_w = area.width;
+
+		BasicGraphicsUtils.drawString(g, text.toUpperCase(), -1, (int) Math.round((b_w - w) / 2.0),
+				textRect.y + fm.getAscent() - 3);
+	}
+
+	public Color getBorderColor() {
+		return borderColor;
+	}
+
+	public void setBorderColor(Color borderColor) {
+		this.borderColor = borderColor;
+	}
+
+	public Color getTextColor() {
+		return textColor;
+	}
+
+	public void setTextColor(Color textColor) {
+		this.textColor = textColor;
+	}
+
+	public Font getFont() {
+		return font;
 	}
 }
