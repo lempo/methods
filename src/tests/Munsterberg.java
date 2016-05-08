@@ -153,6 +153,7 @@ public class Munsterberg extends AbstractTest {
 		toResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showResults();
+				//TODO Collect timer
 			}
 		});
 		

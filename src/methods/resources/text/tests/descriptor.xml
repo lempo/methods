@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <interface>
-<q word="Сад"><answer true="yes">растения</answer><answer true="no">садовник</answer><answer true="no">собака</answer><answer true="no">забор</answer><answer true="yes">земля</answer></q>
-<q word="Река"><answer true="yes">берег</answer><answer true="no">рыба</answer><answer true="no">рыболов</answer><answer true="no">тина</answer><answer true="yes">вода</answer></q>
-<q word="Город"><answer true="no">автомобиль</answer><answer true="yes">здания</answer><answer true="no">толпа</answer><answer true="yes">улица</answer><answer true="no">велосипед</answer></q>
-<q word="Сарай"><answer true="no">сеновал</answer><answer true="no">лошадь</answer><answer true="yes">крыша</answer><answer true="no">скот</answer><answer true="yes">стены</answer></q>
-<q word="Куб"><answer true="yes">углы</answer><answer true="no">чертеж</answer><answer true="yes">сторона</answer><answer true="no">камень</answer><answer true="no">дерево</answer></q>
-<q word="Деление"><answer true="no">класс</answer><answer true="yes">делимое</answer><answer true="no">карандаш</answer><answer true="yes">делитель</answer><answer true="no">бумага</answer></q>
-<q word="Кольцо"><answer true="yes">диаметр</answer><answer true="no">алмаз</answer><answer true="no">проба</answer><answer true="yes">окружность</answer><answer true="no">золото</answer></q>
-<q word="Чтение"><answer true="yes">глаза</answer><answer true="no">книга</answer><answer true="no">очки</answer><answer true="yes">текст</answer><answer true="no">слово</answer></q>
-<q word="Газета"><answer true="no">правда</answer><answer true="no">происшествие</answer><answer true="no">кроссворд</answer><answer true="yes">бумага</answer><answer true="yes">редактор</answer></q>
-<q word="Игра"><answer true="no">карты</answer><answer true="yes">игроки</answer><answer true="no">фишки</answer><answer true="no">наказания</answer><answer true="yes">правила</answer></q>
-<q word="Война"><answer true="no">самолет</answer><answer true="no">пушки</answer><answer true="yes">сражения</answer><answer true="no">ружья</answer><answer true="yes">солдаты</answer></q>
-<q word="Книга"><answer true="no">рисунки</answer><answer true="no">рассказ</answer><answer true="yes">бумага</answer><answer true="no">оглавление</answer><answer true="yes">текст</answer></q>
-<q word="Пение"><answer true="no">звон</answer><answer true="no">искусство</answer><answer true="yes">голос</answer><answer true="no">аплодисменты</answer><answer true="yes">мелодия</answer></q>
-<q word="Землетрясение"><answer true="no">пожар</answer><answer true="no">смерть</answer><answer true="yes">колебания почвы</answer><answer true="yes">шум</answer><answer true="no">наводнение</answer></q>
-<q word="Библиотека"><answer true="no">столы</answer><answer true="yes">книги</answer><answer true="no">читальный зал</answer><answer true="no">гардероб</answer><answer true="yes">читатели</answer></q>
-<q word="Лес"><answer true="yes">почва</answer><answer true="no">грибы</answer><answer true="no">охотник</answer><answer true="yes">дерево</answer><answer true="no">волк</answer></q>
-<q word="Спорт"><answer true="no">медаль</answer><answer true="no">оркестр</answer><answer true="yes">состязания</answer><answer true="yes">победа</answer><answer true="no">стадион</answer></q>
-<q word="Больница"><answer true="no">помещение</answer><answer true="no">уколы</answer><answer true="yes">врач</answer><answer true="no">градусник</answer><answer true="yes">больные</answer></q>
-<q word="Любовь"><answer true="no">розы</answer><answer true="yes">чувства</answer><answer true="yes">человек</answer><answer true="no">свидание</answer><answer true="no">свадьба</answer></q>
-<q word="Патриотизм"><answer true="no">город</answer><answer true="yes">родина</answer><answer true="no">друзья</answer><answer true="no">семья</answer><answer true="yes">человек</answer></q>
+<q word="Сад"><answer true="1">растения</answer><answer true="0">садовник</answer><answer true="0">собака</answer><answer true="0">забор</answer><answer true="1">земля</answer></q>
+<q word="Река"><answer true="1">берег</answer><answer true="0">рыба</answer><answer true="0">рыболов</answer><answer true="0">тина</answer><answer true="1">вода</answer></q>
+<q word="Город"><answer true="0">автомобиль</answer><answer true="1">здания</answer><answer true="0">толпа</answer><answer true="1">улица</answer><answer true="0">велосипед</answer></q>
+<q word="Сарай"><answer true="0">сеновал</answer><answer true="0">лошадь</answer><answer true="1">крыша</answer><answer true="0">скот</answer><answer true="1">стены</answer></q>
+<q word="Куб"><answer true="1">углы</answer><answer true="0">чертеж</answer><answer true="1">сторона</answer><answer true="0">камень</answer><answer true="0">дерево</answer></q>
+<q word="Деление"><answer true="0">класс</answer><answer true="1">делимое</answer><answer true="0">карандаш</answer><answer true="1">делитель</answer><answer true="0">бумага</answer></q>
+<q word="Кольцо"><answer true="1">диаметр</answer><answer true="0">алмаз</answer><answer true="0">проба</answer><answer true="1">окружность</answer><answer true="0">золото</answer></q>
+<q word="Чтение"><answer true="1">глаза</answer><answer true="0">книга</answer><answer true="0">очки</answer><answer true="1">текст</answer><answer true="0">слово</answer></q>
+<q word="Газета"><answer true="0">правда</answer><answer true="0">происшествие</answer><answer true="0">кроссворд</answer><answer true="1">бумага</answer><answer true="1">редактор</answer></q>
+<q word="Игра"><answer true="0">карты</answer><answer true="1">игроки</answer><answer true="0">фишки</answer><answer true="0">наказания</answer><answer true="1">правила</answer></q>
+<q word="Война"><answer true="0">самолет</answer><answer true="0">пушки</answer><answer true="1">сражения</answer><answer true="0">ружья</answer><answer true="1">солдаты</answer></q>
+<q word="Книга"><answer true="0">рисунки</answer><answer true="0">рассказ</answer><answer true="1">бумага</answer><answer true="0">оглавление</answer><answer true="1">текст</answer></q>
+<q word="Пение"><answer true="0">звон</answer><answer true="0">искусство</answer><answer true="1">голос</answer><answer true="0">аплодисменты</answer><answer true="1">мелодия</answer></q>
+<q word="Землетрясение"><answer true="0">пожар</answer><answer true="0">смерть</answer><answer true="1">колебания почвы</answer><answer true="1">шум</answer><answer true="0">наводнение</answer></q>
+<q word="Библиотека"><answer true="0">столы</answer><answer true="1">книги</answer><answer true="0">читальный зал</answer><answer true="0">гардероб</answer><answer true="1">читатели</answer></q>
+<q word="Лес"><answer true="1">почва</answer><answer true="0">грибы</answer><answer true="0">охотник</answer><answer true="1">дерево</answer><answer true="0">волк</answer></q>
+<q word="Спорт"><answer true="0">медаль</answer><answer true="0">оркестр</answer><answer true="1">состязания</answer><answer true="1">победа</answer><answer true="0">стадион</answer></q>
+<q word="Больница"><answer true="0">помещение</answer><answer true="0">уколы</answer><answer true="1">врач</answer><answer true="0">градусник</answer><answer true="1">больные</answer></q>
+<q word="Любовь"><answer true="0">розы</answer><answer true="1">чувства</answer><answer true="1">человек</answer><answer true="0">свидание</answer><answer true="0">свадьба</answer></q>
+<q word="Патриотизм"><answer true="0">город</answer><answer true="1">родина</answer><answer true="0">друзья</answer><answer true="0">семья</answer><answer true="1">человек</answer></q>
 <interpretation>
 <d>Количество правильных ответов (из 20)</d>
 <d>низкий уровень сформированности логичности мышления</d>

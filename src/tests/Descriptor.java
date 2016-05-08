@@ -32,7 +32,7 @@ public class Descriptor extends AbstractTest {
 	Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.DESCRIPTOR));
 
 	int summCorrect = 0;
-	int currentQuestionNumber = 1;
+	int currentQuestionNumber = 0;
 	int summSelected = 0;
 
 	JButton questionButton = new JButton();
@@ -68,22 +68,28 @@ public class Descriptor extends AbstractTest {
 		nextButton.setPreferredSize(new Dimension(200, 35));
 		nextButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-		nextButton.addActionListener(new ActionListener() {//TODO Next Question
+		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength()) {
 					testTime = new Date().getTime() - testTime;
-					showResults();					
-				}
-				else {
-				//summ += answers[0][currentQuestionNumber];
-				//lies += lieCheck[0][currentQuestionNumber];
-				//TODO Calculate summCorrect
-				currentQuestionNumber++;
-				showQuestion();
+					showResults();
+				} else {
+					int counter = 0;
+					for (int i = 0; i < answers.size(); i++) {
+						if ( Integer.parseInt(doc.getElementsByTagName("q").item(currentQuestionNumber).getChildNodes().item(i)
+								.getAttributes().getNamedItem("true").getNodeValue()) == 1
+								&& ((BorderButtonCustomUI) answers.get(i).getUI()).getBorderColor()
+										.equals(new Color(0, 168, 155))) 
+							counter++;
+					}
+					if (counter == 2)
+						summCorrect++;
+					currentQuestionNumber++;
+					showQuestion();
 				}
 			}
 		});
-		
+
 		this.removeAll();
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -111,13 +117,20 @@ public class Descriptor extends AbstractTest {
 
 		this.revalidate();
 		this.repaint();
-		
+
 		testDate = new Date();
 		testTime = new Date().getTime();
 		showQuestion();
 	}
 
 	public void showQuestion() {
+
+		// Clean-up
+		for (int i = 0; i < answers.size(); i++) {
+			this.remove(answers.get(i));
+		}
+		answers.clear();
+		summSelected = 0;
 
 		NodeList answersText = doc.getElementsByTagName("q").item(currentQuestionNumber).getChildNodes();
 
@@ -136,27 +149,32 @@ public class Descriptor extends AbstractTest {
 		c.ipady = 0;
 		c.weightx = 0.0;
 		c.weighty = 0.0;
-		
+
 		AnswersListener l = new AnswersListener();
-		
+
 		for (int i = 0; i < answersText.getLength(); i++) {
 			JButton b = new JButton(answersText.item(i).getTextContent());
 			b.setUI(new BorderButtonCustomUI(new Color(144, 106, 96)));
 			b.setBorder(null);
 			b.setOpaque(false);
 			b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			// TODO button padding? 
+			// TODO button padding?
 			Font f = ((BorderButtonCustomUI) b.getUI()).getFont();
 			FontMetrics fm = b.getFontMetrics(f);
 			int w = (int) fm.getStringBounds(b.getText(), b.getGraphics()).getWidth();
 			b.setPreferredSize(new Dimension(w + 40, 35));
 			b.addActionListener(l);
-			
+
 			answers.add(b);
 
 			c.gridx = i;
 
-			this.add(b, c);
+			// this.add(b, c);
+		}
+
+		for (int i = 0; i < answers.size(); i++) {
+			c.gridx = i;
+			this.add(answers.get(i), c);
 		}
 
 		this.revalidate();
@@ -174,22 +192,21 @@ public class Descriptor extends AbstractTest {
 	public void showSettings() {
 		showStandartSettings();
 	}
-	
+
 	class AnswersListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			JButton b = (JButton) e.getSource();
-			
+
 			if (((BorderButtonCustomUI) b.getUI()).getBorderColor().equals(new Color(0, 168, 155))) {
 				((BorderButtonCustomUI) b.getUI()).setBorderColor(new Color(144, 106, 96));
 				summSelected--;
-			}
-			else {
+			} else {
 				if (summSelected < 2) {
 					((BorderButtonCustomUI) b.getUI()).setBorderColor(new Color(0, 168, 155));
 					summSelected++;
 				}
 			}
-					
+
 			b.repaint();
 		}
 	}

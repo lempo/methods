@@ -33,8 +33,7 @@ public class Taylor extends AbstractTest {
 	
 	int summ = 0;
 	int lies = 0;
-	int currentQuestionNumber = 1;
-	final int nQuestions = 60;
+	int currentQuestionNumber = 0;
 	int[][] answers = 
 		{{1,0,1,1,1,0,0,1,0,0,
 			0,0,0,1,0,0,1,0,1,0,
@@ -88,19 +87,18 @@ public class Taylor extends AbstractTest {
 		yesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		yesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (currentQuestionNumber >= nQuestions) {
+				summ += answers[1][currentQuestionNumber];
+				lies += lieCheck[1][currentQuestionNumber];
+				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength() - 1) {
 					testTime = new Date().getTime() - testTime;
 					showResults();
 				}
 				else {
-				summ += answers[1][currentQuestionNumber];
-				lies += lieCheck[1][currentQuestionNumber];
 				currentQuestionNumber++;
 				showQuestion();
 				}
 			}
 		});
-		
 		noButton.setUI(new BorderButtonCustomUI(new Color(239, 83, 80)));
 		noButton.setBorder(null);
 		noButton.setOpaque(false);
@@ -110,13 +108,13 @@ public class Taylor extends AbstractTest {
 		noButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		noButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (currentQuestionNumber >= nQuestions) {
+				summ += answers[0][currentQuestionNumber];
+				lies += lieCheck[0][currentQuestionNumber];
+				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength() - 1) {
 					testTime = new Date().getTime() - testTime;
 					showResults();					
 				}
 				else {
-				summ += answers[0][currentQuestionNumber];
-				lies += lieCheck[0][currentQuestionNumber];
 				currentQuestionNumber++;
 				showQuestion();
 				}
@@ -173,7 +171,7 @@ public class Taylor extends AbstractTest {
 	public void showQuestion() {
 		
 		String questionText = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
-		 + n.item(currentQuestionNumber-1).getTextContent() + "</div></html>";
+		 + n.item(currentQuestionNumber).getTextContent() + "</div></html>";
 		
 		question.setText(questionText);
 		
