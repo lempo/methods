@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,6 +22,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import customui.ButtonCustomUI;
+import customui.PanelCustomUI;
 import defaults.InterfaceTextDefaults;
 import defaults.TextLinkDefaults;
 import defaults.TextLinkDefaults.Key;
@@ -152,10 +154,12 @@ public class Munsterberg extends AbstractTest {
 		toResults.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		toResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				testTime = new Date().getTime() - testTime;
 				showResults();
-				//TODO Collect timer
 			}
 		});
+		
+		//TODO Run and intercept a 2 minute timer to end test
 		
 		c.anchor = GridBagConstraints.SOUTHEAST;
 		c.gridx = 0;
@@ -167,12 +171,14 @@ public class Munsterberg extends AbstractTest {
 		this.revalidate();
 		this.repaint();
 		
-		//TODO Add timer
+		testDate = new Date();
+		testTime = new Date().getTime();
 	}
 
 	@Override
 	public void showResults() {
-		// TODO output results, high priority
+
+		this.showStandartResults();
 
 		Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.MUNSTERBERG));
 		NodeList k = doc.getElementsByTagName("key");
@@ -210,6 +216,74 @@ public class Munsterberg extends AbstractTest {
 			if (!answers.contains(i))  
 				summSkipped++;
 		}
+		
+		JLabel leftCol = new JLabel();
+		JLabel rightCol = new JLabel();
+		
+		NodeList d = doc.getElementsByTagName("d");
+		
+		String t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
+				+ d.item(0).getTextContent() + ": <br>" 
+				+ d.item(1).getTextContent() + ": <br>" 
+				+ d.item(2).getTextContent() + ": <br>" + 
+				"</div></html>";
+		leftCol.setText(t);	
+			
+		t = "<html><div style='font: bold 20pt Arial; color: rgb(38, 166, 154);'>"
+				+ summCorrect + "<br>"
+				+ summWrong + "<br>"
+				+ summSkipped + "<br>";
+		t += "</div></html>";
+		rightCol.setText(t);
+	
+		/* TODO Conclusion - have to ask for a detailed interpretation
+		t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
+		if (summCorrect >= 0 && summCorrect <= 10) t += d.item(1).getTextContent().toUpperCase();
+		if (summCorrect >= 11 && summCorrect <= 14) t += d.item(2).getTextContent().toUpperCase();
+		if (summCorrect >= 15 && summCorrect <= 20) t += d.item(3).getTextContent().toUpperCase();
+		t += "</div></html>";
+		JPanel conclusion = new JPanel();
+		conclusion.add(new JLabel(t));
+		conclusion.setUI(new PanelCustomUI(true));*/
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.fill = GridBagConstraints.NONE;
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.ipadx = 0;
+		c.ipady = 0;
+		c.weightx = 1.0;
+		c.weighty = 0.0;
+		
+		c.insets = new Insets(10, 0, 0, 20);
+		c.anchor = GridBagConstraints.EAST;
+		c.gridwidth = 1;
+		//leftCol.setPreferredSize(new Dimension(300, 350));
+		leftCol.setVerticalAlignment(JLabel.TOP);
+		resultsPanel.add(leftCol, c);
+
+		c.gridx = 1;
+		
+		c.anchor = GridBagConstraints.WEST;
+		c.insets = new Insets(10, 20, 0, 0);
+		c.gridwidth = 1;
+		//rightCol.setPreferredSize(new Dimension(300, 350));
+		rightCol.setVerticalAlignment(JLabel.TOP);
+		resultsPanel.add(rightCol, c);
+		
+		/*c.anchor = GridBagConstraints.CENTER;
+		c.insets = new Insets(20, 0, 0, 0);
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 2;
+		resultsPanel.add(conclusion, c);*/
+		
+		this.revalidate();
+		this.repaint();
+
 	}
 
 
