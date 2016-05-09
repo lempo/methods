@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import customui.ButtonCustomUI;
+import customui.PanelCustomUI;
 import defaults.ImageLinkDefaults;
 import defaults.InterfaceTextDefaults;
 import methods.Methods;
@@ -188,7 +189,6 @@ public class Shulte extends AbstractTest {
 
 	@Override
 	public void showResults() {
-		// TODO format results, high priority
 		
 		showStandartResults();
 		
@@ -202,7 +202,7 @@ public class Shulte extends AbstractTest {
 		float resultPU = times[3] / resultER / 1000;
 		
 		JLabel leftCol = new JLabel();
-		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
+		String t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("results_ER") + ": <br>"
 				+ InterfaceTextDefaults.getInstance().getDefault("results_VR") + ": <br>"
 				+ InterfaceTextDefaults.getInstance().getDefault("results_PU") + ": <br>" + "</div></html>";
@@ -211,16 +211,26 @@ public class Shulte extends AbstractTest {
 		JLabel rightCol = new JLabel();
 
 		DecimalFormat df = new DecimalFormat("#.##");
-		t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>" 
+		t = "<html><div style='font: bold 20pt Arial; color: rgb(38, 166, 154);'>" 
 				+ df.format(resultER) + "<br>" 
 				+ df.format(resultVR) + "<br>" 
 				+ df.format(resultPU) + "<br>"
 				+ "</div></html>";
 		rightCol.setText(t);
 		
+		/* Conclusion interpreation placeholder
+		t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
+		if (summCorrect >= 0 && summCorrect <= 10) t += d.item(1).getTextContent().toUpperCase();
+		if (summCorrect >= 11 && summCorrect <= 14) t += d.item(2).getTextContent().toUpperCase();
+		if (summCorrect >= 15 && summCorrect <= 20) t += d.item(3).getTextContent().toUpperCase();
+		t += "</div></html>";
+		JPanel conclusion = new JPanel();
+		conclusion.add(new JLabel(t));
+		conclusion.setUI(new PanelCustomUI(true));*/
+		
 		GridBagConstraints c = new GridBagConstraints();
 		
-		c.anchor = GridBagConstraints.WEST;
+		c.anchor = GridBagConstraints.NORTHWEST;
 		c.fill = GridBagConstraints.NONE;
 		c.gridheight = 1;
 		c.gridx = 0;
@@ -230,16 +240,29 @@ public class Shulte extends AbstractTest {
 		c.weightx = 1.0;
 		c.weighty = 0.0;
 		
-		
-		c.insets = new Insets(10, 200, 0, 0);
+		c.insets = new Insets(10, 0, 0, 20);
+		c.anchor = GridBagConstraints.EAST;
 		c.gridwidth = 1;
+		//leftCol.setPreferredSize(new Dimension(300, 350));
+		leftCol.setVerticalAlignment(JLabel.TOP);
 		resultsPanel.add(leftCol, c);
 
 		c.gridx = 1;
 		
+		c.anchor = GridBagConstraints.WEST;
 		c.insets = new Insets(10, 20, 0, 0);
-		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridwidth = 1;
+		//rightCol.setPreferredSize(new Dimension(300, 350));
+		rightCol.setVerticalAlignment(JLabel.TOP);
 		resultsPanel.add(rightCol, c);
+		
+		/*TODO Some interpretation is needed (need to ask for more info)
+		c.anchor = GridBagConstraints.CENTER;
+		c.insets = new Insets(20, 0, 0, 0);
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 2;
+		resultsPanel.add(conclusion, c);*/
 		
 		this.revalidate();
 		this.repaint();
