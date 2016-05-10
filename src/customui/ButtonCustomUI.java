@@ -55,6 +55,7 @@ public class ButtonCustomUI extends BasicButtonUI {
 		super.paint(g, c);
 	}
 
+	// TODO Button text somehow still has smth like "padding-left: 20px" on all buttons
 	@Override
 	protected void paintText(Graphics g, JComponent c, Rectangle textRect, String text) {
 		AbstractButton b = (AbstractButton) c;

@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Date;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -150,12 +151,14 @@ public class Correction extends AbstractTest {
 		this.revalidate();
 		this.repaint();
 		
-		//TODO Add timer
-
+		testDate = new Date();
+		testTime = new Date().getTime();
+		//TODO Run a special timer that marks 1 minute(?) intervals - need to ask the way we count that as well
 	}
 
 	@Override
 	public void showResults() {
+		this.showStandartResults();
 		// TODO count and show results, later
 
 	}

@@ -21,6 +21,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import component.CustomRadioButton;
+import customui.BorderButtonCustomUI;
 import customui.ButtonCustomUI;
 import customui.PanelCustomUI;
 import defaults.InterfaceTextDefaults;
@@ -28,6 +29,7 @@ import defaults.TextLinkDefaults;
 import methods.Methods;
 import methods.Test;
 import methods.Utils;
+import tests.Descriptor.AnswersListener;
 
 public class Audit extends AbstractTest {
 
@@ -37,12 +39,14 @@ public class Audit extends AbstractTest {
 	int summ = 0;
 	int answer = 0;
 	int currentQuestionNumber = 1;
+	boolean doComments = false;
 	final int nQuestions = 10;
 
 	JLabel question = new JLabel();
+	JLabel commentsText = new JLabel();
+	JPanel commentsPanel = new JPanel();
 
 	JButton nextButton = new JButton(InterfaceTextDefaults.getInstance().getDefault("next"));
-
 	ButtonGroup radioButtonGroup = new ButtonGroup();
 
 	ArrayList<JRadioButton> radioButtonList = new ArrayList<JRadioButton>();
@@ -115,8 +119,8 @@ public class Audit extends AbstractTest {
 		c.anchor = GridBagConstraints.EAST;
 		c.insets = new Insets(0, 0, 0, 40);
 		c.weightx = 1.0;
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(0, 40, 0, 0);
+		c.gridwidth = 1;//GridBagConstraints.REMAINDER;
+		c.insets = new Insets(20, 40, 0, 0);
 		c.gridx = 1;
 		c.gridy = 10;
 		this.add(nextButton, c);
@@ -150,33 +154,64 @@ public class Audit extends AbstractTest {
 
 		int optionsNum = nodelist.item(currentQuestionNumber - 1).getChildNodes().getLength();
 
+		// Split based on if "comments" exist
+		if (!nodelist.item(currentQuestionNumber - 1).getChildNodes().item(0).getAttributes().getNamedItem("comment")
+				.getTextContent().toString().equals(""))
+			doComments = true;
+		else
+			doComments = false;
+
 		GridBagConstraints c = new GridBagConstraints();
 
 		c.anchor = GridBagConstraints.WEST;
 		c.fill = GridBagConstraints.BOTH;
 		c.gridheight = 1;
-		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridwidth = 1;//GridBagConstraints.REMAINDER;
 		c.gridx = 0;
 		c.gridy = 1;
-		c.insets = new Insets(20, 300, 0, 0);
+		c.insets = new Insets(20, 200, 0, 0);
 		c.ipadx = 0;
 		c.ipady = 0;
-		c.weightx = 0.0;
+		c.weightx = 0.7;
 		c.weighty = 0.0;
 
+		RadioListener l = new RadioListener();
+
 		for (int i = 0; i < optionsNum; i++) {
-			// TODO "if" statement needed to check for "comments" in xml and
-			// output a text pane if it exists, middle priority
 			JRadioButton b = new CustomRadioButton(
 					nodelist.item(currentQuestionNumber - 1).getChildNodes().item(i).getTextContent(), false);
 			radioButtonList.add(b);
 			radioButtonGroup.add(b);
 			b.setOpaque(false);
+			if (doComments)
+				b.addActionListener(l);
 			c.gridy = i + 1;
+			b.setName(Integer.toString(i));
 			this.add(b, c);
 		}
 
 		radioButtonList.get(0).setSelected(true);
+
+
+		if (doComments) {
+			String t = nodelist.item(currentQuestionNumber - 1).getChildNodes().item(0).getAttributes()
+					.getNamedItem("comment").getTextContent().toString();
+			
+			commentsText.setText("<html><div style='font: bold 16pt Arial; color: rgb(144, 106, 96); padding: 10px'>" + t.replace("!br!", "<br>") + "</div></html>");
+			
+			c.gridwidth = 1;
+			c.gridheight = 5;
+			c.gridx = 1;
+			c.gridy = 1;
+			c.fill = GridBagConstraints.NONE;
+			c.anchor = GridBagConstraints.NORTH;
+			c.insets = new Insets(20, 20, 0, 0);
+			commentsPanel.setMinimumSize(new Dimension(400,300));
+			commentsPanel.add(commentsText, c);
+			commentsPanel.setUI(new PanelCustomUI(true));
+			this.add(commentsPanel, c);
+		}
+		else this.remove(commentsPanel); // TODO Horrible implementation - rework later
 
 		this.revalidate();
 		this.repaint();
@@ -250,6 +285,19 @@ public class Audit extends AbstractTest {
 
 		this.revalidate();
 		this.repaint();
+	}
+
+	class RadioListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			JRadioButton b = (JRadioButton) e.getSource();
+			
+			String t = nodelist.item(currentQuestionNumber - 1).getChildNodes().item(Integer.parseInt(b.getName())).getAttributes()
+					.getNamedItem("comment").getTextContent().toString();
+			
+			commentsText.setText("<html><div style='font: bold 16pt Arial; color: rgb(144, 106, 96); padding: 10px'>" + t.replace("!br!", "<br>") + "</div></html>");
+	
+			b.repaint();
+		}
 	}
 
 }

@@ -10,7 +10,6 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -110,7 +109,6 @@ public class Descriptor extends AbstractTest {
 		add(questionButton, c);
 
 		c.gridy = 1;
-
 		c.insets = new Insets(25, 0, 25, 0);
 		
 		add(task, c);
@@ -119,7 +117,7 @@ public class Descriptor extends AbstractTest {
 		c.gridy = 3;
 		c.weighty = 0.1;
 		c.insets = new Insets(40, 0, 80, 0);
-				
+		
 		add(nextButton, c);
 
 		this.revalidate();
@@ -132,7 +130,7 @@ public class Descriptor extends AbstractTest {
 
 	public void showQuestion() {
 
-		// Clean-up previous questions
+		// Previous questions clean-up 
 		for (int i = 0; i < answers.size(); i++) {
 			this.remove(answers.get(i));
 		}
@@ -151,12 +149,11 @@ public class Descriptor extends AbstractTest {
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 2;
-		c.insets = new Insets(40, 15, 40, 15);
+		c.insets = new Insets(40, 20, 40, 20);
 		c.ipadx = 0;
 		c.ipady = 0;
 		c.weightx = 0.1;
 		c.weighty = 0.0;
-		// TODO Preferably, add outer margins for the 1-st and 5-th buttons, so there's some space near the screen edges
 		
 		AnswersListener l = new AnswersListener();
 
@@ -175,10 +172,18 @@ public class Descriptor extends AbstractTest {
 			answers.add(b);
 		}
 
-		for (int i = 0; i < answers.size(); i++) {
+		// Myetod: "chje-rjez zhoo-puu"......
+		c.insets = new Insets(40, 60, 40, 15);
+		this.add(answers.get(0), c);
+		c.insets = new Insets(40, 15, 40, 15);
+		for (int i = 1; i < answers.size() - 1; i++) {
 			c.gridx = i;
 			this.add(answers.get(i), c);
 		}
+		c.gridx = 4;
+		c.insets = new Insets(40, 15, 40, 60);
+		this.add(answers.get(4), c);
+		// ...ne, nu esli inache nikak....
 
 		this.revalidate();
 		this.repaint();
