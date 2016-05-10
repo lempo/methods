@@ -76,7 +76,6 @@ public class Taylor extends AbstractTest {
 	
 	@Override
 	public void showTest() {
-		// TODO format, margins, high priority
 		
 		yesButton.setUI(new BorderButtonCustomUI(new Color(38, 166, 154)));
 		yesButton.setBorder(null);
@@ -133,19 +132,20 @@ public class Taylor extends AbstractTest {
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(0, 40, 0, 40);
+		c.insets = new Insets(0, 40, 20, 40);
 		c.ipadx = 0;
 		c.ipady = 0;
 		c.weightx = 0.0;
 		c.weighty = 0.0;
 
 		question.setHorizontalAlignment(JLabel.CENTER);
+		question.setPreferredSize(new Dimension(800, 120));
 		
 		this.add(question, c);
 		
 		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.EAST;
-		c.insets = new Insets(0, 0, 0, 40);
+		c.insets = new Insets(0, 0, 200, 40);
 		c.weightx = 1.0;
 		c.gridx = 0;
 		c.gridy = 1;
@@ -154,7 +154,7 @@ public class Taylor extends AbstractTest {
 		
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.anchor = GridBagConstraints.WEST;
-		c.insets = new Insets(0, 40, 0, 0);
+		c.insets = new Insets(0, 40, 200, 0);
 		c.gridx = 1;
 		c.gridy = 1;
 		this.add(noButton, c);
@@ -170,8 +170,8 @@ public class Taylor extends AbstractTest {
 	
 	public void showQuestion() {
 		
-		String questionText = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
-		 + n.item(currentQuestionNumber).getTextContent() + "</div></html>";
+		String questionText = "<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>"
+		 + n.item(currentQuestionNumber).getTextContent().toUpperCase() + "</div></html>";
 		
 		question.setText(questionText);
 		
@@ -184,11 +184,13 @@ public class Taylor extends AbstractTest {
 		
 		JLabel leftCol = new JLabel();
 		JLabel rightCol = new JLabel();
+		JPanel conclusion = new JPanel();
+		String t;
 		
 		if (lies <= 6) {
 			NodeList d = doc.getElementsByTagName("d");
 			
-			String t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
+			t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
 					+ d.item(0).getTextContent() + ": <br>" + "</div></html>";
 			leftCol.setText(t);			
 			
@@ -196,27 +198,24 @@ public class Taylor extends AbstractTest {
 					+ summ + "<br>";
 			t += "</div></html>";
 			rightCol.setText(t);
+			
+			t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
+			if (summ >= 41 && summ <= 50) t += d.item(1).getTextContent().toUpperCase();
+			if (summ >= 26 && summ <= 40) t += d.item(2).getTextContent().toUpperCase();
+			if (summ >= 16 && summ <= 25) t += d.item(3).getTextContent().toUpperCase();
+			if (summ >= 6 && summ <= 15) t += d.item(4).getTextContent().toUpperCase();
+			if (summ >= 0 && summ <= 5) t += d.item(5).getTextContent().toUpperCase();
+			t += "</div></html>";			
 		}
-		else { //TODO Repair this
+		else {
 			NodeList l = doc.getElementsByTagName("lies");
-			String t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96);'>"
-				+ l.item(0).getTextContent() +"</div></html>";
-			leftCol.setText(t);
+			t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'><center>"
+				+ l.item(0).getTextContent() + "<br>"
+				+ l.item(1).getTextContent() + "</center></div></html>";
 		}
 		
-		String t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
-		NodeList d = doc.getElementsByTagName("d");
-		if (summ >= 41 && summ <= 50) t += d.item(1).getTextContent().toUpperCase();
-		if (summ >= 26 && summ <= 40) t += d.item(2).getTextContent().toUpperCase();
-		if (summ >= 16 && summ <= 25) t += d.item(3).getTextContent().toUpperCase();
-		if (summ >= 6 && summ <= 15) t += d.item(4).getTextContent().toUpperCase();
-		if (summ >= 0 && summ <= 5) t += d.item(5).getTextContent().toUpperCase();
-		t += "</div></html>";
-		JPanel conclusion = new JPanel();
 		conclusion.add(new JLabel(t));
 		conclusion.setUI(new PanelCustomUI(true));
-		
-		// TODO Discover why the text field resizes all the way to the right and doesn't fit into the window
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
