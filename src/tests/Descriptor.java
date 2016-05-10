@@ -52,7 +52,6 @@ public class Descriptor extends AbstractTest {
 
 	@Override
 	public void showTest() {
-		// TODO margins, middle priority
 
 		questionButton.setUI(new ButtonCustomUI(new Color(0, 168, 155)));
 		questionButton.setBorder(null);
@@ -102,7 +101,7 @@ public class Descriptor extends AbstractTest {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(0, 0, 0, 0);
+		c.insets = new Insets(40, 0, 40, 0);
 		c.ipadx = 0;
 		c.ipady = 0;
 		c.weightx = 0.0;
@@ -112,10 +111,15 @@ public class Descriptor extends AbstractTest {
 
 		c.gridy = 1;
 
+		c.insets = new Insets(25, 0, 25, 0);
+		
 		add(task, c);
 
+		c.anchor = GridBagConstraints.NORTH;
 		c.gridy = 3;
-
+		c.weighty = 0.1;
+		c.insets = new Insets(40, 0, 80, 0);
+				
 		add(nextButton, c);
 
 		this.revalidate();
@@ -142,17 +146,18 @@ public class Descriptor extends AbstractTest {
 
 		GridBagConstraints c = new GridBagConstraints();
 		c.anchor = GridBagConstraints.CENTER;
-		c.fill = GridBagConstraints.NONE;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridheight = 1;
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 2;
-		c.insets = new Insets(0, 0, 0, 0);
+		c.insets = new Insets(40, 15, 40, 15);
 		c.ipadx = 0;
 		c.ipady = 0;
-		c.weightx = 0.0;
+		c.weightx = 0.1;
 		c.weighty = 0.0;
-
+		// TODO Preferably, add outer margins for the 1-st and 5-th buttons, so there's some space near the screen edges
+		
 		AnswersListener l = new AnswersListener();
 
 		for (int i = 0; i < answersText.getLength(); i++) {
@@ -161,7 +166,6 @@ public class Descriptor extends AbstractTest {
 			b.setBorder(null);
 			b.setOpaque(false);
 			b.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			// TODO button padding?
 			Font f = ((BorderButtonCustomUI) b.getUI()).getFont();
 			FontMetrics fm = b.getFontMetrics(f);
 			int w = (int) fm.getStringBounds(b.getText(), b.getGraphics()).getWidth();
