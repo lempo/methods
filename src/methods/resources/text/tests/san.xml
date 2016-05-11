@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<interface>
+<text>Оцените свое состояние в данный момент</text>
+<questions>
+<q scale="0" positive="Самочувствие хорошее" negative="Самочувствие плохое"></q>
+<q scale="0" positive="Чувствую себя сильным" negative="Чувствую себя слабым"></q>
+<q scale="1" neagtive="Пассивный" positive="Активный"></q>
+</questions>
+<interpretation>
+<d>Самочувствие</d>
+<d>Активность</d>
+<d>Настроение</d>
+<d>И ещё какие-то трактовки...</d>
+</interpretation>
+</interface>

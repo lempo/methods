@@ -33,7 +33,8 @@ public class TextLinkDefaults {
 		CORRECTION,
 		DESCRIPTOR,
 		EYSENCK,
-		RAVEN;
+		RAVEN,
+		SAN;
 	}
 
 	private Map<Key, String> links;
@@ -61,6 +62,7 @@ public class TextLinkDefaults {
 		links.put(Key.DESCRIPTOR, "resources/text/tests/descriptor.xml");
 		links.put(Key.EYSENCK, "resources/text/tests/eysenck.xml");
 		links.put(Key.RAVEN, "resources/text/tests/raven.xml");
+		links.put(Key.SAN, "resources/text/tests/san.xml");
 	}
 
 	public String getLink(Key key) {
