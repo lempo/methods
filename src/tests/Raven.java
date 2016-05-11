@@ -1,57 +1,59 @@
 package tests;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-import javax.swing.ButtonGroup;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.JRadioButton;
 import javax.swing.Timer;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import component.CustomRadioButton;
-import component.CustomTextField;
 import customui.ButtonCustomUI;
 import customui.ProgressBarCustomUI;
+import defaults.ImageLinkDefaults;
 import defaults.InterfaceTextDefaults;
 import defaults.TextLinkDefaults;
 import methods.Methods;
 import methods.Test;
 import methods.Utils;
 
-public class Eysenck extends AbstractTest {
+public class Raven extends AbstractTest {
 
-	Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.EYSENCK));
-
-	JLabel task;
-	JLabel blank;
-	JPanel answers;
-	CustomTextField input = new CustomTextField(20, "");
-	ButtonGroup radioButtonGroup = new ButtonGroup();
-	ArrayList<JRadioButton> radioButtonList = new ArrayList<JRadioButton>();
+	Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.RAVEN));
 
 	int currentQuestionNumber = 0;
-	String questionType;
+	JLabel set;
+	JLabel task;
+	JPanel cards;
+	JPanel answers;
 
 	private Timer timer;
 	private JProgressBar bar;
 	private JLabel timeLeft;
 
 	private final int TIME = 30;
+	
+	private int selected;
 
-	public Eysenck(Methods methods, int width, int height, Test test) {
+	public Raven(Methods methods, int width, int height, Test test) {
 		super(methods, width, height, test);
 	}
 
@@ -65,9 +67,12 @@ public class Eysenck extends AbstractTest {
 		// TODO layout, high priority
 
 		task = new JLabel();
-		blank = new JLabel();
+		set = new JLabel();
 		answers = new JPanel();
 		answers.setOpaque(false);
+		cards = new JPanel();
+		cards.setOpaque(false);
+		cards.setLayout(new BoxLayout(cards, BoxLayout.Y_AXIS));
 
 		JButton nextButton = new JButton(InterfaceTextDefaults.getInstance().getDefault("next"));
 		nextButton.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
@@ -83,15 +88,6 @@ public class Eysenck extends AbstractTest {
 					showResults();
 				} else {
 					// TODO calculate results, high priority
-					switch (questionType) {
-					case "text":
-						break;
-					case "radio":
-
-						break;
-					case "picture":
-						break;
-					}
 					currentQuestionNumber++;
 					showQuestion();
 				}
@@ -112,11 +108,13 @@ public class Eysenck extends AbstractTest {
 
 		this.removeAll();
 		this.setLayout(new GridBagLayout());
+
 		GridBagConstraints c = new GridBagConstraints();
+
 		c.anchor = GridBagConstraints.CENTER;
 		c.fill = GridBagConstraints.NONE;
 		c.gridheight = 1;
-		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.insets = new Insets(40, 0, 40, 0);
@@ -124,26 +122,22 @@ public class Eysenck extends AbstractTest {
 		c.ipady = 0;
 		c.weightx = 0.0;
 		c.weighty = 0.0;
-
-		add(task, c);
+		add(set, c);
 
 		c.gridy = 1;
-		c.insets = new Insets(25, 0, 25, 0);
+		add(task, c);
 
-		add(answers, c);
-
-		c.anchor = GridBagConstraints.NORTH;
-		c.gridy = 3;
-		c.weighty = 0.1;
-		c.insets = new Insets(40, 0, 80, 0);
-
+		c.gridy = 2;
 		add(nextButton, c);
 
-		c.gridy = 4;
-		c.insets = new Insets(40, 0, 0, 0);
-		add(timeLeft, c);
+		c.gridheight = 3;
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridx = 1;
+		c.gridy = 0;
+		add(cards, c);
 
-		c.gridy = 5;
+		c.gridx = 0;
+		c.gridy = 3;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		add(bar, c);
@@ -158,8 +152,8 @@ public class Eysenck extends AbstractTest {
 					bar.setValue(bar.getValue() + 1);
 					timeLeft.setText("<html><div style='font: 16pt Arial Narrow; color: rgb(144, 106, 96);'>"
 							+ InterfaceTextDefaults.getInstance().getDefault("time_left").toUpperCase() + ": "
-							+ (TIME - bar.getValue()) + " " + InterfaceTextDefaults.getInstance().getDefault("min").toUpperCase()
-							+ "</div></html>");
+							+ (TIME - bar.getValue()) + " "
+							+ InterfaceTextDefaults.getInstance().getDefault("min").toUpperCase() + "</div></html>");
 					timeLeft.repaint();
 				} else {
 					timer.stop();
@@ -171,46 +165,43 @@ public class Eysenck extends AbstractTest {
 		timer.start();
 
 		showQuestion();
-
 	}
 
 	public void showQuestion() {
 		// TODO layout, high priority
-		Node n = doc.getElementsByTagName("q").item(currentQuestionNumber);
-		String s = n.getChildNodes().item(0).getTextContent();
-		task.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>" + s.toUpperCase()
-				+ "</div></html>");
 
-		String type = n.getAttributes().getNamedItem("type").getNodeValue();
+		Node n = doc.getElementsByTagName("q").item(currentQuestionNumber);
+		set.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>"
+				+ n.getAttributes().getNamedItem("set").getNodeValue().toUpperCase() + "</div></html>");
+		task.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>"
+				+ n.getAttributes().getNamedItem("task").getNodeValue().toUpperCase() + "</div></html>");
+
+		cards.removeAll();
+
+		ImageIcon icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.RAVEN)
+				+ n.getAttributes().getNamedItem("image").getNodeValue());
+		JLabel question = new JLabel();
+		question.setIcon(icon);
+		cards.add(question);
+
 		answers.removeAll();
-		switch (type) {
-		case "text":
-			s = n.getAttributes().getNamedItem("blank").getNodeValue();
-			blank.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>" + s.toUpperCase()
-					+ "</div></html>");
-			answers.add(blank);
-			answers.add(input);
-			break;
-		case "radio":
-			for (int i = 0; i < radioButtonList.size(); i++) {
-				this.remove(radioButtonList.get(i));
-				radioButtonGroup.remove(radioButtonList.get(i));
-			}
-			radioButtonList = new ArrayList<JRadioButton>();
-			int optionsNum = n.getChildNodes().getLength() - 1;
-			for (int i = 0; i < optionsNum; i++) {
-				JRadioButton b = new CustomRadioButton(n.getChildNodes().item(i + 1).getTextContent(), false);
-				radioButtonList.add(b);
-				radioButtonGroup.add(b);
-				b.setOpaque(false);
-				answers.add(b);
-			}
-			radioButtonList.get(0).setSelected(true);
-			break;
-		case "picture":
-			// TODO case "picture" type, high priority
-			break;
+		NodeList a = n.getChildNodes();
+		answers.setLayout(new GridLayout(2, a.getLength() / 2));
+		AnswersMouseListener l = new AnswersMouseListener();
+		for (int i = 0; i < a.getLength(); i++) {
+			icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.RAVEN)
+					+ a.item(i).getTextContent());
+			JLabel v = new JLabel();
+			v.setName(Integer.toString(i));
+			v.setIcon(icon);
+			v.addMouseListener(l);
+			v.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			answers.add(v);
 		}
+		
+		cards.add(answers);
+		
+		selected = 0;
 
 		this.revalidate();
 		this.repaint();
@@ -225,6 +216,38 @@ public class Eysenck extends AbstractTest {
 	@Override
 	public void showSettings() {
 		showStandartSettings();
+	}
+	
+	class AnswersMouseListener implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			JLabel l = (JLabel) e.getSource();
+			selected = Integer.parseInt(l.getName());
+			for (Component a : answers.getComponents()) {
+				((JLabel) a).setBorder(null);
+			}
+			Dimension d = l.getPreferredSize();
+			l.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(38, 166, 154)));
+			l.setPreferredSize(d);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
+		
 	}
 
 }
