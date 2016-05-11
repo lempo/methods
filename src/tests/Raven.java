@@ -50,7 +50,7 @@ public class Raven extends AbstractTest {
 	private JLabel timeLeft;
 
 	private final int TIME = 30;
-	
+
 	private int selected;
 
 	public Raven(Methods methods, int width, int height, Test test) {
@@ -136,8 +136,14 @@ public class Raven extends AbstractTest {
 		c.gridy = 0;
 		add(cards, c);
 
+		c.gridheight = 1;
 		c.gridx = 0;
 		c.gridy = 3;
+		c.insets = new Insets(0, 0, 0, 0);
+		add(timeLeft, c);
+
+		c.gridx = 0;
+		c.gridy = 4;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1.0;
 		add(bar, c);
@@ -189,8 +195,8 @@ public class Raven extends AbstractTest {
 		answers.setLayout(new GridLayout(2, a.getLength() / 2));
 		AnswersMouseListener l = new AnswersMouseListener();
 		for (int i = 0; i < a.getLength(); i++) {
-			icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.RAVEN)
-					+ a.item(i).getTextContent());
+			icon = Utils.createImageIcon(
+					ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.RAVEN) + a.item(i).getTextContent());
 			JLabel v = new JLabel();
 			v.setName(Integer.toString(i));
 			v.setIcon(icon);
@@ -198,9 +204,9 @@ public class Raven extends AbstractTest {
 			v.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			answers.add(v);
 		}
-		
+		answers.setMaximumSize(new Dimension(icon.getIconWidth() * (a.getLength() / 2), icon.getIconHeight() * 2));
 		cards.add(answers);
-		
+
 		selected = 0;
 
 		this.revalidate();
@@ -217,7 +223,7 @@ public class Raven extends AbstractTest {
 	public void showSettings() {
 		showStandartSettings();
 	}
-	
+
 	class AnswersMouseListener implements MouseListener {
 
 		@Override
@@ -247,7 +253,7 @@ public class Raven extends AbstractTest {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 		}
-		
+
 	}
 
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <interface>
 <questions>
-<q set='Серия A' task='A1' answer='5' image="A1/A1.png"><a>A1/A1_1.png</a><a>A1/A1_2.png</a><a>A1/A1_3.png</a><a>A1/A1_4.png</a><a>A1/A1_5.png</a><a>A1/A1_6.png</a></q>
+<q set='Серия A' task='A1' answer='5' image="A1/a-1.gif"><a>A1/a-1-1.gif</a><a>A1/a-1-2.gif</a><a>A1/a-1-3.gif</a><a>A1/a-1-4.gif</a><a>A1/a-1-5.gif</a><a>A1/a-1-6.gif</a></q>
+<q set='Серия A' task='A2' answer='5' image="A2/A2.png"><a>A2/A2_1.png</a><a>A2/A2_2.png</a><a>A2/A2_3.png</a><a>A2/A2_4.png</a><a>A2/A2_5.png</a><a>A2/A2_6.png</a></q>
 </questions>
 <interpretation>
 <d>Показатель ситуативной тревожности</d>
