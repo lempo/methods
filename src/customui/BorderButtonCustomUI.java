@@ -10,6 +10,7 @@ import java.awt.Rectangle;
 
 import javax.swing.AbstractButton;
 import javax.swing.JComponent;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.plaf.basic.BasicGraphicsUtils;
@@ -60,8 +61,8 @@ public class BorderButtonCustomUI extends BasicButtonUI {
 		SwingUtilities.calculateInnerArea(b, area);
 		int b_w = area.width;
 
-		BasicGraphicsUtils.drawString(g, text.toUpperCase(), -1, (int) Math.round((b_w - w) / 2.0),
-				textRect.y + fm.getAscent() - 3);
+		BasicGraphicsUtils.drawString(g, text.toUpperCase(), -1,
+				(int) Math.round((b_w - w) / 2.0 - textRect.getWidth() * 0.15), textRect.y + fm.getAscent() - 3);
 	}
 
 	public Color getBorderColor() {

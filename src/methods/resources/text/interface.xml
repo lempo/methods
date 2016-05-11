@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <interface>
+<string key="time_left" value="Осталось времени"/>
 <string key="results_ER" value="Эффективность работы"/>
 <string key="results_VR" value="Степень врабатываемости"/>
 <string key="results_PU" value="Психическая устойчивость"/>
@@ -77,7 +78,7 @@
 <string key="forward" value="Вперед"/>
 <string key="accuracy" value="ТОЧНОСТЬ"/>
 <string key="in" value="в"/>
-<string key="min" value="минут"/>
+<string key="min" value="мин"/>
 <string key="sec" value="секунд"/>
 <string key="day" value="дней"/>
 <string key="min_1" value="минута"/>
