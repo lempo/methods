@@ -43,7 +43,8 @@ public class ImageLinkDefaults {
 		MENU,
 		RADIO,
 		RADIO_SELECTED,
-		RAVEN;
+		RAVEN,
+		EXCEPTION;
 	}
 
 	private Map<Key, String> links;
@@ -79,6 +80,7 @@ public class ImageLinkDefaults {
 		links.put(Key.RADIO, "resources/image/radio_unselected.png");
 		links.put(Key.RADIO_SELECTED, "resources/image/radio_selected.png");
 		links.put(Key.RAVEN, "resources/image/raven/");
+		links.put(Key.EXCEPTION, "resources/image/exception/");
 	}
 
 	public String getLink(Key key) {

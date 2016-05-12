@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<interface>
+<text>Исключите одно изображение</text>
+<questions>
+<q answer="2"><picture>1/1.png</picture><picture>1/2.png</picture><picture>1/3.png</picture><picture>1/4.png</picture></q>
+<q answer="3"><picture>2/1.png</picture><picture>2/2.png</picture><picture>2/3.png</picture><picture>2/4.png</picture></q>
+</questions>
+<interpretation>
+<d>Самочувствие</d>
+<d>Активность</d>
+<d>Настроение</d>
+<d>И ещё какие-то трактовки...</d>
+</interpretation>
+</interface>

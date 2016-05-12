@@ -208,6 +208,10 @@ public class Raven extends AbstractTest {
 		cards.add(answers);
 
 		selected = 0;
+		Dimension d = answers.getComponents()[0].getPreferredSize();
+		((JLabel) answers.getComponents()[0])
+				.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(38, 166, 154)));
+		answers.getComponents()[0].setPreferredSize(d);
 
 		this.revalidate();
 		this.repaint();

@@ -59,14 +59,14 @@ public class SAN extends AbstractTest {
 		answersPanel.setLayout(new GridBagLayout());
 		
 		leftButton.setUI(new BorderButtonCustomUI(new Color(144, 106, 96)));
+		leftButton.setUI(new BorderButtonCustomUI(new Color(144, 106, 96)));
 		leftButton.setBorder(null);
 		leftButton.setOpaque(false);
-		leftButton.setUI(new BorderButtonCustomUI(new Color(144, 106, 96)));
 		
+		rightButton.setUI(new BorderButtonCustomUI(new Color(144, 106, 96)));
 		rightButton.setUI(new BorderButtonCustomUI(new Color(144, 106, 96)));
 		rightButton.setBorder(null);
 		rightButton.setOpaque(false);
-		rightButton.setUI(new BorderButtonCustomUI(new Color(144, 106, 96)));
 		
 		answersPanel.add(rightButton);
 		
@@ -138,8 +138,8 @@ public class SAN extends AbstractTest {
 	public void showQuestion() {
 		// TODO
 		
-		String t = nodelist.item(currentQuestionNumber - 1).getChildNodes().item(Integer.parseInt(b.getName())).getAttributes()
-				.getNamedItem("comment").getTextContent().toString();
+		//String t = nodelist.item(currentQuestionNumber - 1).getChildNodes().item(Integer.parseInt(b.getName())).getAttributes()
+			//	.getNamedItem("comment").getTextContent().toString();
 		
 
 		
