@@ -138,9 +138,11 @@ public class SAN extends AbstractTest {
 	public void showQuestion() {
 		// TODO
 		
-		String t = nodelist.item(currentQuestionNumber - 1).getChildNodes().item(Integer.parseInt(b.getName())).getAttributes()
-				.getNamedItem("comment").getTextContent().toString();
-		
+		String t = nodelist.item(currentQuestionNumber - 1).getAttributes().item(1).getNodeName().toString();
+
+		if (nodelist.item(currentQuestionNumber - 1).getAttributes().item(1).getNodeName().toString() == "positive") {
+			System.out.println(t);
+		}
 
 		
 	}
