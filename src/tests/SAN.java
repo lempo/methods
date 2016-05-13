@@ -191,6 +191,14 @@ public class SAN extends AbstractTest {
 				.toString());
 		rightButton.setText(nodelist.item(currentQuestionNumber).getAttributes().getNamedItem("right")
 				.getNodeValue().toString());
+		if (t > 0) {
+			((BorderButtonCustomUI) leftButton.getUI()).setBorderColor(new Color(38, 166, 154));
+			((BorderButtonCustomUI) rightButton.getUI()).setBorderColor(new Color(239, 83, 80));
+		}
+		else {
+			((BorderButtonCustomUI) rightButton.getUI()).setBorderColor(new Color(38, 166, 154));
+			((BorderButtonCustomUI) leftButton.getUI()).setBorderColor(new Color(239, 83, 80));
+		}
 
 		this.revalidate();
 		this.repaint();
