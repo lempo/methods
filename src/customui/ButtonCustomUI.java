@@ -15,6 +15,7 @@ import javax.swing.plaf.basic.BasicGraphicsUtils;
 public class ButtonCustomUI extends BasicButtonUI {
 	private Color color;
 	private Color borderColor = null;
+	private Font font = new Font("Arial Narrow", Font.PLAIN, 17);
 
 	public ButtonCustomUI(Color color) {
 		super();
@@ -58,11 +59,20 @@ public class ButtonCustomUI extends BasicButtonUI {
 	@Override
 	protected void paintText(Graphics g, JComponent c, Rectangle textRect, String text) {
 		AbstractButton b = (AbstractButton) c;
-		Font f = new Font("Arial Narrow", Font.PLAIN, 17);
-		g.setFont(f);
-		FontMetrics fm = g.getFontMetrics(f);
+		g.setFont(font);
+		FontMetrics fm = g.getFontMetrics(font);
 
 		g.setColor(Color.WHITE);
-		BasicGraphicsUtils.drawString(g, text, -1, textRect.x - 4, textRect.y + fm.getAscent() - 3);
+		int w = (int) fm.getStringBounds(b.getText(), b.getGraphics()).getWidth();
+		Rectangle area = new Rectangle();
+		SwingUtilities.calculateInnerArea(b, area);
+		int b_w = area.width;
+
+		BasicGraphicsUtils.drawString(g, text, -1,
+				(int) Math.round((b_w - w) / 2.0 - textRect.getWidth() * 0.03), textRect.y + fm.getAscent() - 3);
+	}
+
+	public Font getFont() {
+		return font;
 	}
 }

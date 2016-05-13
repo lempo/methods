@@ -35,7 +35,8 @@ public class TextLinkDefaults {
 		EYSENCK,
 		RAVEN,
 		SAN,
-		EXCEPTION;
+		EXCEPTION,
+		SPILBERG;
 	}
 
 	private Map<Key, String> links;
@@ -65,6 +66,7 @@ public class TextLinkDefaults {
 		links.put(Key.RAVEN, "resources/text/tests/raven.xml");
 		links.put(Key.SAN, "resources/text/tests/san.xml");
 		links.put(Key.EXCEPTION, "resources/text/tests/exception.xml");
+		links.put(Key.SPILBERG, "resources/text/tests/spilberg.xml");
 	}
 
 	public String getLink(Key key) {
