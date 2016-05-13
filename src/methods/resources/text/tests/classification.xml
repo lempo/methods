@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<interface>
+<q><answer true="0">Василий</answer><answer true="0">Федор</answer><answer true="0">Семен</answer><answer true="1">Иванов</answer><answer true="0"> Петр</answer></q>
+<q><answer true="0">дряхлый</answer><answer true="1">маленький</answer><answer true="0">старый</answer><answer true="0">изношенный</answer><answer true="0">ветхий</answer></q>
+<q><answer true="0">грабеж</answer><answer true="0">кража</answer><answer true="1">землетрясение</answer><answer true="0">поджог</answer><answer true="0">нападение</answer></q>
+<q><answer true="0">скоро</answer><answer true="0">быстро</answer><answer true="0">поспешно</answer><answer true="1">постепенно</answer><answer true="0">торопливо</answer></q>
+<q><answer true="0">лист</answer><answer true="0">почва</answer><answer true="0">кора</answer><answer true="1">чешуя</answer><answer true="0">сук</answer></q>
+<q><answer true="0">ненавидеть</answer><answer true="0">презирать</answer><answer true="0">негодовать</answer><answer true="0">возмущаться</answer><answer true="1">понимать</answer></q>
+<q><answer true="0">темный</answer><answer true="0">светлый</answer><answer true="1">голубой</answer><answer true="0">яркий</answer><answer true="0">тусклый</answer></q>
+<q><answer true="0">гнездо</answer><answer true="0">нора</answer><answer true="0">курятник</answer><answer true="1">сторожка</answer><answer true="0">берлога</answer></q>
+<q><answer true="0">неудача</answer><answer true="1">волнение</answer><answer true="0">поражение</answer><answer true="0">провал</answer><answer true="0">крах</answer></q>
+<q><answer true="0">успех</answer><answer true="0">удача</answer><answer true="0">выигрыш</answer><answer true="1">спокойствие</answer><answer true="0">неудача</answer></q>
+<q><answer true="0">молоко</answer><answer true="0">сыр</answer><answer true="0">сметана</answer><answer true="1">сало</answer><answer true="0">простокваша</answer></q>
+<q><answer true="0">глубокий</answer><answer true="0">низкий</answer><answer true="1">светлый</answer><answer true="0">высокий</answer><answer true="0">длинный</answer></q>
+<q><answer true="0">хата</answer><answer true="0">шалаш</answer><answer true="1">дым</answer><answer true="0">хлев</answer><answer true="0">будка</answer></q>
+<q><answer true="0">береза</answer><answer true="0">сосна</answer><answer true="0">дуб</answer><answer true="0">ель</answer><answer true="1">сирень</answer></q>
+<q><answer true="0">секунда</answer><answer true="0">час</answer><answer true="0">год</answer><answer true="1">вечер</answer><answer true="0">неделя</answer></q>
+<q><answer true="0">смелый</answer><answer true="0">храбрый</answer><answer true="0">решительный</answer><answer true="1">злой</answer><answer true="0">отважный</answer></q>
+<q><answer true="0">карандаш</answer><answer true="0">ручка</answer><answer true="0">рейсфедер</answer><answer true="0">фломастер</answer><answer true="1">чернила</answer></q>
+<interpretation>
+<d>Количество правильных ответов (из 20)</d>
+<d>низкий уровень сформированности логичности мышления</d>
+<d>средний уровень сформированности логичности мышления</d>
+<d>высокий уровень сформированности логичности мышления</d>
+</interpretation>
+<task>Отметьте слово, не относящееся к ряду</task>
+</interface>

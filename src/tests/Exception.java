@@ -56,7 +56,7 @@ public class Exception extends AbstractTest {
 
 	@Override
 	public void showTest() {
-		// TODO layout, high priority
+		// TODO layout, middle priority
 
 		JLabel question = new JLabel();
 		String s = doc.getElementsByTagName("text").item(0).getTextContent();

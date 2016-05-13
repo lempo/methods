@@ -18,7 +18,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
 import customui.BorderButtonCustomUI;
-import customui.ButtonCustomUI;
 import customui.PanelCustomUI;
 import defaults.InterfaceTextDefaults;
 import defaults.TextLinkDefaults;
