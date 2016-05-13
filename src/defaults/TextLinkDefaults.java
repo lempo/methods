@@ -37,7 +37,8 @@ public class TextLinkDefaults {
 		SAN,
 		EXCEPTION,
 		SPILBERG,
-		CLASSIFICATION;
+		CLASSIFICATION,
+		MAST;
 	}
 
 	private Map<Key, String> links;
@@ -69,6 +70,7 @@ public class TextLinkDefaults {
 		links.put(Key.EXCEPTION, "resources/text/tests/exception.xml");
 		links.put(Key.SPILBERG, "resources/text/tests/spilberg.xml");
 		links.put(Key.CLASSIFICATION, "resources/text/tests/classification.xml");
+		links.put(Key.MAST, "resources/text/tests/mast.xml");
 	}
 
 	public String getLink(Key key) {
