@@ -71,20 +71,20 @@ public class Descriptor extends AbstractTest {
 
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int counter = 0;
+				for (int i = 0; i < answers.size(); i++) {
+					if ( Integer.parseInt(doc.getElementsByTagName("q").item(currentQuestionNumber).getChildNodes().item(i)
+							.getAttributes().getNamedItem("true").getNodeValue()) == 1
+							&& ((BorderButtonCustomUI) answers.get(i).getUI()).getBorderColor()
+									.equals(new Color(0, 168, 155))) 
+						counter++;
+				}
+				if (counter == 2) summCorrect++;
+				
 				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength() - 1) {
 					testTime = new Date().getTime() - testTime;
 					showResults();
 				} else {
-					int counter = 0;
-					for (int i = 0; i < answers.size(); i++) {
-						if ( Integer.parseInt(doc.getElementsByTagName("q").item(currentQuestionNumber).getChildNodes().item(i)
-								.getAttributes().getNamedItem("true").getNodeValue()) == 1
-								&& ((BorderButtonCustomUI) answers.get(i).getUI()).getBorderColor()
-										.equals(new Color(0, 168, 155))) 
-							counter++;
-					}
-					if (counter == 2)
-						summCorrect++;
 					currentQuestionNumber++;
 					showQuestion();
 				}
