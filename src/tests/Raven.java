@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -83,8 +84,9 @@ public class Raven extends AbstractTest {
 
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO time?
 				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength() - 1) {
+					timer.stop();
+					testTime = new Date().getTime() - testTime;
 					showResults();
 				} else {
 					// TODO calculate results, high priority
@@ -111,13 +113,13 @@ public class Raven extends AbstractTest {
 
 		GridBagConstraints c = new GridBagConstraints();
 
-		c.anchor = GridBagConstraints.CENTER;
+		c.anchor = GridBagConstraints.NORTHWEST;
 		c.fill = GridBagConstraints.NONE;
 		c.gridheight = 1;
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(40, 0, 40, 0);
+		c.insets = new Insets(0, 20, 0, 120);
 		c.ipadx = 0;
 		c.ipady = 0;
 		c.weightx = 0.0;
@@ -127,21 +129,28 @@ public class Raven extends AbstractTest {
 		c.gridy = 1;
 		add(task, c);
 
+		c.anchor = GridBagConstraints.SOUTHWEST;
+		c.ipady = 5;
+		c.weighty = 0.1;
 		c.gridy = 2;
 		add(nextButton, c);
 
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.insets = new Insets(0, 0, 0, 20);
 		c.gridheight = 3;
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.gridx = 1;
 		c.gridy = 0;
 		add(cards, c);
 
+		c.anchor = GridBagConstraints.SOUTHWEST;
 		c.gridheight = 1;
 		c.gridx = 0;
 		c.gridy = 3;
-		c.insets = new Insets(0, 0, 0, 0);
+		c.insets = new Insets(0, 20, 0, 20);
 		add(timeLeft, c);
 
+		c.anchor = GridBagConstraints.NORTH;
 		c.gridx = 0;
 		c.gridy = 4;
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -163,6 +172,7 @@ public class Raven extends AbstractTest {
 					timeLeft.repaint();
 				} else {
 					timer.stop();
+					testTime = new Date().getTime() - testTime;
 					showResults();
 				}
 
@@ -170,6 +180,8 @@ public class Raven extends AbstractTest {
 		});
 		timer.start();
 
+		testDate = new Date();
+		testTime = new Date().getTime();
 		showQuestion();
 	}
 

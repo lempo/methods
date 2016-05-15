@@ -1,8 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <interface>
 <questions>
-<q set='Серия A' task='A1' answer='5' image="A1/a-1.gif"><a>A1/a-1-1.gif</a><a>A1/a-1-2.gif</a><a>A1/a-1-3.gif</a><a>A1/a-1-4.gif</a><a>A1/a-1-5.gif</a><a>A1/a-1-6.gif</a></q>
-<q set='Серия A' task='A2' answer='5' image="A2/A2.png"><a>A2/A2_1.png</a><a>A2/A2_2.png</a><a>A2/A2_3.png</a><a>A2/A2_4.png</a><a>A2/A2_5.png</a><a>A2/A2_6.png</a></q>
+<q set='Серия A' task='A1' answer='4' image="A1/a-1.gif"><a>A1/a-1-1.gif</a><a>A1/a-1-2.gif</a><a>A1/a-1-3.gif</a><a>A1/a-1-4.gif</a><a>A1/a-1-5.gif</a><a>A1/a-1-6.gif</a></q>
+<q set='Серия A' task='A2' answer='5' image="A2/a-2.gif"><a>A2/a-2-1.gif</a><a>A2/a-2-2.gif</a><a>A2/a-2-3.gif</a><a>A2/a-2-4.gif</a><a>A2/a-2-5.gif</a><a>A2/a-2-6.gif</a></q>
+<q set='Серия A' task='A3' answer='1' image="A3/a-3.gif"><a>A3/a-3-1.gif</a><a>A3/a-3-2.gif</a><a>A3/a-3-3.gif</a><a>A3/a-3-4.gif</a><a>A3/a-3-5.gif</a><a>A3/a-3-6.gif</a></q>
+<q set='Серия A' task='A4' answer='2' image="A4/a-4.gif"><a>A4/a-4-1.gif</a><a>A4/a-4-2.gif</a><a>A4/a-4-3.gif</a><a>A4/a-4-4.gif</a><a>A4/a-4-5.gif</a><a>A4/a-4-6.gif</a></q>
+<q set='Серия A' task='A5' answer='6' image="A5/a-5.gif"><a>A5/a-5-1.gif</a><a>A5/a-5-2.gif</a><a>A5/a-5-3.gif</a><a>A5/a-5-4.gif</a><a>A5/a-5-5.gif</a><a>A5/a-5-6.gif</a></q>
+<q set='Серия A' task='A6' answer='3' image="A6/a-6.gif"><a>A6/a-6-1.gif</a><a>A6/a-6-2.gif</a><a>A6/a-6-3.gif</a><a>A6/a-6-4.gif</a><a>A6/a-6-5.gif</a><a>A6/a-6-6.gif</a></q>
+<q set='Серия A' task='A7' answer='6' image="A7/a-7.gif"><a>A7/a-7-1.gif</a><a>A7/a-7-2.gif</a><a>A7/a-7-3.gif</a><a>A7/a-7-4.gif</a><a>A7/a-7-5.gif</a><a>A7/a-7-6.gif</a></q>
+<q set='Серия A' task='A8' answer='2' image="A8/a-8.gif"><a>A8/a-8-1.gif</a><a>A8/a-8-2.gif</a><a>A8/a-8-3.gif</a><a>A8/a-8-4.gif</a><a>A8/a-8-5.gif</a><a>A8/a-8-6.gif</a></q>
+<q set='Серия A' task='A9' answer='1' image="A9/a-9.gif"><a>A9/a-9-1.gif</a><a>A9/a-9-2.gif</a><a>A9/a-9-3.gif</a><a>A9/a-9-4.gif</a><a>A9/a-9-5.gif</a><a>A9/a-9-6.gif</a></q>
+<q set='Серия A' task='A10' answer='3' image="A10/a-10.gif"><a>A10/a-10-1.gif</a><a>A10/a-10-2.gif</a><a>A10/a-10-3.gif</a><a>A10/a-10-4.gif</a><a>A10/a-10-5.gif</a><a>A10/a-10-6.gif</a></q>
+<q set='Серия A' task='A11' answer='4' image="A11/a-11.gif"><a>A11/a-11-1.gif</a><a>A11/a-11-2.gif</a><a>A11/a-11-3.gif</a><a>A11/a-11-4.gif</a><a>A11/a-11-5.gif</a><a>A11/a-11-6.gif</a></q>
+<q set='Серия A' task='A12' answer='5' image="A12/a-12.gif"><a>A12/a-12-1.gif</a><a>A12/a-12-2.gif</a><a>A12/a-12-3.gif</a><a>A12/a-12-4.gif</a><a>A12/a-12-5.gif</a><a>A12/a-12-6.gif</a></q>
+<q set='Серия B' task='B1' answer='2' image="B1/b-1.gif"><a>B1/b-1-1.gif</a><a>B1/b-1-2.gif</a><a>B1/b-1-3.gif</a><a>B1/b-1-4.gif</a><a>B1/b-1-5.gif</a><a>B1/b-1-6.gif</a></q>
+<q set='Серия B' task='B2' answer='6' image="B2/b-2.gif"><a>B2/b-2-1.gif</a><a>B2/b-2-2.gif</a><a>B2/b-2-3.gif</a><a>B2/b-2-4.gif</a><a>B2/b-2-5.gif</a><a>B2/b-2-6.gif</a></q>
+<q set='Серия B' task='B3' answer='1' image="B3/b-3.gif"><a>B3/b-3-1.gif</a><a>B3/b-3-2.gif</a><a>B3/b-3-3.gif</a><a>B3/b-3-4.gif</a><a>B3/b-3-5.gif</a><a>B3/b-3-6.gif</a></q>
+<q set='Серия B' task='B4' answer='2' image="B4/b-4.gif"><a>B4/b-4-1.gif</a><a>B4/b-4-2.gif</a><a>B4/b-4-3.gif</a><a>B4/b-4-4.gif</a><a>B4/b-4-5.gif</a><a>B4/b-4-6.gif</a></q>
+<q set='Серия B' task='B5' answer='1' image="B5/b-5.gif"><a>B5/b-5-1.gif</a><a>B5/b-5-2.gif</a><a>B5/b-5-3.gif</a><a>B5/b-5-4.gif</a><a>B5/b-5-5.gif</a><a>B5/b-5-6.gif</a></q>
+<q set='Серия B' task='B6' answer='3' image="B6/b-6.gif"><a>B6/b-6-1.gif</a><a>B6/b-6-2.gif</a><a>B6/b-6-3.gif</a><a>B6/b-6-4.gif</a><a>B6/b-6-5.gif</a><a>B6/b-6-6.gif</a></q>
+<q set='Серия B' task='B7' answer='5' image="B7/b-7.gif"><a>B7/b-7-1.gif</a><a>B7/b-7-2.gif</a><a>B7/b-7-3.gif</a><a>B7/b-7-4.gif</a><a>B7/b-7-5.gif</a><a>B7/b-7-6.gif</a></q>
+<q set='Серия B' task='B8' answer='6' image="B8/b-8.gif"><a>B8/b-8-1.gif</a><a>B8/b-8-2.gif</a><a>B8/b-8-3.gif</a><a>B8/b-8-4.gif</a><a>B8/b-8-5.gif</a><a>B8/b-8-6.gif</a></q>
+<q set='Серия B' task='B9' answer='4' image="B9/b-9.gif"><a>B9/b-9-1.gif</a><a>B9/b-9-2.gif</a><a>B9/b-9-3.gif</a><a>B9/b-9-4.gif</a><a>B9/b-9-5.gif</a><a>B9/b-9-6.gif</a></q>
+<q set='Серия B' task='B10' answer='3' image="B10/b-10.gif"><a>B10/b-10-1.gif</a><a>B10/b-10-2.gif</a><a>B10/b-10-3.gif</a><a>B10/b-10-4.gif</a><a>B10/b-10-5.gif</a><a>B10/b-10-6.gif</a></q>
+<q set='Серия B' task='B11' answer='4' image="B11/b-11.gif"><a>B11/b-11-1.gif</a><a>B11/b-11-2.gif</a><a>B11/b-11-3.gif</a><a>B11/b-11-4.gif</a><a>B11/b-11-5.gif</a><a>B11/b-11-6.gif</a></q>
+<q set='Серия B' task='B12' answer='5' image="B12/b-12.gif"><a>B12/b-12-1.gif</a><a>B12/b-12-2.gif</a><a>B12/b-12-3.gif</a><a>B12/b-12-4.gif</a><a>B12/b-12-5.gif</a><a>B12/b-12-6.gif</a></q>
+<q set='Серия C' task='C1' answer='8' image="C1/c-1.gif"><a>C1/c-1-1.gif</a><a>C1/c-1-2.gif</a><a>C1/c-1-3.gif</a><a>C1/c-1-4.gif</a><a>C1/c-1-5.gif</a><a>C1/c-1-6.gif</a><a>C1/c-1-7.gif</a><a>C1/c-1-8.gif</a></q>
+<q set='Серия C' task='C2' answer='2' image="C2/c-2.gif"><a>C2/c-2-1.gif</a><a>C2/c-2-2.gif</a><a>C2/c-2-3.gif</a><a>C2/c-2-4.gif</a><a>C2/c-2-5.gif</a><a>C2/c-2-6.gif</a><a>C2/c-2-7.gif</a><a>C2/c-2-8.gif</a></q>
+<q set='Серия C' task='C3' answer='3' image="C3/c-3.gif"><a>C3/c-3-1.gif</a><a>C3/c-3-2.gif</a><a>C3/c-3-3.gif</a><a>C3/c-3-4.gif</a><a>C3/c-3-5.gif</a><a>C3/c-3-6.gif</a><a>C3/c-3-7.gif</a><a>C3/c-3-8.gif</a></q>
+<q set='Серия C' task='C4' answer='8' image="C4/c-4.gif"><a>C4/c-4-1.gif</a><a>C4/c-4-2.gif</a><a>C4/c-4-3.gif</a><a>C4/c-4-4.gif</a><a>C4/c-4-5.gif</a><a>C4/c-4-6.gif</a><a>C4/c-4-7.gif</a><a>C4/c-4-8.gif</a></q>
+<q set='Серия C' task='C5' answer='7' image="C5/c-5.gif"><a>C5/c-5-1.gif</a><a>C5/c-5-2.gif</a><a>C5/c-5-3.gif</a><a>C5/c-5-4.gif</a><a>C5/c-5-5.gif</a><a>C5/c-5-6.gif</a><a>C5/c-5-7.gif</a><a>C5/c-5-8.gif</a></q>
+<q set='Серия C' task='C6' answer='4' image="C6/c-6.gif"><a>C6/c-6-1.gif</a><a>C6/c-6-2.gif</a><a>C6/c-6-3.gif</a><a>C6/c-6-4.gif</a><a>C6/c-6-5.gif</a><a>C6/c-6-6.gif</a><a>C6/c-6-7.gif</a><a>C6/c-6-8.gif</a></q>
+<q set='Серия C' task='C7' answer='5' image="C7/c-7.gif"><a>C7/c-7-1.gif</a><a>C7/c-7-2.gif</a><a>C7/c-7-3.gif</a><a>C7/c-7-4.gif</a><a>C7/c-7-5.gif</a><a>C7/c-7-6.gif</a><a>C7/c-7-7.gif</a><a>C7/c-7-8.gif</a></q>
+<q set='Серия C' task='C8' answer='1' image="C8/c-8.gif"><a>C8/c-8-1.gif</a><a>C8/c-8-2.gif</a><a>C8/c-8-3.gif</a><a>C8/c-8-4.gif</a><a>C8/c-8-5.gif</a><a>C8/c-8-6.gif</a><a>C8/c-8-7.gif</a><a>C8/c-8-8.gif</a></q>
+<q set='Серия C' task='C9' answer='7' image="C9/c-9.gif"><a>C9/c-9-1.gif</a><a>C9/c-9-2.gif</a><a>C9/c-9-3.gif</a><a>C9/c-9-4.gif</a><a>C9/c-9-5.gif</a><a>C9/c-9-6.gif</a><a>C9/c-9-7.gif</a><a>C9/c-9-8.gif</a></q>
+<q set='Серия C' task='C10' answer='6' image="C10/c-10.gif"><a>C10/c-10-1.gif</a><a>C10/c-10-2.gif</a><a>C10/c-10-3.gif</a><a>C10/c-10-4.gif</a><a>C10/c-10-5.gif</a><a>C10/c-10-6.gif</a><a>C10/c-10-7.gif</a><a>C10/c-10-8.gif</a></q>
+<q set='Серия C' task='C11' answer='1' image="C11/c-11.gif"><a>C11/c-11-1.gif</a><a>C11/c-11-2.gif</a><a>C11/c-11-3.gif</a><a>C11/c-11-4.gif</a><a>C11/c-11-5.gif</a><a>C11/c-11-6.gif</a><a>C11/c-11-7.gif</a><a>C11/c-11-8.gif</a></q>
+<q set='Серия C' task='C12' answer='2' image="C12/c-12.gif"><a>C12/c-12-1.gif</a><a>C12/c-12-2.gif</a><a>C12/c-12-3.gif</a><a>C12/c-12-4.gif</a><a>C12/c-12-5.gif</a><a>C12/c-12-6.gif</a><a>C12/c-12-7.gif</a><a>C12/c-12-8.gif</a></q>
+<q set='Серия D' task='D1' answer='3' image="D1/d-1.gif"><a>D1/d-1-1.gif</a><a>D1/d-1-2.gif</a><a>D1/d-1-3.gif</a><a>D1/d-1-4.gif</a><a>D1/d-1-5.gif</a><a>D1/d-1-6.gif</a><a>D1/d-1-7.gif</a><a>D1/d-1-8.gif</a></q>
+<q set='Серия D' task='D2' answer='4' image="D2/d-2.gif"><a>D2/d-2-1.gif</a><a>D2/d-2-2.gif</a><a>D2/d-2-3.gif</a><a>D2/d-2-4.gif</a><a>D2/d-2-5.gif</a><a>D2/d-2-6.gif</a><a>D2/d-2-7.gif</a><a>D2/d-2-8.gif</a></q>
+<q set='Серия D' task='D3' answer='3' image="D3/d-3.gif"><a>D3/d-3-1.gif</a><a>D3/d-3-2.gif</a><a>D3/d-3-3.gif</a><a>D3/d-3-4.gif</a><a>D3/d-3-5.gif</a><a>D3/d-3-6.gif</a><a>D3/d-3-7.gif</a><a>D3/d-3-8.gif</a></q>
+<q set='Серия D' task='D4' answer='7' image="D4/d-4.gif"><a>D4/d-4-1.gif</a><a>D4/d-4-2.gif</a><a>D4/d-4-3.gif</a><a>D4/d-4-4.gif</a><a>D4/d-4-5.gif</a><a>D4/d-4-6.gif</a><a>D4/d-4-7.gif</a><a>D4/d-4-8.gif</a></q>
+<q set='Серия D' task='D5' answer='8' image="D5/d-5.gif"><a>D5/d-5-1.gif</a><a>D5/d-5-2.gif</a><a>D5/d-5-3.gif</a><a>D5/d-5-4.gif</a><a>D5/d-5-5.gif</a><a>D5/d-5-6.gif</a><a>D5/d-5-7.gif</a><a>D5/d-5-8.gif</a></q>
+<q set='Серия D' task='D6' answer='6' image="D6/d-6.gif"><a>D6/d-6-1.gif</a><a>D6/d-6-2.gif</a><a>D6/d-6-3.gif</a><a>D6/d-6-4.gif</a><a>D6/d-6-5.gif</a><a>D6/d-6-6.gif</a><a>D6/d-6-7.gif</a><a>D6/d-6-8.gif</a></q>
+<q set='Серия D' task='D7' answer='5' image="D7/d-7.gif"><a>D7/d-7-1.gif</a><a>D7/d-7-2.gif</a><a>D7/d-7-3.gif</a><a>D7/d-7-4.gif</a><a>D7/d-7-5.gif</a><a>D7/d-7-6.gif</a><a>D7/d-7-7.gif</a><a>D7/d-7-8.gif</a></q>
+<q set='Серия D' task='D8' answer='4' image="D8/d-8.gif"><a>D8/d-8-1.gif</a><a>D8/d-8-2.gif</a><a>D8/d-8-3.gif</a><a>D8/d-8-4.gif</a><a>D8/d-8-5.gif</a><a>D8/d-8-6.gif</a><a>D8/d-8-7.gif</a><a>D8/d-8-8.gif</a></q>
+<q set='Серия D' task='D9' answer='1' image="D9/d-9.gif"><a>D9/d-9-1.gif</a><a>D9/d-9-2.gif</a><a>D9/d-9-3.gif</a><a>D9/d-9-4.gif</a><a>D9/d-9-5.gif</a><a>D9/d-9-6.gif</a><a>D9/d-9-7.gif</a><a>D9/d-9-8.gif</a></q>
+<q set='Серия D' task='D10' answer='2' image="D10/d-10.gif"><a>D10/d-10-1.gif</a><a>D10/d-10-2.gif</a><a>D10/d-10-3.gif</a><a>D10/d-10-4.gif</a><a>D10/d-10-5.gif</a><a>D10/d-10-6.gif</a><a>D10/d-10-7.gif</a><a>D10/d-10-8.gif</a></q>
+<q set='Серия D' task='D11' answer='5' image="D11/d-11.gif"><a>D11/d-11-1.gif</a><a>D11/d-11-2.gif</a><a>D11/d-11-3.gif</a><a>D11/d-11-4.gif</a><a>D11/d-11-5.gif</a><a>D11/d-11-6.gif</a><a>D11/d-11-7.gif</a><a>D11/d-11-8.gif</a></q>
+<q set='Серия D' task='D12' answer='6' image="D12/d-12.gif"><a>D12/d-12-1.gif</a><a>D12/d-12-2.gif</a><a>D12/d-12-3.gif</a><a>D12/d-12-4.gif</a><a>D12/d-12-5.gif</a><a>D12/d-12-6.gif</a><a>D12/d-12-7.gif</a><a>D12/d-12-8.gif</a></q>
+<q set='Серия E' task='E1' answer='7' image="E1/e-1.gif"><a>E1/e-1-1.gif</a><a>E1/e-1-2.gif</a><a>E1/e-1-3.gif</a><a>E1/e-1-4.gif</a><a>E1/e-1-5.gif</a><a>E1/e-1-6.gif</a><a>E1/e-1-7.gif</a><a>E1/e-1-8.gif</a></q>
+<q set='Серия E' task='E2' answer='6' image="E2/e-2.gif"><a>E2/e-2-1.gif</a><a>E2/e-2-2.gif</a><a>E2/e-2-3.gif</a><a>E2/e-2-4.gif</a><a>E2/e-2-5.gif</a><a>E2/e-2-6.gif</a><a>E2/e-2-7.gif</a><a>E2/e-2-8.gif</a></q>
+<q set='Серия E' task='E3' answer='8' image="E3/e-3.gif"><a>E3/e-3-1.gif</a><a>E3/e-3-2.gif</a><a>E3/e-3-3.gif</a><a>E3/e-3-4.gif</a><a>E3/e-3-5.gif</a><a>E3/e-3-6.gif</a><a>E3/e-3-7.gif</a><a>E3/e-3-8.gif</a></q>
+<q set='Серия E' task='E4' answer='2' image="E4/e-4.gif"><a>E4/e-4-1.gif</a><a>E4/e-4-2.gif</a><a>E4/e-4-3.gif</a><a>E4/e-4-4.gif</a><a>E4/e-4-5.gif</a><a>E4/e-4-6.gif</a><a>E4/e-4-7.gif</a><a>E4/e-4-8.gif</a></q>
+<q set='Серия E' task='E5' answer='1' image="E5/e-5.gif"><a>E5/e-5-1.gif</a><a>E5/e-5-2.gif</a><a>E5/e-5-3.gif</a><a>E5/e-5-4.gif</a><a>E5/e-5-5.gif</a><a>E5/e-5-6.gif</a><a>E5/e-5-7.gif</a><a>E5/e-5-8.gif</a></q>
+<q set='Серия E' task='E6' answer='5' image="E6/e-6.gif"><a>E6/e-6-1.gif</a><a>E6/e-6-2.gif</a><a>E6/e-6-3.gif</a><a>E6/e-6-4.gif</a><a>E6/e-6-5.gif</a><a>E6/e-6-6.gif</a><a>E6/e-6-7.gif</a><a>E6/e-6-8.gif</a></q>
+<q set='Серия E' task='E7' answer='1' image="E7/e-7.gif"><a>E7/e-7-1.gif</a><a>E7/e-7-2.gif</a><a>E7/e-7-3.gif</a><a>E7/e-7-4.gif</a><a>E7/e-7-5.gif</a><a>E7/e-7-6.gif</a><a>E7/e-7-7.gif</a><a>E7/e-7-8.gif</a></q>
+<q set='Серия E' task='E8' answer='6' image="E8/e-8.gif"><a>E8/e-8-1.gif</a><a>E8/e-8-2.gif</a><a>E8/e-8-3.gif</a><a>E8/e-8-4.gif</a><a>E8/e-8-5.gif</a><a>E8/e-8-6.gif</a><a>E8/e-8-7.gif</a><a>E8/e-8-8.gif</a></q>
+<q set='Серия E' task='E9' answer='3' image="E9/e-9.gif"><a>E9/e-9-1.gif</a><a>E9/e-9-2.gif</a><a>E9/e-9-3.gif</a><a>E9/e-9-4.gif</a><a>E9/e-9-5.gif</a><a>E9/e-9-6.gif</a><a>E9/e-9-7.gif</a><a>E9/e-9-8.gif</a></q>
+<q set='Серия E' task='E10' answer='2' image="E10/e-10.gif"><a>E10/e-10-1.gif</a><a>E10/e-10-2.gif</a><a>E10/e-10-3.gif</a><a>E10/e-10-4.gif</a><a>E10/e-10-5.gif</a><a>E10/e-10-6.gif</a><a>E10/e-10-7.gif</a><a>E10/e-10-8.gif</a></q>
+<q set='Серия E' task='E11' answer='4' image="E11/e-11.gif"><a>E11/e-11-1.gif</a><a>E11/e-11-2.gif</a><a>E11/e-11-3.gif</a><a>E11/e-11-4.gif</a><a>E11/e-11-5.gif</a><a>E11/e-11-6.gif</a><a>E11/e-11-7.gif</a><a>E11/e-11-8.gif</a></q>
+<q set='Серия E' task='E12' answer='5' image="E12/e-12.gif"><a>E12/e-12-1.gif</a><a>E12/e-12-2.gif</a><a>E12/e-12-3.gif</a><a>E12/e-12-4.gif</a><a>E12/e-12-5.gif</a><a>E12/e-12-6.gif</a><a>E12/e-12-7.gif</a><a>E12/e-12-8.gif</a></q>
 </questions>
 <interpretation>
 <d>Показатель ситуативной тревожности</d>
