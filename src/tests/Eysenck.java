@@ -9,8 +9,10 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,11 +22,14 @@ import javax.swing.Timer;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import component.CustomRadioButton;
 import component.CustomTextField;
 import customui.ButtonCustomUI;
+import customui.PanelCustomUI;
 import customui.ProgressBarCustomUI;
+import defaults.ImageLinkDefaults;
 import defaults.InterfaceTextDefaults;
 import defaults.TextLinkDefaults;
 import methods.Methods;
@@ -43,6 +48,7 @@ public class Eysenck extends AbstractTest {
 	ArrayList<JRadioButton> radioButtonList = new ArrayList<JRadioButton>();
 
 	int currentQuestionNumber = 0;
+	int summCorrect = 0;
 	String questionType;
 
 	private Timer timer;
@@ -78,20 +84,28 @@ public class Eysenck extends AbstractTest {
 
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO time?
+				String correctAnswer = doc.getElementsByTagName("q").item(currentQuestionNumber).getAttributes().getNamedItem("answer").getNodeValue().toUpperCase();
+				switch (questionType) {
+				case "text":
+					if (correctAnswer.equals(input.getText().trim().toUpperCase())) summCorrect++;
+					break;
+				case "radio":
+					int selected = 0;
+					for (int i = 0; i < radioButtonList.size(); i++) {
+						if (radioButtonList.get(i).isSelected()) selected = i + 1;
+					}
+					if (Integer.parseInt(correctAnswer) == selected) summCorrect++;
+					break;
+				case "picture":
+					if (correctAnswer.equals(input.getText().trim().toUpperCase())) summCorrect++;
+					break;
+				}
+				System.out.println(summCorrect);
+				
 				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength() - 1) {
+					testTime = new Date().getTime() - testTime;
 					showResults();
 				} else {
-					// TODO calculate results, high priority
-					switch (questionType) {
-					case "text":
-						break;
-					case "radio":
-
-						break;
-					case "picture":
-						break;
-					}
 					currentQuestionNumber++;
 					showQuestion();
 				}
@@ -119,7 +133,7 @@ public class Eysenck extends AbstractTest {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(40, 0, 40, 0);
+		c.insets = new Insets(10, 0, 0, 0);
 		c.ipadx = 0;
 		c.ipady = 0;
 		c.weightx = 0.0;
@@ -128,24 +142,30 @@ public class Eysenck extends AbstractTest {
 		add(task, c);
 
 		c.gridy = 1;
-		c.insets = new Insets(25, 0, 25, 0);
+		c.insets = new Insets(10, 0, 10, 0);
+		answers.setPreferredSize(new Dimension(800, 350));
+		answers.setMinimumSize(new Dimension(800, 350));
 
 		add(answers, c);
 
 		c.anchor = GridBagConstraints.NORTH;
 		c.gridy = 3;
 		c.weighty = 0.1;
-		c.insets = new Insets(40, 0, 80, 0);
+		c.ipady = 5;
+		c.insets = new Insets(30, 0, 10, 0);
 
 		add(nextButton, c);
 
 		c.gridy = 4;
-		c.insets = new Insets(40, 0, 0, 0);
+		c.anchor = GridBagConstraints.SOUTHWEST;
+		c.insets = new Insets(20, 0, 0, 0);
 		add(timeLeft, c);
 
 		c.gridy = 5;
+		c.anchor = GridBagConstraints.NORTH;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.weightx = 1.0;
+		c.weightx = 0.8;
+		c.insets = new Insets(0, 0, 20, 0);
 		add(bar, c);
 
 		this.revalidate();
@@ -170,6 +190,8 @@ public class Eysenck extends AbstractTest {
 		});
 		timer.start();
 
+		testDate = new Date();
+		testTime = new Date().getTime();
 		showQuestion();
 
 	}
@@ -181,15 +203,26 @@ public class Eysenck extends AbstractTest {
 		task.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>" + s.toUpperCase()
 				+ "</div></html>");
 
-		String type = n.getAttributes().getNamedItem("type").getNodeValue();
+		questionType = n.getAttributes().getNamedItem("type").getNodeValue();
 		answers.removeAll();
-		switch (type) {
+		blank.setIcon(null);
+		blank.setText("");
+		input.setText("");
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridy = 0;
+		c.insets = new Insets(30, 0, 0, 0);
+		answers.setLayout(new GridBagLayout());
+
+		switch (questionType) {
 		case "text":
 			s = n.getAttributes().getNamedItem("blank").getNodeValue();
-			blank.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>" + s.toUpperCase()
+			blank.setText("<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>" + s.toUpperCase()
 					+ "</div></html>");
-			answers.add(blank);
-			answers.add(input);
+			answers.add(blank, c);
+			c.gridy = 1;
+			c.ipady = 5;
+			answers.add(input, c);
 			break;
 		case "radio":
 			for (int i = 0; i < radioButtonList.size(); i++) {
@@ -203,12 +236,19 @@ public class Eysenck extends AbstractTest {
 				radioButtonList.add(b);
 				radioButtonGroup.add(b);
 				b.setOpaque(false);
-				answers.add(b);
+				c.insets = new Insets(30, 0, 30, 0);
+				answers.add(b, c);
 			}
 			radioButtonList.get(0).setSelected(true);
 			break;
 		case "picture":
-			// TODO case "picture" type, high priority
+			ImageIcon icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.EYSENCK)
+					+ n.getAttributes().getNamedItem("image").getNodeValue());
+			blank.setIcon(icon);
+			answers.add(blank, c);
+			c.gridy = 1;
+			c.ipady = 5;
+			answers.add(input, c);
 			break;
 		}
 
@@ -219,7 +259,71 @@ public class Eysenck extends AbstractTest {
 	@Override
 	public void showResults() {
 		showStandartResults();
-		// TODO calculate and output results, do conclusion, high priority
+		
+		JLabel leftCol = new JLabel();
+		JLabel rightCol = new JLabel();
+		
+		NodeList d = doc.getElementsByTagName("d");
+			
+		String t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
+				+ d.item(0).getTextContent() + ": <br>" + "</div></html>";
+		leftCol.setText(t);	
+		
+		summCorrect = (int) Math.floor(90 + summCorrect * 2); 
+		//TODO Calculate it with the right formula and ask for a conclusion text
+
+		t = "<html><div style='font: bold 20pt Arial; color: rgb(38, 166, 154);'>"
+				+ summCorrect + "<br>"; 
+		t += "</div></html>";
+		rightCol.setText(t);
+	
+		/*t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
+		if (summAnxiety <= 11) t += d.item(1).getTextContent().toUpperCase();
+		if (summAnxiety >= 12 && summAnxiety <= 30) t += d.item(2).getTextContent().toUpperCase();
+		if (summAnxiety >= 31 && summAnxiety <= 45) t += d.item(3).getTextContent().toUpperCase();
+		if (summAnxiety >= 46 ) t += d.item(4).getTextContent().toUpperCase();
+		t += "</div></html>";
+		JPanel conclusion = new JPanel();
+		conclusion.add(new JLabel(t));
+		conclusion.setUI(new PanelCustomUI(true));*/
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.fill = GridBagConstraints.NONE;
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.ipadx = 0;
+		c.ipady = 0;
+		c.weightx = 1.0;
+		c.weighty = 0.0;
+		
+		c.insets = new Insets(10, 0, 0, 20);
+		c.anchor = GridBagConstraints.EAST;
+		c.gridwidth = 1;
+		//leftCol.setPreferredSize(new Dimension(300, 350));
+		leftCol.setVerticalAlignment(JLabel.TOP);
+		resultsPanel.add(leftCol, c);
+
+		c.gridx = 1;
+		
+		c.anchor = GridBagConstraints.WEST;
+		c.insets = new Insets(10, 20, 0, 0);
+		c.gridwidth = 1;
+		//rightCol.setPreferredSize(new Dimension(300, 350));
+		rightCol.setVerticalAlignment(JLabel.TOP);
+		resultsPanel.add(rightCol, c);
+		
+		/*c.anchor = GridBagConstraints.CENTER;
+		c.insets = new Insets(20, 0, 0, 0);
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 2;
+		resultsPanel.add(conclusion, c);*/
+		
+		this.revalidate();
+		this.repaint();
 	}
 
 	@Override
