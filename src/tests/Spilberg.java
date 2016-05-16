@@ -146,6 +146,8 @@ public class Spilberg extends AbstractTest {
 
 			answers.add(b);
 		}
+		
+		((BorderButtonCustomUI) answers.get(0).getUI()).setBorderColor(new Color(0, 168, 155));
 
 		// Myetod: "chje-rjez zhoo-puu"......
 		c.insets = new Insets(10, 60, 10, 15);

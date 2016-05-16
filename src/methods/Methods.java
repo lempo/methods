@@ -873,8 +873,8 @@ public class Methods extends JFrame {
 			testsLabels[j].setVerticalTextPosition(JLabel.BOTTOM);
 			testsLabels[j].setVerticalAlignment(SwingConstants.TOP);
 			testsLabels[j]
-					.setPreferredSize(new Dimension(icon.getIconWidth() + 200, (int) (icon.getIconHeight() + 100)));
-			testsLabels[j].setMaximumSize(new Dimension(icon.getIconWidth() + 200, (int) (icon.getIconHeight() + 100)));
+					.setPreferredSize(new Dimension(icon.getIconWidth() + 200, (int) (icon.getIconHeight() + 300)));
+			testsLabels[j].setMaximumSize(new Dimension(icon.getIconWidth() + 200, (int) (icon.getIconHeight() + 300)));
 			testsLabels[j].setName(Integer.toString(j));
 			testsLabels[j].addMouseListener(l);
 			testsLabels[j].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

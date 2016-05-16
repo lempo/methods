@@ -21,6 +21,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import org.w3c.dom.Document;
@@ -135,7 +136,7 @@ public class Raven extends AbstractTest {
 		c.gridy = 2;
 		add(nextButton, c);
 
-		c.anchor = GridBagConstraints.NORTHWEST;
+		c.anchor = GridBagConstraints.SOUTHWEST;
 		c.insets = new Insets(0, 0, 0, 20);
 		c.gridheight = 3;
 		c.gridwidth = GridBagConstraints.REMAINDER;
@@ -201,6 +202,7 @@ public class Raven extends AbstractTest {
 		JLabel question = new JLabel();
 		question.setIcon(icon);
 		cards.add(question);
+		question.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		answers.removeAll();
 		NodeList a = n.getChildNodes();
@@ -218,6 +220,7 @@ public class Raven extends AbstractTest {
 		}
 		answers.setMaximumSize(new Dimension(icon.getIconWidth() * (a.getLength() / 2), icon.getIconHeight() * 2));
 		cards.add(answers);
+		answers.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		selected = 0;
 		Dimension d = answers.getComponents()[0].getPreferredSize();

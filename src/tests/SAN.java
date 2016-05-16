@@ -130,7 +130,7 @@ public class SAN extends AbstractTest {
 				} else {
 					
 					currentQuestionNumber++;
-					buttonSelected = 0;
+					//buttonSelected = 0;
 					showQuestion();
 				}
 			}
@@ -184,6 +184,9 @@ public class SAN extends AbstractTest {
 		for (int i = 0; i < 7; i++) {
 			answers[i].setName(Integer.toString(Math.abs(i - t)));
 		}
+		
+		((BorderButtonCustomUI) answers[3].getUI()).setBorderColor(new Color(0, 168, 155));
+		buttonSelected = Integer.parseInt(answers[3].getName());
 
 		leftButton.setText(nodelist.item(currentQuestionNumber).getAttributes().getNamedItem("left").getNodeValue()
 				.toString());
