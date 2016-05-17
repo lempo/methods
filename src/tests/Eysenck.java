@@ -68,7 +68,6 @@ public class Eysenck extends AbstractTest {
 
 	@Override
 	public void showTest() {
-		// TODO layout, high priority
 
 		task = new JLabel();
 		blank = new JLabel();
@@ -158,14 +157,14 @@ public class Eysenck extends AbstractTest {
 
 		c.gridy = 4;
 		c.anchor = GridBagConstraints.SOUTHWEST;
-		c.insets = new Insets(20, 0, 0, 0);
+		c.insets = new Insets(20, 10, 0, 10);
 		add(timeLeft, c);
 
 		c.gridy = 5;
 		c.anchor = GridBagConstraints.NORTH;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 0.8;
-		c.insets = new Insets(0, 0, 20, 0);
+		c.insets = new Insets(0, 10, 20, 10);
 		add(bar, c);
 
 		this.revalidate();
@@ -197,7 +196,6 @@ public class Eysenck extends AbstractTest {
 	}
 
 	public void showQuestion() {
-		// TODO layout, high priority
 		Node n = doc.getElementsByTagName("q").item(currentQuestionNumber);
 		String s = n.getChildNodes().item(0).getTextContent();
 		task.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>" + s.toUpperCase()
@@ -236,7 +234,9 @@ public class Eysenck extends AbstractTest {
 				radioButtonList.add(b);
 				radioButtonGroup.add(b);
 				b.setOpaque(false);
-				c.insets = new Insets(30, 0, 30, 0);
+				c.anchor = GridBagConstraints.WEST;
+				c.gridy = i;
+				c.insets = new Insets(10, 0, 10, 0);
 				answers.add(b, c);
 			}
 			radioButtonList.get(0).setSelected(true);
