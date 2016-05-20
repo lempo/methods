@@ -40,6 +40,7 @@ public class ImageLinkDefaults {
 		CIRCLE_ARROW,
 		BEGIN,
 		REPEAT,
+		REPEAT_ROLLOVER,
 		MENU,
 		RADIO,
 		RADIO_SELECTED,
@@ -77,6 +78,7 @@ public class ImageLinkDefaults {
 		links.put(Key.CIRCLE_ARROW, "resources/image/circleArrow.png");
 		links.put(Key.BEGIN, "resources/image/begin.png");
 		links.put(Key.REPEAT, "resources/image/repeat.png");
+		links.put(Key.REPEAT_ROLLOVER, "resources/image/repeat_rollover.png");
 		links.put(Key.MENU, "resources/image/menu");
 		links.put(Key.RADIO, "resources/image/radio_unselected.png");
 		links.put(Key.RADIO_SELECTED, "resources/image/radio_selected.png");

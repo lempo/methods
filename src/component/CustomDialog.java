@@ -1,7 +1,6 @@
 package component;
 
 import javax.swing.JDialog;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dialog;
@@ -65,7 +64,7 @@ public class CustomDialog extends JDialog {
 		c.weightx = 0.0;
 		c.weighty = 1.0;
 
-		messagePane.add(new JLabel("<html><div style='font: bold 16pt Arial Narrow; color: rgb(70, 110, 122);'>"
+		messagePane.add(new JLabel("<html><div style='font: bold 16pt Arial Narrow; text-align: center; color: rgb(144, 106, 96);'>"
 				+ title.toUpperCase().replaceAll(" ", "<br/>") + "</div></html>"), c);
 
 		pass = new CustomTextField(20, InterfaceTextDefaults.getInstance().getDefault("password"));
@@ -77,7 +76,7 @@ public class CustomDialog extends JDialog {
 		messagePane.add(pass, c);
 
 		JButton yes = new JButton(y);
-		yes.setUI(new ButtonCustomUI(new Color(38, 166, 154)));
+		yes.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
 		yes.setBorder(null);
 		yes.setOpaque(false);
 		yes.setPreferredSize(new Dimension(85, 35));
@@ -91,7 +90,7 @@ public class CustomDialog extends JDialog {
 			}
 		});
 		JButton no = new JButton(n);
-		no.setUI(new ButtonCustomUI(new Color(239, 83, 80)));
+		no.setUI(new ButtonCustomUI(new Color(11, 172, 159)));
 		no.setBorder(null);
 		no.setOpaque(false);
 		no.setPreferredSize(new Dimension(85, 35));
@@ -172,7 +171,7 @@ public class CustomDialog extends JDialog {
 		c.weightx = 0.0;
 		c.weighty = 1.0;
 
-		messagePane.add(new JLabel("<html><div style='font: bold 16pt Arial Narrow; color: rgb(70, 110, 122);'>"
+		messagePane.add(new JLabel("<html><div style='font: bold 16pt Arial Narrow; text-align: center; color: rgb(144, 106, 96);'>"
 				+ title.toUpperCase().replaceAll(" ", "<br/>") + "</div></html>"), c);
 
 		// Create a button
@@ -188,7 +187,7 @@ public class CustomDialog extends JDialog {
 			}
 
 			JButton yes = new JButton(v);
-			yes.setUI(new ButtonCustomUI(new Color(38, 166, 154)));
+			yes.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
 			yes.setBorder(null);
 			yes.setOpaque(false);
 			yes.setPreferredSize(new Dimension(85, 35));
@@ -217,7 +216,7 @@ public class CustomDialog extends JDialog {
 			messagePane.add(yes, c);
 		} else {
 			JButton yes = new JButton(y);
-			yes.setUI(new ButtonCustomUI(new Color(38, 166, 154)));
+			yes.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
 			yes.setBorder(null);
 			yes.setOpaque(false);
 			yes.setPreferredSize(new Dimension(85, 35));
@@ -231,7 +230,7 @@ public class CustomDialog extends JDialog {
 				}
 			});
 			JButton no = new JButton(n);
-			no.setUI(new ButtonCustomUI(new Color(239, 83, 80)));
+			no.setUI(new ButtonCustomUI(new Color(11, 172, 159)));
 			no.setBorder(null);
 			no.setOpaque(false);
 			no.setPreferredSize(new Dimension(85, 35));

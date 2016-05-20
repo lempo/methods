@@ -66,7 +66,7 @@ public class MenuPanel extends JPanel {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					JLabel l = (JLabel) e.getSource();
-					if (r.showedTest != null) {
+					if (r.showedTest != null && ! r.showedTest.isDontShowBreakingDialog()) {
 						CustomDialog d1 = new CustomDialog(r,
 								InterfaceTextDefaults.getInstance().getDefault("sure_break_task"),
 								InterfaceTextDefaults.getInstance().getDefault("break"),

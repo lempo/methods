@@ -402,9 +402,9 @@ public class Methods extends JFrame {
 			groups[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			groups[i].createToolTip();
 			groups[i].setToolTipText(
-					"<html><div style='font: bold 14pt Arial Narrow; color: #455a64; padding: 10px; padding-top: 13px; padding-bottom: 5px;'>"
+					"<html><div style='font: bold 14pt Arial Narrow; color: #906a60; padding: 10px; padding-top: 13px; padding-left: 20px; padding-bottom: 5px;'>"
 							+ methodGroups[i].getName().toUpperCase() + "</div>"
-							+ "<div style='font: 13pt Arial Narrow; color: #455a64; padding: 10px;  padding-top: 0px; padding-bottom: 13px;'>"
+							+ "<div style='font: 13pt Arial Narrow; color: black; padding: 10px;  padding-top: 0px; padding-left: 20px; padding-bottom: 13px;'>"
 							+ methodGroups[i].getToolTipText() + "</div></html>");
 		}
 
@@ -562,6 +562,7 @@ public class Methods extends JFrame {
 		checkUpdates.setOpaque(false);
 		checkUpdates.setPreferredSize(new Dimension(252, 40));
 		checkUpdates.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		// checkUpdates.setIconTextGap(20);
 		checkUpdates.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				DateFormat format = new SimpleDateFormat("dd.MM.yy");
@@ -933,7 +934,15 @@ public class Methods extends JFrame {
 		heading.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				showTests(currentTestGroup);
+				if (showedTest != null && !showedTest.isDontShowBreakingDialog()) {
+					CustomDialog d1 = new CustomDialog(methods, InterfaceTextDefaults.getInstance().getDefault("sure_break_task"),
+							InterfaceTextDefaults.getInstance().getDefault("break"),
+							InterfaceTextDefaults.getInstance().getDefault("cancel"), true);
+					if (d1.getAnswer() == 1)
+						showTests(currentTestGroup);
+				}
+				else
+					showTests(currentTestGroup);
 			}
 		});
 
@@ -1033,7 +1042,11 @@ public class Methods extends JFrame {
 			JLabel l = (JLabel) e.getSource();
 			switch (l.getName()) {
 			case "close":
-				System.exit(0);
+				CustomDialog d = new CustomDialog(methods, InterfaceTextDefaults.getInstance().getDefault("sure_exit"),
+						InterfaceTextDefaults.getInstance().getDefault("exit"),
+						InterfaceTextDefaults.getInstance().getDefault("cancel"), true);
+				if (d.getAnswer() == 1)
+					System.exit(0);
 				break;
 			case "restore":
 				resize();
@@ -1111,15 +1124,28 @@ public class Methods extends JFrame {
 				// TODO logout, dialog, later
 				break;
 			case "help":
-				// TODO dialog, later
-				showHelp();
+				if (showedTest != null && !showedTest.isDontShowBreakingDialog()) {
+					CustomDialog d1 = new CustomDialog(methods, InterfaceTextDefaults.getInstance().getDefault("sure_break_task"),
+							InterfaceTextDefaults.getInstance().getDefault("break"),
+							InterfaceTextDefaults.getInstance().getDefault("cancel"), true);
+					if (d1.getAnswer() == 1)
+						showHelp();
+				}
+				else
+					showHelp();
 				break;
 			case "about":
-				// TODO dialog, later
-				showAbout();
+				if (showedTest != null && !showedTest.isDontShowBreakingDialog()) {
+					CustomDialog d1 = new CustomDialog(methods, InterfaceTextDefaults.getInstance().getDefault("sure_break_task"),
+							InterfaceTextDefaults.getInstance().getDefault("break"),
+							InterfaceTextDefaults.getInstance().getDefault("cancel"), true);
+					if (d1.getAnswer() == 1)
+						showAbout();
+				}
+				else
+					showAbout();
 				break;
 			case "tasks":
-				// TODO dialog, later
 				if (popup != null) {
 					popup.hide();
 				}

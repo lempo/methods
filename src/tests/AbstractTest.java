@@ -8,6 +8,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,13 +20,11 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 import component.CustomRadioButton;
 import component.CustomTextField;
 import customui.ButtonCustomUI;
-import customui.ScrollBarCustomUI;
 import defaults.ImageLinkDefaults;
 import defaults.InterfaceTextDefaults;
 import methods.Methods;
@@ -48,6 +48,8 @@ public abstract class AbstractTest extends JPanel {
 	protected int height;
 
 	protected JPanel resultsPanel;
+	
+	protected boolean dontShowBreakingDialog = false;
 
 	public AbstractTest(Methods methods, int width, int height, Test test) {
 		super();
@@ -61,6 +63,7 @@ public abstract class AbstractTest extends JPanel {
 	}
 
 	public void showStandartInfo() {
+		dontShowBreakingDialog = true;
 		// TODO layout and text into a scroll, middle priority
 		JLabel image = new JLabel();
 		ImageIcon icon = Utils.createImageIcon(test.getBigImage());
@@ -126,19 +129,20 @@ public abstract class AbstractTest extends JPanel {
 	}
 
 	public void showStandartSettings() {
+		dontShowBreakingDialog = false;
 		JLabel heading = new JLabel();
-		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(115, 84, 73);'>"
+		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("settings") + "</div></html>";
 		heading.setText(t);
 
-		JLabel ageLabel = new JLabel("<html><div style='font: 18pt Arial Narrow; color: rgb(115, 84, 73);'>"
+		JLabel ageLabel = new JLabel("<html><div style='font: 18pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("age") + ":" + "</div></html>");
-		JLabel sexLabel = new JLabel("<html><div style='font: 18pt Arial Narrow; color: rgb(115, 84, 73);'>"
+		JLabel sexLabel = new JLabel("<html><div style='font: 18pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("sex") + ":" + "</div></html>");
-		JLabel nameLabel = new JLabel("<html><div style='font: 18pt Arial Narrow; color: rgb(115, 84, 73);'>"
+		JLabel nameLabel = new JLabel("<html><div style='font: 18pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("name") + ":" + "</div></html>");
-		CustomTextField ageTextField = new CustomTextField(20, "");
-		CustomTextField nameTextField = new CustomTextField(20, "");
+		CustomTextField ageTextField = new CustomTextField(25, "");
+		CustomTextField nameTextField = new CustomTextField(25, "");
 
 		JRadioButton maleButton = new CustomRadioButton(InterfaceTextDefaults.getInstance().getDefault("male"), true);
 		maleButton.setActionCommand("male");
@@ -152,7 +156,7 @@ public abstract class AbstractTest extends JPanel {
 		group.add(femaleButton);
 
 		JButton start = new JButton(InterfaceTextDefaults.getInstance().getDefault("begin_task"));
-		start.setUI(new ButtonCustomUI(new Color(38, 166, 154)));
+		start.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
 		start.setBorder(null);
 		start.setOpaque(false);
 		start.setPreferredSize(new Dimension(200, 35));
@@ -192,6 +196,7 @@ public abstract class AbstractTest extends JPanel {
 		c.gridy = 1;
 		c.insets = new Insets(10, 200, 0, 0);
 		c.gridwidth = 1;
+		c.weightx = 0.0;
 		add(nameLabel, c);
 
 		c.gridy = 2;
@@ -202,7 +207,7 @@ public abstract class AbstractTest extends JPanel {
 
 		c.gridx = 2;
 		c.gridy = 1;
-		c.insets = new Insets(10, 20, 0, 0);
+		c.insets = new Insets(10, 30, 0, 0);
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		add(nameTextField, c);
 
@@ -214,13 +219,15 @@ public abstract class AbstractTest extends JPanel {
 		add(maleButton, c);
 
 		c.gridx = 3;
+		c.insets = new Insets(10, 10, 0, 0);
 		add(femaleButton, c);
 
-		c.anchor = GridBagConstraints.CENTER;
+		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridheight = GridBagConstraints.REMAINDER;
+		c.gridwidth = 2;
 		c.gridx = 2;
 		c.gridy = 4;
-		c.insets = new Insets(40, 0, 0, 0);
+		c.insets = new Insets(30, 32, 0, 0);
 		c.weighty = 1.0;
 		add(start, c);
 
@@ -229,6 +236,7 @@ public abstract class AbstractTest extends JPanel {
 	}
 
 	public void showStandartResults() {
+		dontShowBreakingDialog = true;
 
 		resultsPanel = new JPanel();
 		resultsPanel.setOpaque(false);
@@ -254,6 +262,9 @@ public abstract class AbstractTest extends JPanel {
 
 		JLabel repeat = new JLabel();
 		repeat.setIcon(Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.REPEAT)));
+		repeat.setName("repeat");
+		repeat.addMouseListener(new IconMouseListener());
+		repeat.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		JLabel leftCol = new JLabel();
 		t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
@@ -350,5 +361,56 @@ public abstract class AbstractTest extends JPanel {
 	public abstract void showResults();
 
 	public abstract void showSettings();
+	
+	class IconMouseListener implements MouseListener {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			JLabel l = (JLabel) e.getSource();
+			switch (l.getName()) {
+			case "repeat":
+				showTest();
+				break;
+			}
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			JLabel l = (JLabel) e.getSource();
+			ImageIcon icon;
+			switch (l.getName()) {
+			case "repeat":
+				icon = Utils
+						.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.REPEAT_ROLLOVER));
+				l.setIcon(icon);
+				l.updateUI();
+				break;
+			}
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			JLabel l = (JLabel) e.getSource();
+			ImageIcon icon;
+			switch (l.getName()) {
+			case "repeat":
+				icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.REPEAT));
+				l.setIcon(icon);
+				l.updateUI();
+				break;
+			}
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+		}
+	}
+	
+	public boolean isDontShowBreakingDialog() {
+		return dontShowBreakingDialog;
+	}
 
 }

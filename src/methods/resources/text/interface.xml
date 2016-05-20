@@ -43,7 +43,7 @@
 <string key="rule_users" value="Управление пользователями"/>
 <string key="task_groups" value="ГРУППЫ УПРАЖНЕНИЙ"/>
 <string key="task_number" value="ЗАДАНИЕ №"/>
-<string key="begin_task" value="Начать упражнение"/>
+<string key="begin_task" value="Начать тестирование"/>
 <string key="about" value="О ПРОГРАММЕ"/>
 <string key="key" value="Лицензионный ключ"/>
 <string key="license" value="Зарегистрировано на имя"/>
@@ -58,7 +58,7 @@
 <string key="faq" value="ЧАСТО ЗАДАВАЕМЫЕ ВОПРОСЫ"/>
 <string key="break" value="Прервать"/>
 <string key="cancel" value="Отмена"/>
-<string key="sure_break_task" value="ВЫ_УВЕРЕНЫ, ЧТО_ХОТИТЕ_ПРЕРВАТЬ_ВЫПОЛНЕНИЕ ЗАДАНИЯ?"/>
+<string key="sure_break_task" value="ВЫ_УВЕРЕНЫ, ЧТО_ХОТИТЕ_ПРЕРВАТЬ_ВЫПОЛНЕНИЕ ТЕСТА?"/>
 <string key="sure_exit" value="ВЫ_УВЕРЕНЫ, ЧТО_ХОТИТЕ_ВЫЙТИ_ИЗ_ПРОГРАММЫ?"/>
 <string key="sure_logout" value="ВЫ_УВЕРЕНЫ, ЧТО_ХОТИТЕ_ВЫЙТИ ИЗ_УЧЕТНОЙ_ЗАПИСИ?"/>
 <string key="exit" value="Выйти"/>
