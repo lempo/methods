@@ -99,7 +99,7 @@ public class Eysenck extends AbstractTest {
 					if (correctAnswer.equals(input.getText().trim().toUpperCase())) summCorrect++;
 					break;
 				}
-				System.out.println(summCorrect);
+				//System.out.println(summCorrect);
 				
 				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength() - 1) {
 					testTime = new Date().getTime() - testTime;

@@ -156,6 +156,7 @@ public class Munsterberg extends AbstractTest {
 		toResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				testTime = new Date().getTime() - testTime;
+				timer.stop();
 				showResults();
 			}
 		});
@@ -239,7 +240,7 @@ public class Munsterberg extends AbstractTest {
 		t += "</div></html>";
 		rightCol.setText(t);
 
-		// TODO Conclusion - have to ask for a detailed interpretation
+		
 		t = "<html><div style='font: bold 14pt Arial; color: rgb(144, 106, 96); padding: 5px'>";
 		if (summCorrect >= 0 && summCorrect <= 15)
 			t += d.item(3).getTextContent().toUpperCase().replaceAll("_", "<br/>");

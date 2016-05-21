@@ -218,8 +218,7 @@ public class Shulte extends AbstractTest {
 				+ "</div></html>";
 		rightCol.setText(t);
 		
-		/* Conclusion interpreation placeholder
-		t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
+		/*t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
 		if (summCorrect >= 0 && summCorrect <= 10) t += d.item(1).getTextContent().toUpperCase();
 		if (summCorrect >= 11 && summCorrect <= 14) t += d.item(2).getTextContent().toUpperCase();
 		if (summCorrect >= 15 && summCorrect <= 20) t += d.item(3).getTextContent().toUpperCase();
@@ -256,8 +255,7 @@ public class Shulte extends AbstractTest {
 		rightCol.setVerticalAlignment(JLabel.TOP);
 		resultsPanel.add(rightCol, c);
 		
-		/*TODO Some interpretation is needed (need to ask for more info)
-		c.anchor = GridBagConstraints.CENTER;
+		/*c.anchor = GridBagConstraints.CENTER;
 		c.insets = new Insets(20, 0, 0, 0);
 		c.gridwidth = 2;
 		c.gridx = 0;

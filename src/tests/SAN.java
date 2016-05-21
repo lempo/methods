@@ -228,17 +228,17 @@ public class SAN extends AbstractTest {
 				+ "</div></html>";
 		rightCol.setText(t);
 	
-		t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
+		/*t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
 		t += d.item(3).getTextContent();
-		/*if (summCorrect >= 0 && summCorrect <= 10) t += d.item(1).getTextContent().toUpperCase();
+		if (summCorrect >= 0 && summCorrect <= 10) t += d.item(1).getTextContent().toUpperCase();
 		if (summCorrect >= 11 && summCorrect <= 14) t += d.item(2).getTextContent().toUpperCase();
 		if (summCorrect >= 15 && summCorrect <= 20) t += d.item(3).getTextContent().toUpperCase();
-		Vdruk-k-k-k pri-i-igoditsyaa-a-a....*/
+		Vdruk-k-k-k pri-i-igoditsyaa-a-a....
 		
 		t += "</div></html>";
 		JPanel conclusion = new JPanel();
 		conclusion.add(new JLabel(t));
-		conclusion.setUI(new PanelCustomUI(true));
+		conclusion.setUI(new PanelCustomUI(true));*/
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -268,16 +268,15 @@ public class SAN extends AbstractTest {
 		rightCol.setVerticalAlignment(JLabel.TOP);
 		resultsPanel.add(rightCol, c);
 		
-		c.anchor = GridBagConstraints.CENTER;
+		/*c.anchor = GridBagConstraints.CENTER;
 		c.insets = new Insets(20, 0, 0, 0);
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 2;
-		resultsPanel.add(conclusion, c);
+		resultsPanel.add(conclusion, c);*/
 		
 		this.revalidate();
 		this.repaint();
-		// TODO need conclusion texts, high priority
 	}
 
 	@Override

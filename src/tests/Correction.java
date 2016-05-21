@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -35,6 +36,18 @@ public class Correction extends AbstractTest {
 
 	Color unselected = new Color(144, 106, 96);
 	Color selected = new Color(38, 166, 154);
+	
+	int minuteCounter = 0;
+	int cherta = 0;
+	int summCorrect[];
+	int summIncorrect[];
+	int summMissed[];
+	
+	JLabel[][] letters;
+	JButton firstLetter;
+	JButton secondLetter;
+		
+	private Timer timer;
 
 	public Correction(Methods methods, int width, int height, Test test) {
 		super(methods, width, height, test);
@@ -55,7 +68,7 @@ public class Correction extends AbstractTest {
 		NodeList strings = doc.getElementsByTagName("blank");
 		int stringNum = strings.getLength();
 
-		JLabel[][] letters = new JLabel[stringNum][];
+		letters = new JLabel[stringNum][];
 
 		JPanel[] stringPanels = new JPanel[stringNum];
 		JPanel table = new JPanel();
@@ -108,12 +121,12 @@ public class Correction extends AbstractTest {
 		c.gridy = 0;
 		this.add(table, c);
 		
-		JButton firstLetter = new JButton("Ê");
+		firstLetter = new JButton("Ê"); // TODO Randomize here as well
 		firstLetter.setUI(new ButtonCustomUI(new Color(38, 166, 154)));
 		firstLetter.setBorder(null);
 		firstLetter.setOpaque(false);
 		firstLetter.setPreferredSize(new Dimension(35, 35));
-		JButton secondLetter = new JButton("Ð");
+		secondLetter = new JButton("Ð");
 		secondLetter.setUI(new ButtonCustomUI(new Color(38, 166, 154)));
 		secondLetter.setBorder(null);
 		secondLetter.setOpaque(false);
@@ -137,6 +150,8 @@ public class Correction extends AbstractTest {
 		toResults.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		toResults.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				testTime = new Date().getTime() - testTime;
+				timer.stop();
 				showResults();
 			}
 		});
@@ -153,7 +168,23 @@ public class Correction extends AbstractTest {
 		
 		testDate = new Date();
 		testTime = new Date().getTime();
-		//TODO Run a special timer that marks 1 minute(?) intervals - need to ask the way we count that as well
+
+		timer = new Timer(1000 * 60, new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				minuteCounter++;
+				// TODO Calculate mid-results
+				
+				if (minuteCounter >= 8) {
+					timer.stop();
+					showResults();
+				}
+				else {
+					// Do something? Or not?
+				}
+				
+			}
+		});
+		timer.start();
 	}
 
 	@Override
