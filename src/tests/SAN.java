@@ -54,6 +54,12 @@ public class SAN extends AbstractTest {
 
 	@Override
 	public void showTest() {
+		currentQuestionNumber = 0;
+		buttonSelected = 0;
+		summWellbeing = 0;
+		summActivity = 0;
+		summMood = 0;
+		
 		JLabel question = new JLabel();
 		String s = doc.getElementsByTagName("text").item(0).getTextContent();
 		question.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>" + s.toUpperCase()

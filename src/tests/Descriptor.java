@@ -51,6 +51,9 @@ public class Descriptor extends AbstractTest {
 
 	@Override
 	public void showTest() {
+		summCorrect = 0;
+		currentQuestionNumber = 0;
+		summSelected = 0;
 
 		questionButton.setUI(new ButtonCustomUI(new Color(0, 168, 155)));
 		questionButton.setBorder(null);

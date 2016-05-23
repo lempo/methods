@@ -68,6 +68,8 @@ public class Eysenck extends AbstractTest {
 
 	@Override
 	public void showTest() {
+		currentQuestionNumber = 0;
+		summCorrect = 0;
 
 		task = new JLabel();
 		blank = new JLabel();

@@ -56,6 +56,9 @@ public class MAST extends AbstractTest {
 
 	@Override
 	public void showTest() {
+		currentQuestionNumber = 0;
+		summ = 0;
+		
 		yesButton.setUI(new BorderButtonCustomUI(new Color(38, 166, 154)));
 		yesButton.setBorder(null);
 		yesButton.setOpaque(false);

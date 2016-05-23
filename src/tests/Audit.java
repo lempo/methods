@@ -67,6 +67,11 @@ public class Audit extends AbstractTest {
 
 	@Override
 	public void showTest() {
+		summ = 0;
+		answer = 0;
+		currentQuestionNumber = 1;
+		doComments = false;
+		
 		nextButton.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
 		nextButton.setBorder(null);
 		nextButton.setOpaque(false);

@@ -3,6 +3,7 @@ package tests;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -14,9 +15,12 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import org.w3c.dom.Document;
@@ -58,6 +62,9 @@ public class Munsterberg extends AbstractTest {
 
 	@Override
 	public void showTest() {
+		summCorrect = 0;
+		summSkipped = 0;
+		summWrong = 0;
 
 		this.removeAll();
 
@@ -74,7 +81,7 @@ public class Munsterberg extends AbstractTest {
 		table.setPreferredSize(new Dimension(900, 400));
 
 		GridBagConstraints c = new GridBagConstraints();
-		c.anchor = GridBagConstraints.CENTER;
+		c.anchor = GridBagConstraints.WEST;
 		c.fill = GridBagConstraints.BOTH;
 		c.gridheight = 1;
 		c.gridwidth = 1;
@@ -86,41 +93,25 @@ public class Munsterberg extends AbstractTest {
 		c.weightx = 1.0;
 		c.weighty = 1.0;
 
+		// TODO justify labels more careful, low priority
+		
 		LettersMouseListener l = new LettersMouseListener();
-
-		/*
-		 * for (int i = 0; i < stringNum; i++) { String blank =
-		 * strings.item(i).getTextContent(); letters[i] = new
-		 * JLabel[blank.length()];
-		 * 
-		 * stringPanels[i] = new JPanel(); stringPanels[i].setOpaque(false);
-		 * stringPanels[i].setLayout(new BoxLayout(stringPanels[i],
-		 * BoxLayout.X_AXIS)); stringPanels[i].setMinimumSize(new Dimension(900,
-		 * 30)); stringPanels[i].setMaximumSize(new Dimension(900, 30));
-		 * stringPanels[i].setPreferredSize(new Dimension(900, 30));
-		 * stringPanels[i].add(Box.createHorizontalGlue());
-		 * 
-		 * for (int j = 0; j < blank.length(); j++) { letters[i][j] = new
-		 * JLabel(("" + blank.charAt(j)).toUpperCase());
-		 * letters[i][j].addMouseListener(l);
-		 * letters[i][j].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR
-		 * )); letters[i][j].setFont(new Font("Arial", Font.BOLD, 14));
-		 * letters[i][j].setForeground(unselected);
-		 * stringPanels[i].add(letters[i][j]);
-		 * letters[i][j].setHorizontalAlignment(SwingConstants.CENTER);
-		 * stringPanels[i].add(Box.createHorizontalGlue()); } c.gridy = i;
-		 * table.add(stringPanels[i], c); }
-		 */
-
-		// TODO justify labels, low priority
-
+		JPanel[] stringPanels = new JPanel[stringNum];
 		letters = new JLabel[stringNum][];
-
+		
 		for (int i = 0; i < stringNum; i++) {
 			String blank = strings.item(i).getTextContent();
 			letters[i] = new JLabel[blank.length()];
 
-			c.gridy = i;
+			stringPanels[i] = new JPanel();
+			stringPanels[i].setOpaque(false);
+			stringPanels[i].setLayout(new FlowLayout());
+			stringPanels[i].setMinimumSize(new Dimension(800, 30));
+			stringPanels[i].setMaximumSize(new Dimension(800, 30));
+			stringPanels[i].setPreferredSize(new Dimension(800, 30));
+			
+			Dimension d = new Dimension(Math.round(800f / (float) blank.length()), 30);
+			System.out.println(d);
 
 			for (int j = 0; j < blank.length(); j++) {
 				letters[i][j] = new JLabel(("" + blank.charAt(j)).toUpperCase());
@@ -128,10 +119,48 @@ public class Munsterberg extends AbstractTest {
 				letters[i][j].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 				letters[i][j].setFont(new Font("Arial", Font.BOLD, 14));
 				letters[i][j].setForeground(unselected);
+				letters[i][j].setPreferredSize(d);
+				letters[i][j].setMinimumSize(d);
+				letters[i][j].setMaximumSize(d);
+				stringPanels[i].add(letters[i][j]);
+				letters[i][j].setHorizontalAlignment(SwingConstants.LEFT);
+				if (j == blank.length() - 1)
+					letters[i][j].setHorizontalAlignment(SwingConstants.RIGHT);
+			}
+			c.gridy = i;
+			table.add(stringPanels[i], c);
+		}
+
+		/*letters = new JLabel[stringNum][];
+
+		for (int i = 0; i < stringNum; i++) {
+			String blank = strings.item(i).getTextContent();
+			letters[i] = new JLabel[blank.length()];
+
+			c.gridy = i;
+
+			Dimension d = new Dimension(Math.round(900f / (float) blank.length()), 30);
+			System.out.println(d);
+
+			for (int j = 0; j < blank.length(); j++) {
+				letters[i][j] = new JLabel(("" + blank.charAt(j)).toUpperCase());
+				letters[i][j].addMouseListener(l);
+				letters[i][j].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				letters[i][j].setFont(new Font("Arial", Font.BOLD, 14));
+				letters[i][j].setForeground(unselected);
+				letters[i][j].setPreferredSize(d);
+				letters[i][j].setMinimumSize(d);
+				letters[i][j].setMaximumSize(d);
+				letters[i][j].setOpaque(true);
+				c.anchor = GridBagConstraints.WEST;
+				if (j == blank.length() - 1)
+					c.anchor = GridBagConstraints.EAST;
 				c.gridx = j;
 				table.add(letters[i][j], c);
 			}
 		}
+		
+		table.revalidate();*/
 
 		c.anchor = GridBagConstraints.CENTER;
 		c.fill = GridBagConstraints.NONE;
@@ -142,7 +171,7 @@ public class Munsterberg extends AbstractTest {
 		c.insets = new Insets(0, 0, 0, 0);
 		c.ipadx = 0;
 		c.ipady = 0;
-		c.weightx = 0.0;
+		c.weightx = 1.0;
 		c.weighty = 0.0;
 
 		this.add(table, c);
@@ -161,6 +190,7 @@ public class Munsterberg extends AbstractTest {
 			}
 		});
 
+		c.fill = GridBagConstraints.NONE;
 		c.anchor = GridBagConstraints.SOUTHEAST;
 		c.gridx = 0;
 		c.gridy = 1;
@@ -240,7 +270,6 @@ public class Munsterberg extends AbstractTest {
 		t += "</div></html>";
 		rightCol.setText(t);
 
-		
 		t = "<html><div style='font: bold 14pt Arial; color: rgb(144, 106, 96); padding: 5px'>";
 		if (summCorrect >= 0 && summCorrect <= 15)
 			t += d.item(3).getTextContent().toUpperCase().replaceAll("_", "<br/>");

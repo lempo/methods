@@ -7,30 +7,19 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import customui.ButtonCustomUI;
-import customui.PanelCustomUI;
-import defaults.ImageLinkDefaults;
 import defaults.InterfaceTextDefaults;
 import methods.Methods;
 import methods.Test;
-import methods.Utils;
 
 public class Shulte extends AbstractTest {
 
@@ -56,19 +45,20 @@ public class Shulte extends AbstractTest {
 
 	private void generateTable(int[][] table) {
 		Random rnd = new Random(new Date().getTime());
-		
+
 		int tyk1, tyk2;
-		for (int i = 1; i <= n*n;)
-		while(true) {
-			tyk1 = rnd.nextInt(n);
-			tyk2 = rnd.nextInt(n);
-			if (table[tyk1][tyk2] != 0) break;
-			else {
-				table[tyk1][tyk2] = i;
-				i++;
-				break;
+		for (int i = 1; i <= n * n;)
+			while (true) {
+				tyk1 = rnd.nextInt(n);
+				tyk2 = rnd.nextInt(n);
+				if (table[tyk1][tyk2] != 0)
+					break;
+				else {
+					table[tyk1][tyk2] = i;
+					i++;
+					break;
+				}
 			}
-		}
 	}
 
 	private void showTable(int next) {
@@ -87,7 +77,7 @@ public class Shulte extends AbstractTest {
 
 		times[next] = new Date().getTime();
 	}
-
+	
 	@Override
 	public void showInfo() {
 		showStandartInfo();
@@ -96,7 +86,8 @@ public class Shulte extends AbstractTest {
 	@Override
 	public void showTest() {
 		progress = 1;
-		
+		tableCounter = 0;
+
 		removeAll();
 		setLayout(new GridBagLayout());
 
@@ -125,7 +116,7 @@ public class Shulte extends AbstractTest {
 			cells[k].setOpaque(true);
 			cells[k].setBackground(Color.WHITE);
 		}
-		
+
 		heading = new JLabel();
 		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("table").toUpperCase() + " "
@@ -134,17 +125,17 @@ public class Shulte extends AbstractTest {
 
 		GridBagConstraints c = new GridBagConstraints();
 
-		c.anchor = GridBagConstraints.SOUTHWEST;
+		c.anchor = GridBagConstraints.NORTHWEST;
 		c.fill = GridBagConstraints.NONE;
 		c.gridheight = 1;
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(0, (int) (-table.getPreferredSize().getWidth() * 0.7), 50, 0);
+		c.insets = new Insets(0, 10, 50, 0);
 		c.ipadx = 0;
 		c.ipady = 0;
-		c.weightx = 0.0;
-		c.weighty = 0.0;
+		c.weightx = 1.0;
+		c.weighty = 1.0;
 
 		add(heading, c);
 
@@ -152,55 +143,35 @@ public class Shulte extends AbstractTest {
 		c.fill = GridBagConstraints.NONE;
 		c.gridheight = 1;
 		c.gridwidth = 1;
-		c.gridx = 1;
+		c.gridx = 0;
 		c.gridy = 1;
-		c.insets = new Insets(0, 0, 0, 0);
+		c.insets = new Insets(0, 0, 100, 0);
 
 		add(table, c);
 
-		JButton toResults = new JButton(InterfaceTextDefaults.getInstance().getDefault("finish_test"));
-		toResults.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
-		toResults.setBorder(null);
-		toResults.setOpaque(false);
-		toResults.setPreferredSize(new Dimension(200, 35));
-		toResults.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		toResults.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				showResults();
-			}
-		});
-
-		c.anchor = GridBagConstraints.SOUTHEAST;
-		c.gridwidth = 1;
-		c.gridx = 2;
-		c.gridy = 2;
-		c.insets = new Insets(50, 0, 0, (int) (-table.getPreferredSize().getWidth() * 0.7));
-
-		add(toResults, c);
-
 		revalidate();
 		repaint();
-		
+
 		showTable(0);
-		
+
 		testDate = new Date();
 		testTime = new Date().getTime();
 	}
 
 	@Override
 	public void showResults() {
-		
+
 		showStandartResults();
-		
+
 		float resultER = 0;
-		for(int i = 0; i < times.length; i++)
+		for (int i = 0; i < times.length; i++)
 			resultER += times[i];
 		resultER /= times.length;
 		resultER /= 1000;
-		
+
 		float resultVR = times[0] / resultER / 1000;
 		float resultPU = times[3] / resultER / 1000;
-		
+
 		JLabel leftCol = new JLabel();
 		String t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("results_ER") + ": <br>"
@@ -211,24 +182,24 @@ public class Shulte extends AbstractTest {
 		JLabel rightCol = new JLabel();
 
 		DecimalFormat df = new DecimalFormat("#.##");
-		t = "<html><div style='font: bold 20pt Arial; color: rgb(38, 166, 154);'>" 
-				+ df.format(resultER) + "<br>" 
-				+ df.format(resultVR) + "<br>" 
-				+ df.format(resultPU) + "<br>"
-				+ "</div></html>";
+		t = "<html><div style='font: bold 20pt Arial; color: rgb(38, 166, 154);'>" + df.format(resultER) + "<br>"
+				+ df.format(resultVR) + "<br>" + df.format(resultPU) + "<br>" + "</div></html>";
 		rightCol.setText(t);
-		
-		/*t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
-		if (summCorrect >= 0 && summCorrect <= 10) t += d.item(1).getTextContent().toUpperCase();
-		if (summCorrect >= 11 && summCorrect <= 14) t += d.item(2).getTextContent().toUpperCase();
-		if (summCorrect >= 15 && summCorrect <= 20) t += d.item(3).getTextContent().toUpperCase();
-		t += "</div></html>";
-		JPanel conclusion = new JPanel();
-		conclusion.add(new JLabel(t));
-		conclusion.setUI(new PanelCustomUI(true));*/
-		
+
+		/*
+		 * t =
+		 * "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>"
+		 * ; if (summCorrect >= 0 && summCorrect <= 10) t +=
+		 * d.item(1).getTextContent().toUpperCase(); if (summCorrect >= 11 &&
+		 * summCorrect <= 14) t += d.item(2).getTextContent().toUpperCase(); if
+		 * (summCorrect >= 15 && summCorrect <= 20) t +=
+		 * d.item(3).getTextContent().toUpperCase(); t += "</div></html>";
+		 * JPanel conclusion = new JPanel(); conclusion.add(new JLabel(t));
+		 * conclusion.setUI(new PanelCustomUI(true));
+		 */
+
 		GridBagConstraints c = new GridBagConstraints();
-		
+
 		c.anchor = GridBagConstraints.NORTHWEST;
 		c.fill = GridBagConstraints.NONE;
 		c.gridheight = 1;
@@ -238,30 +209,29 @@ public class Shulte extends AbstractTest {
 		c.ipady = 0;
 		c.weightx = 1.0;
 		c.weighty = 0.0;
-		
+
 		c.insets = new Insets(10, 0, 0, 20);
 		c.anchor = GridBagConstraints.EAST;
 		c.gridwidth = 1;
-		//leftCol.setPreferredSize(new Dimension(300, 350));
+		// leftCol.setPreferredSize(new Dimension(300, 350));
 		leftCol.setVerticalAlignment(JLabel.TOP);
 		resultsPanel.add(leftCol, c);
 
 		c.gridx = 1;
-		
+
 		c.anchor = GridBagConstraints.WEST;
 		c.insets = new Insets(10, 20, 0, 0);
 		c.gridwidth = 1;
-		//rightCol.setPreferredSize(new Dimension(300, 350));
+		// rightCol.setPreferredSize(new Dimension(300, 350));
 		rightCol.setVerticalAlignment(JLabel.TOP);
 		resultsPanel.add(rightCol, c);
-		
-		/*c.anchor = GridBagConstraints.CENTER;
-		c.insets = new Insets(20, 0, 0, 0);
-		c.gridwidth = 2;
-		c.gridx = 0;
-		c.gridy = 2;
-		resultsPanel.add(conclusion, c);*/
-		
+
+		/*
+		 * c.anchor = GridBagConstraints.CENTER; c.insets = new Insets(20, 0, 0,
+		 * 0); c.gridwidth = 2; c.gridx = 0; c.gridy = 2;
+		 * resultsPanel.add(conclusion, c);
+		 */
+
 		this.revalidate();
 		this.repaint();
 

@@ -43,7 +43,7 @@ public class Exception extends AbstractTest {
 
 	private final int TABLESIZE = 2;
 
-	private int selected;
+	private int selected = 0;
 
 	public Exception(Methods methods, int width, int height, Test test) {
 		super(methods, width, height, test);
@@ -56,6 +56,7 @@ public class Exception extends AbstractTest {
 
 	@Override
 	public void showTest() {
+		currentQuestionNumber = 0;
 		// TODO layout, middle priority
 
 		JLabel question = new JLabel();

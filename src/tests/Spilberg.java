@@ -58,6 +58,11 @@ public class Spilberg extends AbstractTest {
 
 	@Override
 	public void showTest() {
+		currentQuestionNumber = 0;
+		summ1 = 0;
+		summ2 = 0;
+		summAnxiety = 0;
+		
 		questionButton.setUI(new ButtonCustomUI(new Color(0, 168, 155)));
 		questionButton.setBorder(null);
 		questionButton.setOpaque(false);

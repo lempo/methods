@@ -49,6 +49,9 @@ public class Classification extends AbstractTest {
 
 	@Override
 	public void showTest() {
+		currentQuestionNumber = 0;
+		summCorrect = 0;
+		
 		JLabel task = new JLabel();
 		String s = doc.getElementsByTagName("task").item(0).getTextContent();
 		task.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>" + s.toUpperCase()

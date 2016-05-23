@@ -385,11 +385,13 @@ public abstract class AbstractTest extends JPanel {
 
 		@Override
 		public int print(Graphics g, PageFormat pf, int pageNumber) throws PrinterException {
+			pf.setOrientation(PageFormat.LANDSCAPE);
 			if (pageNumber > 0) {
 				return Printable.NO_SUCH_PAGE;
 			} else {
 				Graphics2D g2 = (Graphics2D) g;
-				g2.translate(- pf.getWidth() / 3, pf.getImageableY());
+				g2.translate(- pf.getWidth() / 10, pf.getImageableY());
+				g2.scale(0.75, 0.75);
 				resultsPanel.print(g2);
 			}
 			return Printable.PAGE_EXISTS;

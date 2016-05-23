@@ -60,6 +60,9 @@ public class Correction extends AbstractTest {
 
 	@Override
 	public void showTest() {
+		minuteCounter = 0;
+		cherta = 0;
+		
 		// TODO randomize letters, middle priority
 
 		this.removeAll();

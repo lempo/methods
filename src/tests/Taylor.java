@@ -75,6 +75,9 @@ public class Taylor extends AbstractTest {
 	
 	@Override
 	public void showTest() {
+		summ = 0;
+		lies = 0;
+		currentQuestionNumber = 0;
 		
 		yesButton.setUI(new BorderButtonCustomUI(new Color(38, 166, 154)));
 		yesButton.setBorder(null);

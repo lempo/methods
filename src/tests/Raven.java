@@ -66,6 +66,8 @@ public class Raven extends AbstractTest {
 
 	@Override
 	public void showTest() {
+		currentQuestionNumber = 0;
+		
 		// TODO layout, high priority
 
 		task = new JLabel();
