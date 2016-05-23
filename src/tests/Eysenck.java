@@ -331,4 +331,9 @@ public class Eysenck extends AbstractTest {
 		showStandartSettings();
 	}
 
+	@Override
+	public void printResults() {
+		standartPrintResults();
+	}
+
 }

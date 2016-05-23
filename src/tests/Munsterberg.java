@@ -326,4 +326,9 @@ public class Munsterberg extends AbstractTest {
 		}
 	}
 
+	@Override
+	public void printResults() {
+		standartPrintResults();
+	}
+
 }

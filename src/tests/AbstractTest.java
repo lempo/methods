@@ -3,6 +3,8 @@ package tests;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,6 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -255,8 +261,7 @@ public abstract class AbstractTest extends JPanel {
 		print.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		print.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO print results, later
-				showResults();
+				printResults();
 			}
 		});
 
@@ -353,6 +358,18 @@ public abstract class AbstractTest extends JPanel {
 		revalidate();
 		repaint();
 	}
+	
+	public void standartPrintResults() {
+		PrinterJob printerJob = PrinterJob.getPrinterJob();
+		if (printerJob.printDialog()) {
+			printerJob.setPrintable(new PageImage());
+			try {
+				printerJob.print();
+			} catch (PrinterException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public abstract void showInfo();
 
@@ -361,6 +378,24 @@ public abstract class AbstractTest extends JPanel {
 	public abstract void showResults();
 
 	public abstract void showSettings();
+	
+	public abstract void printResults();
+	
+	class PageImage implements Printable {
+
+		@Override
+		public int print(Graphics g, PageFormat pf, int pageNumber) throws PrinterException {
+			if (pageNumber > 0) {
+				return Printable.NO_SUCH_PAGE;
+			} else {
+				Graphics2D g2 = (Graphics2D) g;
+				g2.translate(- pf.getWidth() / 3, pf.getImageableY());
+				resultsPanel.print(g2);
+			}
+			return Printable.PAGE_EXISTS;
+		}
+
+	}
 	
 	class IconMouseListener implements MouseListener {
 		@Override

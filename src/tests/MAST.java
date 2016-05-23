@@ -3,11 +3,18 @@ package tests;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -58,7 +65,8 @@ public class MAST extends AbstractTest {
 		yesButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		yesButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				summ += Integer.parseInt(n.item(currentQuestionNumber).getAttributes().getNamedItem("yes").getNodeValue());
+				summ += Integer
+						.parseInt(n.item(currentQuestionNumber).getAttributes().getNamedItem("yes").getNodeValue());
 				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength() - 1) {
 					testTime = new Date().getTime() - testTime;
 					showResults();
@@ -169,7 +177,7 @@ public class MAST extends AbstractTest {
 			t += d.item(1).getTextContent().toUpperCase();
 		if (summ >= 5 && summ <= 7)
 			t += d.item(2).getTextContent().toUpperCase();
-		if (summ >7)
+		if (summ > 7)
 			t += d.item(3).getTextContent().toUpperCase();
 		t += "</div></html>";
 
@@ -218,6 +226,11 @@ public class MAST extends AbstractTest {
 	@Override
 	public void showSettings() {
 		showStandartSettings();
+	}
+
+	@Override
+	public void printResults() {
+		standartPrintResults();
 	}
 
 }

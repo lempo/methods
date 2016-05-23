@@ -280,4 +280,9 @@ public class Descriptor extends AbstractTest {
 		}
 	}
 
+	@Override
+	public void printResults() {
+		standartPrintResults();
+	}
+
 }

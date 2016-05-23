@@ -301,4 +301,9 @@ public class Audit extends AbstractTest {
 		}
 	}
 
+	@Override
+	public void printResults() {
+		standartPrintResults();
+	}
+
 }

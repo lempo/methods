@@ -202,4 +202,9 @@ public class Exception extends AbstractTest {
 
 	}
 
+	@Override
+	public void printResults() {
+		standartPrintResults();
+	}
+
 }

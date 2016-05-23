@@ -284,4 +284,9 @@ public class SAN extends AbstractTest {
 		showStandartSettings();
 	}
 
+	@Override
+	public void printResults() {
+		standartPrintResults();
+	}
+
 }

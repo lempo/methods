@@ -323,4 +323,9 @@ public class Shulte extends AbstractTest {
 		}
 	}
 
+	@Override
+	public void printResults() {
+		standartPrintResults();
+	}
+
 }

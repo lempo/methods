@@ -252,4 +252,9 @@ public class Classification extends AbstractTest {
 		}
 	}
 
+	@Override
+	public void printResults() {
+		standartPrintResults();
+	}
+
 }

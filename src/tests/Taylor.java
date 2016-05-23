@@ -260,4 +260,9 @@ public class Taylor extends AbstractTest {
 		showStandartSettings();
 	}
 
+	@Override
+	public void printResults() {
+		standartPrintResults();
+	}
+
 }

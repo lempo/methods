@@ -277,4 +277,9 @@ public class Spilberg extends AbstractTest {
 		}
 	}
 
+	@Override
+	public void printResults() {
+		standartPrintResults();
+	}
+
 }
