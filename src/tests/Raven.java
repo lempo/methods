@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -41,7 +42,17 @@ public class Raven extends AbstractTest {
 
 	Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.RAVEN));
 
+	int summ = 0;
 	int currentQuestionNumber = 0;
+	int convertIQ[] = 
+		{  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		       0,  0,  0,  0, 62, 65, 65, 66, 67, 69,
+		      70, 71, 72, 73, 75, 76, 77, 79, 80, 82,
+		      83, 84, 86, 87, 88, 90, 91, 92, 94, 95,
+		      96, 98, 99,100,102,104,106,108,110,112,
+		     114,116,118,120,122,124,126,128,130,140
+		};	
+	
 	JLabel set;
 	JLabel task;
 	JPanel cards;
@@ -67,8 +78,6 @@ public class Raven extends AbstractTest {
 	@Override
 	public void showTest() {
 		currentQuestionNumber = 0;
-		
-		// TODO layout, high priority
 
 		task = new JLabel();
 		set = new JLabel();
@@ -87,12 +96,14 @@ public class Raven extends AbstractTest {
 
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (selected + 1 == Integer.parseInt(doc.getElementsByTagName("q").item(currentQuestionNumber).getAttributes().getNamedItem("answer").getNodeValue()))
+						summ++;
+				System.out.println(summ);
 				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength() - 1) {
 					timer.stop();
 					testTime = new Date().getTime() - testTime;
 					showResults();
 				} else {
-					// TODO calculate results, high priority
 					currentQuestionNumber++;
 					showQuestion();
 				}
@@ -189,12 +200,11 @@ public class Raven extends AbstractTest {
 	}
 
 	public void showQuestion() {
-		// TODO layout, high priority
 
 		Node n = doc.getElementsByTagName("q").item(currentQuestionNumber);
 		set.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>"
 				+ n.getAttributes().getNamedItem("set").getNodeValue().toUpperCase() + "</div></html>");
-		task.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>"
+		task.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(144, 106, 96);'>"
 				+ n.getAttributes().getNamedItem("task").getNodeValue().toUpperCase() + "</div></html>");
 
 		cards.removeAll();
@@ -237,7 +247,71 @@ public class Raven extends AbstractTest {
 	@Override
 	public void showResults() {
 		showStandartResults();
-		// TODO calculate and output results, do conclusion, high priority
+		
+		JLabel leftCol = new JLabel();
+		JLabel rightCol = new JLabel();
+		
+		NodeList d = doc.getElementsByTagName("d");
+			
+		String t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
+				+ d.item(0).getTextContent() + ": <br>" 
+				+ "</div></html>";
+		leftCol.setText(t);	
+			
+		t = "<html><div style='font: bold 20pt Arial; color: rgb(38, 166, 154);'>"
+				+ convertIQ[summ] + "<br>" 
+				+ "</div></html>";
+		rightCol.setText(t);
+	
+		/*t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
+		t += d.item(3).getTextContent();
+		if (summCorrect >= 0 && summCorrect <= 10) t += d.item(1).getTextContent().toUpperCase();
+		if (summCorrect >= 11 && summCorrect <= 14) t += d.item(2).getTextContent().toUpperCase();
+		if (summCorrect >= 15 && summCorrect <= 20) t += d.item(3).getTextContent().toUpperCase();
+		Vdruk-k-k-k pri-i-igoditsyaa-a-a....
+		
+		t += "</div></html>";
+		JPanel conclusion = new JPanel();
+		conclusion.add(new JLabel(t));
+		conclusion.setUI(new PanelCustomUI(true));*/
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.fill = GridBagConstraints.NONE;
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.ipadx = 0;
+		c.ipady = 0;
+		c.weightx = 1.0;
+		c.weighty = 0.0;
+		
+		c.insets = new Insets(10, 0, 0, 20);
+		c.anchor = GridBagConstraints.EAST;
+		c.gridwidth = 1;
+		//leftCol.setPreferredSize(new Dimension(300, 350));
+		leftCol.setVerticalAlignment(JLabel.TOP);
+		resultsPanel.add(leftCol, c);
+
+		c.gridx = 1;
+		
+		c.anchor = GridBagConstraints.WEST;
+		c.insets = new Insets(10, 20, 0, 0);
+		c.gridwidth = 1;
+		//rightCol.setPreferredSize(new Dimension(300, 350));
+		rightCol.setVerticalAlignment(JLabel.TOP);
+		resultsPanel.add(rightCol, c);
+		
+		/*c.anchor = GridBagConstraints.CENTER;
+		c.insets = new Insets(20, 0, 0, 0);
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 2;
+		resultsPanel.add(conclusion, c);*/
+		
+		this.revalidate();
+		this.repaint();
 	}
 
 	@Override
