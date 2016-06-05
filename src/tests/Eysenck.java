@@ -183,6 +183,7 @@ public class Eysenck extends AbstractTest {
 							+ "</div></html>");
 					timeLeft.repaint();
 				} else {
+					testTime = new Date().getTime() - testTime;
 					timer.stop();
 					showResults();
 				}
