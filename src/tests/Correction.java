@@ -106,13 +106,13 @@ public class Correction extends AbstractTest {
 			table.add(letters[i]);
 		}
 
-		// TODO scroll setOpaque
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setPreferredSize(new Dimension((int) Math.round(width * 0.9), (int) Math.round(height * 0.75)));
 		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scroll.setBorder(null);
 		scroll.getViewport().setOpaque(false);
+		scroll.setOpaque(false);
 		scroll.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
 		this.add(scroll, c);
 

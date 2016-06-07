@@ -389,8 +389,8 @@ public class Methods extends JFrame {
 		for (int i = 0; i < n.getLength(); i++) {
 			k = n.item(i).getAttributes();
 			methodGroups[i] = new MethodGroup(k.getNamedItem("name").getNodeValue(),
-					k.getNamedItem("text").getNodeValue(), k.getNamedItem("image").getNodeValue(),
-					k.getNamedItem("rolloverImage").getNodeValue(), k.getNamedItem("toolTipText").getNodeValue());
+					k.getNamedItem("image").getNodeValue(), k.getNamedItem("rolloverImage").getNodeValue(),
+					k.getNamedItem("toolTipText").getNodeValue());
 
 			icon = Utils.createImageIcon(methodGroups[i].getImage());
 			groups[i] = new CustomLabel();
@@ -935,13 +935,13 @@ public class Methods extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				if (showedTest != null && !showedTest.isDontShowBreakingDialog()) {
-					CustomDialog d1 = new CustomDialog(methods, InterfaceTextDefaults.getInstance().getDefault("sure_break_task"),
+					CustomDialog d1 = new CustomDialog(methods,
+							InterfaceTextDefaults.getInstance().getDefault("sure_break_task"),
 							InterfaceTextDefaults.getInstance().getDefault("break"),
 							InterfaceTextDefaults.getInstance().getDefault("cancel"), true);
 					if (d1.getAnswer() == 1)
 						showTests(currentTestGroup);
-				}
-				else
+				} else
 					showTests(currentTestGroup);
 			}
 		});
@@ -1125,24 +1125,24 @@ public class Methods extends JFrame {
 				break;
 			case "help":
 				if (showedTest != null && !showedTest.isDontShowBreakingDialog()) {
-					CustomDialog d1 = new CustomDialog(methods, InterfaceTextDefaults.getInstance().getDefault("sure_break_task"),
+					CustomDialog d1 = new CustomDialog(methods,
+							InterfaceTextDefaults.getInstance().getDefault("sure_break_task"),
 							InterfaceTextDefaults.getInstance().getDefault("break"),
 							InterfaceTextDefaults.getInstance().getDefault("cancel"), true);
 					if (d1.getAnswer() == 1)
 						showHelp();
-				}
-				else
+				} else
 					showHelp();
 				break;
 			case "about":
 				if (showedTest != null && !showedTest.isDontShowBreakingDialog()) {
-					CustomDialog d1 = new CustomDialog(methods, InterfaceTextDefaults.getInstance().getDefault("sure_break_task"),
+					CustomDialog d1 = new CustomDialog(methods,
+							InterfaceTextDefaults.getInstance().getDefault("sure_break_task"),
 							InterfaceTextDefaults.getInstance().getDefault("break"),
 							InterfaceTextDefaults.getInstance().getDefault("cancel"), true);
 					if (d1.getAnswer() == 1)
 						showAbout();
-				}
-				else
+				} else
 					showAbout();
 				break;
 			case "tasks":
