@@ -216,7 +216,8 @@ public class Correction extends AbstractTest {
 			}
 		}
 		
-		accuracy = Math.round(summCorrect / (summCorrect + summMissed) * 100);
+		if (summCorrect + summMissed != 0) 
+			accuracy = Math.round(summCorrect / (summCorrect + summMissed) * 100);
 		
 		NodeList s = doc.getElementsByTagName("s");
 		
