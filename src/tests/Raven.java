@@ -98,7 +98,6 @@ public class Raven extends AbstractTest {
 			public void actionPerformed(ActionEvent e) {
 				if (selected + 1 == Integer.parseInt(doc.getElementsByTagName("q").item(currentQuestionNumber).getAttributes().getNamedItem("answer").getNodeValue()))
 						summ++;
-				System.out.println(summ);
 				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength() - 1) {
 					timer.stop();
 					testTime = new Date().getTime() - testTime;

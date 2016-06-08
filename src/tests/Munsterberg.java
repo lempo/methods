@@ -111,7 +111,7 @@ public class Munsterberg extends AbstractTest {
 			stringPanels[i].setPreferredSize(new Dimension(800, 30));
 			
 			Dimension d = new Dimension(Math.round(800f / (float) blank.length()), 30);
-			System.out.println(d);
+			//System.out.println(d);
 
 			for (int j = 0; j < blank.length(); j++) {
 				letters[i][j] = new JLabel(("" + blank.charAt(j)).toUpperCase());
