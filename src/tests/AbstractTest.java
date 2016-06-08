@@ -339,16 +339,16 @@ public abstract class AbstractTest extends JPanel {
 
 		resultsPanel.setPreferredSize(new Dimension(width, height / 2));
 
-		/*
-		 * JScrollPane scroll = new JScrollPane(resultsPanel);
-		 * scroll.setPreferredSize(new Dimension((int) (width * 0.9), (int)
-		 * (height * 0.7))); scroll.setHorizontalScrollBarPolicy(JScrollPane.
-		 * HORIZONTAL_SCROLLBAR_NEVER);
-		 * scroll.setVerticalScrollBarPolicy(JScrollPane.
-		 * VERTICAL_SCROLLBAR_AS_NEEDED); scroll.setBorder(null);
-		 * scroll.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
-		 * scroll.setOpaque(false); scroll.getViewport().setOpaque(false);
-		 */
+		
+		/*JScrollPane scroll = new JScrollPane(resultsPanel);
+		scroll.setPreferredSize(new Dimension((int) (width * 0.9), (int) (height * 0.7))); 
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); 
+		scroll.setBorder(null);
+		scroll.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
+		scroll.setOpaque(false); scroll.getViewport().setOpaque(false);
+		add(scroll, c);
+		*/
 
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;

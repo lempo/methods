@@ -1,13 +1,60 @@
 ﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <correction>
-<blank>бсолнцевтргщоцрайонзгучновостьхэьгчяфактуекэкзаментроч</blank>
-<blank>ягшгцкпрокуроргурстабюетеорияентсджэбьамхоккейтрсицы</blank>
-<blank>фцуйгзхтелевизорсолджщзхюэлгщьбапамятьшогхеюжпждргщ</blank>
-<blank>хэнздвосприятиейцукенгшщзхъвафыапролдблюбовьавфырпл</blank>
-<blank>ослдспектакльячсмитьбюжюерадостьвуфцпэждлорпкнародш</blank>
-<blank>лджьхэшщгиенакуыфйшрепортажэждорлафывюефбьконкурс</blank>
-<blank>йфячыцувскапрличностьзхжэьеюдшщглоджэпрплаваниедтлж</blank>
-<blank>эзбьтрдщшжнпркывкомедияшлдкцуйфотчаяниейфоячвтлджэ</blank>
-<blank>хьфтасенлабораториягщдщнруцтргшщтлроснованиезщдэркэ</blank>
-<blank>нтаопрукгвсмтрпсихиатриябплмстчьйсмтзацэъагнтэхт</blank>
+<stability>
+<s prod_min="0" prod_max="1009" prod_points="1" acc_min="0" acc_max="69" acc_points="1"></s>
+<s prod_min="1010" prod_max="1174" prod_points="3" acc_min="70" acc_max="71" acc_points="2"></s>
+<s prod_min="1175" prod_max="1339" prod_points="5" acc_min="72" acc_max="72" acc_points="3"></s>
+<s prod_min="1340" prod_max="1504" prod_points="7" acc_min="73" acc_max="73" acc_points="4"></s>
+<s prod_min="1505" prod_max="1669" prod_points="9" acc_min="74" acc_max="75" acc_points="5"></s>
+<s prod_min="1670" prod_max="1834" prod_points="10" acc_min="76" acc_max="76" acc_points="6"></s>
+<s prod_min="1835" prod_max="1999" prod_points="11" acc_min="77" acc_max="78" acc_points="7"></s>
+<s prod_min="2000" prod_max="2164" prod_points="12" acc_min="79" acc_max="79" acc_points="8"></s>
+<s prod_min="2165" prod_max="2329" prod_points="13" acc_min="80" acc_max="80" acc_points="9"></s>
+<s prod_min="2330" prod_max="2494" prod_points="14" acc_min="81" acc_max="82" acc_points="10"></s>
+<s prod_min="2495" prod_max="2659" prod_points="15" acc_min="83" acc_max="83" acc_points="11"></s>
+<s prod_min="2660" prod_max="2824" prod_points="16" acc_min="84" acc_max="84" acc_points="12"></s>
+<s prod_min="2825" prod_max="2989" prod_points="17" acc_min="85" acc_max="86" acc_points="13"></s>
+<s prod_min="2990" prod_max="3154" prod_points="18" acc_min="87" acc_max="87" acc_points="14"></s>
+<s prod_min="3155" prod_max="3319" prod_points="19" acc_min="88" acc_max="89" acc_points="15"></s>
+<s prod_min="3320" prod_max="3484" prod_points="20" acc_min="90" acc_max="90" acc_points="16"></s>
+<s prod_min="3485" prod_max="3649" prod_points="21" acc_min="91" acc_max="91" acc_points="17"></s>
+<s prod_min="3650" prod_max="3814" prod_points="22" acc_min="92" acc_max="93" acc_points="18"></s>
+<s prod_min="3815" prod_max="3979" prod_points="23" acc_min="94" acc_max="94" acc_points="20"></s>
+<s prod_min="3980" prod_max="4144" prod_points="24" acc_min="95" acc_max="95" acc_points="22"></s>
+<s prod_min="4145" prod_max="4309" prod_points="25" acc_min="96" acc_max="97" acc_points="24"></s>
+<s prod_min="4310" prod_max="5000" prod_points="26" acc_min="98" acc_max="100" acc_points="26"></s>
+</stability>
+<evaluation>
+<e stab_min="50" stab_max="52" scale_points="19" switch="более 217" size="менее 115"></e>
+<e stab_min="-1" stab_max="-1" scale_points="18" switch="-" size="-"></e>
+<e stab_min="48" stab_max="49" scale_points="17" switch="214-216" size="116-125"></e>
+<e stab_min="46" stab_max="47" scale_points="16" switch="211-213" size="126-135"></e>
+<e stab_min="44" stab_max="45" scale_points="15" switch="208-210" size="136-145"></e>
+<e stab_min="39" stab_max="43" scale_points="14" switch="205-209" size="146-155"></e>
+<e stab_min="36" stab_max="38" scale_points="13" switch="201-204" size="156-165"></e>
+<e stab_min="34" stab_max="35" scale_points="12" switch="195-200" size="166-175"></e>
+<e stab_min="31" stab_max="33" scale_points="11" switch="189-194" size="176-195"></e>
+<e stab_min="28" stab_max="30" scale_points="10" switch="182-188" size="196-215"></e>
+<e stab_min="25" stab_max="27" scale_points="9" switch="172-181" size="216-235"></e>
+<e stab_min="23" stab_max="24" scale_points="8" switch="158-171" size="236-265"></e>
+<e stab_min="20" stab_max="22" scale_points="7" switch="149-157" size="266-295"></e>
+<e stab_min="16" stab_max="19" scale_points="6" switch="142-148" size="296-335"></e>
+<e stab_min="14" stab_max="15" scale_points="5" switch="132-141" size="336-375"></e>
+<e stab_min="12" stab_max="13" scale_points="4" switch="122-131" size="376-405"></e>
+<e stab_min="9" stab_max="11" scale_points="3" switch="114-121" size="406-455"></e>
+<e stab_min="-2" stab_max="-2" scale_points="2" switch="110-113" size="-"></e>
+<e stab_min="-3" stab_max="-3" scale_points="1" switch="-" size="-"></e>
+<e stab_min="0" stab_max="8" scale_points="0" switch="менее 109" size="более 456"></e>
+</evaluation>
+<interpretation>
+<d>Найдено знаков</d>
+<d>Ошибочно выделено</d>
+<d>Пропущено знаков</d>
+<d>Продуктивность внимания</d>
+<d>Оценка продуктивности (в баллах)</d>
+<d>Точность выполнения задания</d>
+<d>Оценка точности (в баллах)</d>
+<d>Интегральный показатель устойчивости внимания</d>
+<d>Шкальная оценка</d>
+</interpretation>
 </correction>

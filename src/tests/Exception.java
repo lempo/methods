@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -40,11 +41,12 @@ public class Exception extends AbstractTest {
 	JPanel answersPanel = new JPanel();
 
 	int currentQuestionNumber = 0;
+	int summ = 0;
 
 	private final int TABLESIZE = 2;
 
 	private int selected = 0;
-
+	
 	public Exception(Methods methods, int width, int height, Test test) {
 		super(methods, width, height, test);
 	}
@@ -57,7 +59,6 @@ public class Exception extends AbstractTest {
 	@Override
 	public void showTest() {
 		currentQuestionNumber = 0;
-		// TODO layout, middle priority
 
 		JLabel question = new JLabel();
 		String s = doc.getElementsByTagName("text").item(0).getTextContent();
@@ -83,10 +84,15 @@ public class Exception extends AbstractTest {
 
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Count summs here
-				currentQuestionNumber++;
-				showQuestion();
-
+				if (selected + 1 == Integer.parseInt(doc.getElementsByTagName("q").item(currentQuestionNumber).getAttributes().getNamedItem("answer").getNodeValue()))
+					summ++;
+				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength() - 1) {
+					testTime = new Date().getTime() - testTime;
+					showResults();
+				} else {
+					currentQuestionNumber++;
+					showQuestion();
+				}
 			}
 		});
 
@@ -124,6 +130,8 @@ public class Exception extends AbstractTest {
 		this.revalidate();
 		this.repaint();
 
+		testDate = new Date();
+		testTime = new Date().getTime();
 		showQuestion();
 
 	}
@@ -153,7 +161,73 @@ public class Exception extends AbstractTest {
 	@Override
 	public void showResults() {
 		showStandartResults();
-		// TODO calculate and output results, do conclusion, high priority
+		
+		JLabel leftCol = new JLabel();
+		JLabel rightCol = new JLabel();
+		
+		NodeList d = doc.getElementsByTagName("d");
+			
+		String t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
+				+ d.item(0).getTextContent() + ": <br>" 
+				+ "</div></html>";
+		leftCol.setText(t);	
+			
+		t = "<html><div style='font: bold 20pt Arial; color: rgb(38, 166, 154);'>"
+				+ summ + "<br>" 
+				+ "</div></html>";
+		rightCol.setText(t);
+	
+		/*t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
+		t += d.item(3).getTextContent();
+		if (summCorrect >= 0 && summCorrect <= 10) t += d.item(1).getTextContent().toUpperCase();
+		if (summCorrect >= 11 && summCorrect <= 14) t += d.item(2).getTextContent().toUpperCase();
+		if (summCorrect >= 15 && summCorrect <= 20) t += d.item(3).getTextContent().toUpperCase();
+		Vdruk-k-k-k pri-i-igoditsyaa-a-a....
+		
+		t += "</div></html>";
+		JPanel conclusion = new JPanel();
+		conclusion.add(new JLabel(t));
+		conclusion.setUI(new PanelCustomUI(true));*/
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.fill = GridBagConstraints.NONE;
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.ipadx = 0;
+		c.ipady = 0;
+		c.weightx = 1.0;
+		c.weighty = 0.0;
+		
+		c.insets = new Insets(10, 0, 0, 20);
+		c.anchor = GridBagConstraints.EAST;
+		c.gridwidth = 1;
+		//leftCol.setPreferredSize(new Dimension(300, 350));
+		leftCol.setVerticalAlignment(JLabel.TOP);
+		resultsPanel.add(leftCol, c);
+
+		c.gridx = 1;
+		
+		c.anchor = GridBagConstraints.WEST;
+		c.insets = new Insets(10, 20, 0, 0);
+		c.gridwidth = 1;
+		//rightCol.setPreferredSize(new Dimension(300, 350));
+		rightCol.setVerticalAlignment(JLabel.TOP);
+		resultsPanel.add(rightCol, c);
+		
+		/*c.anchor = GridBagConstraints.CENTER;
+		c.insets = new Insets(20, 0, 0, 0);
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 2;
+		resultsPanel.add(conclusion, c);*/
+		
+		this.revalidate();
+		this.repaint();
+		
+		// TODO Replay button messes up the layout
 	}
 
 	@Override

@@ -273,8 +273,7 @@ public class Eysenck extends AbstractTest {
 		leftCol.setText(t);	
 		
 		summCorrect = (int) Math.floor(90 + summCorrect * 2); 
-		//TODO Calculate it with the right formula and ask for a conclusion text
-
+		
 		t = "<html><div style='font: bold 20pt Arial; color: rgb(38, 166, 154);'>"
 				+ summCorrect + "<br>"; 
 		t += "</div></html>";

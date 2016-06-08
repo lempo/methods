@@ -38,17 +38,25 @@ import tests.Munsterberg.LettersMouseListener;
 
 public class Correction extends AbstractTest {
 
-	final int stringsNum = 40;
+	Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.CORRECTION));
+	
+	final int stringsNum = 100;
 	final int lettersNum = 50;
+	final int nMinutes = 10;
 
 	Color unselected = new Color(144, 106, 96);
 	Color selected = new Color(38, 166, 154);
 
 	int minuteCounter = 0;
-	int cherta = 0;
-	int summCorrect[];
-	int summIncorrect[];
-	int summMissed[];
+	int summCorrect;
+	int summIncorrect;
+	int summMissed;
+	int lastLetter = 0;
+	int accuracy = 0;
+	int prodPoints = 0;
+	int accPoints = 0;
+	int stability = 0;
+	int scalePoints;
 
 	JLabel[] letters;
 	JButton firstLetter;
@@ -72,7 +80,6 @@ public class Correction extends AbstractTest {
 	@Override
 	public void showTest() {
 		minuteCounter = 0;
-		cherta = 0;
 
 		this.removeAll();
 
@@ -103,6 +110,7 @@ public class Correction extends AbstractTest {
 			letters[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			letters[i].setFont(new Font("Arial", Font.BOLD, 14));
 			letters[i].setForeground(unselected);
+			letters[i].setName(Integer.toString(i + 1));
 			table.add(letters[i]);
 		}
 
@@ -170,9 +178,9 @@ public class Correction extends AbstractTest {
 		timer = new Timer(1000 * 60, new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				minuteCounter++;
-				// TODO Calculate mid-results - not needed now
+				// Calculate mid-results - not needed now
 
-				if (minuteCounter >= 8) {
+				if (minuteCounter >= nMinutes) {
 					timer.stop();
 					testTime = new Date().getTime() - testTime;
 					showResults();
@@ -187,8 +195,150 @@ public class Correction extends AbstractTest {
 
 	@Override
 	public void showResults() {
+		
+		// Start --- Calculate results here
+		for (int i = stringsNum * lettersNum - 1; i > 0; i--) {
+			if (letters[i].getForeground().equals(selected)) {
+				lastLetter = Integer.parseInt(letters[i].getName());
+				break;
+			}
+		}
+		
+		for (int i = 0; i <= lastLetter; i++) {
+			if (letters[i].getForeground().equals(selected)) {
+				if (letters[i].getText().equals(firstLetter.getText()) || letters[i].getText().equals(secondLetter.getText()))
+					summCorrect++;
+				else summIncorrect++;
+			}
+			else {
+				if (letters[i].getText().equals(firstLetter.getText()) || letters[i].getText().equals(secondLetter.getText()))
+					summMissed++;
+			}
+		}
+		
+		accuracy = Math.round(summCorrect / (summCorrect + summMissed) * 100);
+		
+		NodeList s = doc.getElementsByTagName("s");
+		
+		for (int i = 0; i < s.getLength(); i++) {
+			if(lastLetter >= Integer.parseInt(s.item(i).getAttributes().getNamedItem("prod_min").getNodeValue()) && lastLetter <= Integer.parseInt(s.item(i).getAttributes().getNamedItem("prod_max").getNodeValue()))
+				prodPoints = Integer.parseInt(s.item(i).getAttributes().getNamedItem("prod_points").getNodeValue());
+			if(accuracy >= Integer.parseInt(s.item(i).getAttributes().getNamedItem("acc_min").getNodeValue()) && accuracy <= Integer.parseInt(s.item(i).getAttributes().getNamedItem("acc_max").getNodeValue()))
+				accPoints = Integer.parseInt(s.item(i).getAttributes().getNamedItem("acc_points").getNodeValue());
+		}
+		
+		stability = prodPoints + accPoints;
+		
+		NodeList e = doc.getElementsByTagName("e");
+		
+		for (int i = 0; i < e.getLength(); i++) {
+			if(lastLetter >= Integer.parseInt(e.item(i).getAttributes().getNamedItem("stab_min").getNodeValue()) && lastLetter <= Integer.parseInt(e.item(i).getAttributes().getNamedItem("stab_max").getNodeValue()))
+				scalePoints = Integer.parseInt(e.item(i).getAttributes().getNamedItem("scale_points").getNodeValue());
+		}
+		// End --- Calculate results
+		
 		this.showStandartResults();
-		// TODO count and show results, later
+		
+		JLabel leftCol = new JLabel();
+		JLabel rightCol = new JLabel();
+		
+		NodeList d = doc.getElementsByTagName("d");
+			
+		String t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
+				//+ d.item(0).getTextContent() + ": <br>"
+				//+ d.item(1).getTextContent() + ": <br>"
+				//+ d.item(2).getTextContent() + ": <br>" 
+				+ d.item(3).getTextContent() + ": <br>" 
+				+ d.item(4).getTextContent() + ": <br>" 
+				+ d.item(5).getTextContent() + ": <br>"
+				+ d.item(6).getTextContent() + ": <br>"
+				+ d.item(7).getTextContent() + ": <br>"
+				+ d.item(8).getTextContent() + ": <br>" 
+				+ "</div></html>";
+		leftCol.setText(t);	
+			
+		t = "<html><div style='font: bold 20pt Arial; color: rgb(38, 166, 154);'>"
+				//+ summCorrect + "<br>"
+				//+ summIncorrect + "<br>"
+				//+ summMissed + "<br>"
+				+ lastLetter + "<br>"
+				+ prodPoints + "<br>"
+				+ accuracy + "<br>"
+				+ accPoints + "<br>"
+				+ stability + "<br>"
+				+ scalePoints + "<br>"
+				+ "</div></html>";
+		rightCol.setText(t);
+	
+		/*t = "<html><div style='font: bold 20pt Arial; color: rgb(144, 106, 96); padding: 10px'>";
+		t += d.item(3).getTextContent();
+		if (summCorrect >= 0 && summCorrect <= 10) t += d.item(1).getTextContent().toUpperCase();
+		if (summCorrect >= 11 && summCorrect <= 14) t += d.item(2).getTextContent().toUpperCase();
+		if (summCorrect >= 15 && summCorrect <= 20) t += d.item(3).getTextContent().toUpperCase();
+		Vdruk-k-k-k pri-i-igoditsyaa-a-a....
+		
+		t += "</div></html>";
+		JPanel conclusion = new JPanel();
+		conclusion.add(new JLabel(t));
+		conclusion.setUI(new PanelCustomUI(true));*/
+		
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.anchor = GridBagConstraints.NORTHWEST;
+		c.fill = GridBagConstraints.NONE;
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.ipadx = 0;
+		c.ipady = 0;
+		c.weightx = 1.0;
+		c.weighty = 0.0;
+		
+		c.insets = new Insets(10, 0, 0, 20);
+		c.anchor = GridBagConstraints.EAST;
+		c.gridwidth = 1;
+		//leftCol.setPreferredSize(new Dimension(400, 350));
+		//leftCol.setMinimumSize(new Dimension(470, 50));
+		leftCol.setVerticalAlignment(JLabel.TOP);
+		resultsPanel.add(leftCol, c);
+
+		c.gridx = 1;
+		
+		c.anchor = GridBagConstraints.WEST;
+		c.insets = new Insets(10, 20, 0, 0);
+		c.gridwidth = 1;
+		//rightCol.setPreferredSize(new Dimension(400, 350));
+		//rightCol.setMinimumSize(new Dimension(470, 50));
+		rightCol.setVerticalAlignment(JLabel.TOP);
+		resultsPanel.add(rightCol, c);
+		
+		/*c.anchor = GridBagConstraints.CENTER;
+		c.insets = new Insets(20, 0, 0, 0);
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 2;
+		resultsPanel.add(conclusion, c);*/
+		
+		// TODO Fix results layout by adding scroll if possible
+		
+		/*c.anchor = GridBagConstraints.CENTER;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.insets = new Insets(0, 0, 0, 0);
+		
+		JScrollPane scrollResults = new JScrollPane(resultsPanel);
+		scrollResults.setPreferredSize(new Dimension((int) Math.round(width * 0.9), (int) Math.round(height * 0.6)));
+		scrollResults.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollResults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scrollResults.setBorder(null);
+		scrollResults.getViewport().setOpaque(false);
+		scrollResults.setOpaque(false);
+		scrollResults.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
+		this.add(scrollResults, c);*/
+		
+		this.revalidate();
+		this.repaint();
 
 	}
 
@@ -201,8 +351,10 @@ public class Correction extends AbstractTest {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			JLabel l = (JLabel) e.getSource();
-			if (l.getForeground().equals(unselected))
-				l.setForeground(selected);
+			if (l.getForeground().equals(unselected)){
+				l.setForeground(selected);				
+			}
+				
 			else
 				l.setForeground(unselected);
 			l.repaint();
