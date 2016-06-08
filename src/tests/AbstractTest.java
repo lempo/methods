@@ -26,11 +26,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 import component.CustomRadioButton;
 import component.CustomTextField;
 import customui.ButtonCustomUI;
+import customui.ScrollBarCustomUI;
 import defaults.ImageLinkDefaults;
 import defaults.InterfaceTextDefaults;
 import methods.Methods;
@@ -54,7 +56,7 @@ public abstract class AbstractTest extends JPanel {
 	protected int height;
 
 	protected JPanel resultsPanel;
-	
+
 	protected boolean dontShowBreakingDialog = false;
 
 	public AbstractTest(Methods methods, int width, int height, Test test) {
@@ -70,10 +72,15 @@ public abstract class AbstractTest extends JPanel {
 
 	public void showStandartInfo() {
 		dontShowBreakingDialog = true;
-		// TODO layout and text into a scroll, middle priority
+		// TODO header
 		JLabel image = new JLabel();
 		ImageIcon icon = Utils.createImageIcon(test.getBigImage());
 		image.setIcon(icon);
+
+		JLabel heading = new JLabel();
+		String t = "<html><div style='font: bold 22pt Arial Narrow; color: rgb(115, 84, 73); padding-bottom: 20 px'>"
+				+ test.getName().toUpperCase() + "</div></html>";
+		heading.setText(t);
 
 		JTextPane text = new JTextPane();
 		text.setEditable(false);
@@ -83,7 +90,17 @@ public abstract class AbstractTest extends JPanel {
 				+ "</div><div  style='font: 16pt Arial Narrow; color: rgb(115, 84, 73);'>" + test.getLongText()
 				+ "</div></html>");
 		text.setOpaque(false);
-		text.setPreferredSize(new Dimension((int) (width * 0.6 - image.getWidth()), (int) (height * 0.5)));
+		text.setCaretPosition(0);
+
+		JScrollPane scroll = new JScrollPane(text);
+		scroll.setPreferredSize(new Dimension((int) (width * 0.6 - image.getWidth()), (int) (height * 0.5)));
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scroll.setBorder(null);
+		scroll.getViewport().setOpaque(false);
+		scroll.setOpaque(false);
+		scroll.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
+
 		// text.setPreferredSize(
 		// new Dimension(485, 700));
 
@@ -124,7 +141,7 @@ public abstract class AbstractTest extends JPanel {
 		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 1.0;
 
-		add(text, c);
+		add(scroll, c);
 
 		c.gridy = 1;
 		c.insets = new Insets(40, 40, 0, 40);
@@ -358,7 +375,7 @@ public abstract class AbstractTest extends JPanel {
 		revalidate();
 		repaint();
 	}
-	
+
 	public void standartPrintResults() {
 		PrinterJob printerJob = PrinterJob.getPrinterJob();
 		if (printerJob.printDialog()) {
@@ -378,9 +395,9 @@ public abstract class AbstractTest extends JPanel {
 	public abstract void showResults();
 
 	public abstract void showSettings();
-	
+
 	public abstract void printResults();
-	
+
 	class PageImage implements Printable {
 
 		@Override
@@ -390,7 +407,7 @@ public abstract class AbstractTest extends JPanel {
 				return Printable.NO_SUCH_PAGE;
 			} else {
 				Graphics2D g2 = (Graphics2D) g;
-				g2.translate(- pf.getWidth() / 10, pf.getImageableY());
+				g2.translate(-pf.getWidth() / 10, pf.getImageableY());
 				g2.scale(0.75, 0.75);
 				resultsPanel.print(g2);
 			}
@@ -398,7 +415,7 @@ public abstract class AbstractTest extends JPanel {
 		}
 
 	}
-	
+
 	class IconMouseListener implements MouseListener {
 		@Override
 		public void mouseClicked(MouseEvent e) {
@@ -416,8 +433,8 @@ public abstract class AbstractTest extends JPanel {
 			ImageIcon icon;
 			switch (l.getName()) {
 			case "repeat":
-				icon = Utils
-						.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.REPEAT_ROLLOVER));
+				icon = Utils.createImageIcon(
+						ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.REPEAT_ROLLOVER));
 				l.setIcon(icon);
 				l.updateUI();
 				break;
@@ -445,7 +462,7 @@ public abstract class AbstractTest extends JPanel {
 		public void mouseReleased(MouseEvent arg0) {
 		}
 	}
-	
+
 	public boolean isDontShowBreakingDialog() {
 		return dontShowBreakingDialog;
 	}

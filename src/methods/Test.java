@@ -22,7 +22,7 @@ public class Test extends JPanel {
 		this.name = name;
 		this.image = image;
 		this.shortText = shortText;
-		this.longText = longText;
+		this.longText = longText.replace("!linebreak!", "<br/>");
 		this.bigImage = bigImage;
 		this.className = className;
 		this.rolloverImage = rolloverImage;
