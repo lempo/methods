@@ -72,22 +72,20 @@ public abstract class AbstractTest extends JPanel {
 
 	public void showStandartInfo() {
 		dontShowBreakingDialog = true;
-		// TODO header
+		
 		JLabel image = new JLabel();
 		ImageIcon icon = Utils.createImageIcon(test.getBigImage());
 		image.setIcon(icon);
 
 		JLabel heading = new JLabel();
-		String t = "<html><div style='font: bold 22pt Arial Narrow; color: rgb(115, 84, 73); padding-bottom: 20 px'>"
+		String t = "<html><div style='font: bold 22pt Arial Narrow; color: rgb(38, 166, 154); padding-bottom: 20 px'>"
 				+ test.getName().toUpperCase() + "</div></html>";
 		heading.setText(t);
 
 		JTextPane text = new JTextPane();
 		text.setEditable(false);
 		text.setContentType("text/html;charset=utf-8");
-		text.setText("<html><div style='font: bold 22pt Arial Narrow; color: rgb(115, 84, 73); padding-bottom: 20 px'>"
-				+ test.getName().toUpperCase()
-				+ "</div><div  style='font: 16pt Arial Narrow; color: rgb(115, 84, 73);'>" + test.getLongText()
+		text.setText("<html><div  style='font: 16pt Arial Narrow; color: rgb(144, 106, 96);'>" + test.getLongText()
 				+ "</div></html>");
 		text.setOpaque(false);
 		text.setCaretPosition(0);
@@ -101,11 +99,8 @@ public abstract class AbstractTest extends JPanel {
 		scroll.setOpaque(false);
 		scroll.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
 
-		// text.setPreferredSize(
-		// new Dimension(485, 700));
-
 		JButton start = new JButton(InterfaceTextDefaults.getInstance().getDefault("begin_task"));
-		start.setUI(new ButtonCustomUI(new Color(38, 166, 154)));
+		start.setUI(new ButtonCustomUI(new Color(144, 106, 96)));
 		start.setBorder(null);
 		start.setOpaque(false);
 		start.setPreferredSize(new Dimension(200, 35));
@@ -127,24 +122,32 @@ public abstract class AbstractTest extends JPanel {
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(0, 0, 0, 0);
+		c.insets = new Insets(30, 30, 0, 0);
 		c.ipadx = 0;
 		c.ipady = 0;
 		c.weightx = 0.0;
-		c.weighty = 0.0;
+		c.weighty = 1.0;
 
 		add(image, c);
 
+		c.anchor = GridBagConstraints.NORTHWEST;
 		c.gridheight = 1;
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		c.gridx = 1;
-		c.insets = new Insets(0, 0, 0, 0);
+		c.insets = new Insets(30, 30, 0, 0);
 		c.weightx = 1.0;
+		c.weighty = 0.0;
+
+		add(heading, c);
+
+		c.gridx = 1;
+		c.gridy = 1;
+		c.insets = new Insets(0, 30, 0, 0);
 
 		add(scroll, c);
 
-		c.gridy = 1;
-		c.insets = new Insets(40, 40, 0, 40);
+		c.gridy = 2;
+		c.insets = new Insets(40, 35, 0, 40);
 		add(start, c);
 
 		revalidate();
@@ -339,16 +342,17 @@ public abstract class AbstractTest extends JPanel {
 
 		resultsPanel.setPreferredSize(new Dimension(width, height / 2));
 
-		
-		/*JScrollPane scroll = new JScrollPane(resultsPanel);
-		scroll.setPreferredSize(new Dimension((int) (width * 0.9), (int) (height * 0.7))); 
-		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); 
-		scroll.setBorder(null);
-		scroll.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
-		scroll.setOpaque(false); scroll.getViewport().setOpaque(false);
-		add(scroll, c);
-		*/
+		/*
+		 * JScrollPane scroll = new JScrollPane(resultsPanel);
+		 * scroll.setPreferredSize(new Dimension((int) (width * 0.9), (int)
+		 * (height * 0.7))); scroll.setHorizontalScrollBarPolicy(JScrollPane.
+		 * HORIZONTAL_SCROLLBAR_NEVER);
+		 * scroll.setVerticalScrollBarPolicy(JScrollPane.
+		 * VERTICAL_SCROLLBAR_ALWAYS); scroll.setBorder(null);
+		 * scroll.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
+		 * scroll.setOpaque(false); scroll.getViewport().setOpaque(false);
+		 * add(scroll, c);
+		 */
 
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;

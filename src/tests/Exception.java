@@ -65,6 +65,7 @@ public class Exception extends AbstractTest {
 		question.setText("<html><div style='font: 24pt Arial Narrow; color: rgb(0, 168, 155);'>" + s.toUpperCase()
 				+ "</div></html>");
 
+		answersPanel.removeAll();
 		answersPanel.setOpaque(false);
 		answersPanel.setLayout(new GridLayout(TABLESIZE, TABLESIZE, 4, 4));
 		AnswersMouseListener l = new AnswersMouseListener();
