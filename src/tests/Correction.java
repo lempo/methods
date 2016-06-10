@@ -5,7 +5,6 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -15,13 +14,10 @@ import java.awt.event.MouseListener;
 import java.util.Date;
 import java.util.Random;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import org.w3c.dom.Document;
@@ -34,7 +30,6 @@ import defaults.TextLinkDefaults;
 import methods.Methods;
 import methods.Test;
 import methods.Utils;
-import tests.Munsterberg.LettersMouseListener;
 
 public class Correction extends AbstractTest {
 
@@ -80,6 +75,15 @@ public class Correction extends AbstractTest {
 	@Override
 	public void showTest() {
 		minuteCounter = 0;
+		summCorrect = 0;
+		summIncorrect = 0;
+		summMissed = 0;
+		lastLetter = 0;
+		accuracy = 0;
+		prodPoints = 0;
+		accPoints = 0;
+		stability = 0;
+		scalePoints = 0;
 
 		this.removeAll();
 
@@ -246,9 +250,9 @@ public class Correction extends AbstractTest {
 		NodeList d = doc.getElementsByTagName("d");
 			
 		String t = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
-				//+ d.item(0).getTextContent() + ": <br>"
-				//+ d.item(1).getTextContent() + ": <br>"
-				//+ d.item(2).getTextContent() + ": <br>" 
+				+ d.item(0).getTextContent() + ": <br>"
+				+ d.item(1).getTextContent() + ": <br>"
+				+ d.item(2).getTextContent() + ": <br>" 
 				+ d.item(3).getTextContent() + ": <br>" 
 				+ d.item(4).getTextContent() + ": <br>" 
 				+ d.item(5).getTextContent() + ": <br>"
@@ -259,9 +263,9 @@ public class Correction extends AbstractTest {
 		leftCol.setText(t);	
 			
 		t = "<html><div style='font: bold 20pt Arial; color: rgb(38, 166, 154);'>"
-				//+ summCorrect + "<br>"
-				//+ summIncorrect + "<br>"
-				//+ summMissed + "<br>"
+				+ summCorrect + "<br>"
+				+ summIncorrect + "<br>"
+				+ summMissed + "<br>"
 				+ lastLetter + "<br>"
 				+ prodPoints + "<br>"
 				+ accuracy + "<br>"
@@ -295,6 +299,8 @@ public class Correction extends AbstractTest {
 		c.weightx = 1.0;
 		c.weighty = 0.0;
 		
+		// TODO center results
+		
 		c.insets = new Insets(10, 0, 0, 20);
 		c.anchor = GridBagConstraints.EAST;
 		c.gridwidth = 1;
@@ -319,24 +325,6 @@ public class Correction extends AbstractTest {
 		c.gridx = 0;
 		c.gridy = 2;
 		resultsPanel.add(conclusion, c);*/
-		
-		// TODO Fix results layout by adding scroll if possible
-		
-		/*c.anchor = GridBagConstraints.CENTER;
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		c.insets = new Insets(0, 0, 0, 0);
-		
-		JScrollPane scrollResults = new JScrollPane(resultsPanel);
-		scrollResults.setPreferredSize(new Dimension((int) Math.round(width * 0.9), (int) Math.round(height * 0.6)));
-		scrollResults.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollResults.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		scrollResults.setBorder(null);
-		scrollResults.getViewport().setOpaque(false);
-		scrollResults.setOpaque(false);
-		scrollResults.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
-		this.add(scrollResults, c);*/
 		
 		this.revalidate();
 		this.repaint();

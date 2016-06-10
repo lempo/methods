@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.DecimalFormat;
 import java.util.Date;
 
 import javax.swing.BorderFactory;
@@ -22,7 +21,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
-import javax.swing.SwingConstants;
 import javax.swing.Timer;
 
 import org.w3c.dom.Document;

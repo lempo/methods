@@ -72,7 +72,7 @@ public abstract class AbstractTest extends JPanel {
 
 	public void showStandartInfo() {
 		dontShowBreakingDialog = true;
-		
+
 		JLabel image = new JLabel();
 		ImageIcon icon = Utils.createImageIcon(test.getBigImage());
 		image.setIcon(icon);
@@ -340,25 +340,23 @@ public abstract class AbstractTest extends JPanel {
 		c.gridwidth = GridBagConstraints.REMAINDER;
 		resultsPanel.add(rightCol, c);
 
-		resultsPanel.setPreferredSize(new Dimension(width, height / 2));
+		//resultsPanel.setPreferredSize(new Dimension(width, height / 2));
 
-		/*
-		 * JScrollPane scroll = new JScrollPane(resultsPanel);
-		 * scroll.setPreferredSize(new Dimension((int) (width * 0.9), (int)
-		 * (height * 0.7))); scroll.setHorizontalScrollBarPolicy(JScrollPane.
-		 * HORIZONTAL_SCROLLBAR_NEVER);
-		 * scroll.setVerticalScrollBarPolicy(JScrollPane.
-		 * VERTICAL_SCROLLBAR_ALWAYS); scroll.setBorder(null);
-		 * scroll.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
-		 * scroll.setOpaque(false); scroll.getViewport().setOpaque(false);
-		 * add(scroll, c);
-		 */
+		JScrollPane scroll = new JScrollPane(resultsPanel);
+		scroll.setPreferredSize(new Dimension((int) (width * 0.9), (int) (height * 0.5)));
+		scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		scroll.setBorder(null);
+		scroll.getVerticalScrollBar().setUI(new ScrollBarCustomUI());
+		scroll.setOpaque(false);
+		scroll.getViewport().setOpaque(false);
+		add(scroll, c);
 
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 1;
 		c.insets = new Insets(0, 0, 0, 0);
-		add(resultsPanel, c);
+		add(scroll, c);
 
 		c.anchor = GridBagConstraints.WEST;
 		c.gridheight = GridBagConstraints.REMAINDER;

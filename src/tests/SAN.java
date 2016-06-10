@@ -59,6 +59,7 @@ public class SAN extends AbstractTest {
 		summWellbeing = 0;
 		summActivity = 0;
 		summMood = 0;
+		answersPanel = new JPanel();
 		
 		JLabel question = new JLabel();
 		String s = doc.getElementsByTagName("text").item(0).getTextContent();

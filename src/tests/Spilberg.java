@@ -62,6 +62,8 @@ public class Spilberg extends AbstractTest {
 		summ1 = 0;
 		summ2 = 0;
 		summAnxiety = 0;
+		answersPanel = new JPanel();
+		answers = new ArrayList<JButton>();
 		
 		questionButton.setUI(new ButtonCustomUI(new Color(0, 168, 155)));
 		questionButton.setBorder(null);

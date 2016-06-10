@@ -59,6 +59,8 @@ public class Exception extends AbstractTest {
 	@Override
 	public void showTest() {
 		currentQuestionNumber = 0;
+		summ = 0;
+		selected = 0;
 
 		JLabel question = new JLabel();
 		String s = doc.getElementsByTagName("text").item(0).getTextContent();
