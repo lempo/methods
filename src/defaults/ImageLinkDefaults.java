@@ -3,8 +3,6 @@ package defaults;
 import java.util.HashMap;
 import java.util.Map;
 
-import defaults.ImageLinkDefaults.Key;
-
 public class ImageLinkDefaults {
 	private static ImageLinkDefaults instance;
 
@@ -46,7 +44,10 @@ public class ImageLinkDefaults {
 		RADIO_SELECTED,
 		RAVEN,
 		EYSENCK,
-		EXCEPTION;
+		EXCEPTION,
+		FIRST_SCREEN,
+		KOMPLIMED,
+		COPYRIGHT;
 	}
 
 	private Map<Key, String> links;
@@ -85,6 +86,9 @@ public class ImageLinkDefaults {
 		links.put(Key.RAVEN, "resources/image/raven/");
 		links.put(Key.EYSENCK, "resources/image/eysenck/");
 		links.put(Key.EXCEPTION, "resources/image/exception/");
+		links.put(Key.FIRST_SCREEN, "resources/image/first_screen.png");
+		links.put(Key.KOMPLIMED, "resources/image/komplimed.png");
+		links.put(Key.COPYRIGHT, "resources/image/copyright.png");
 	}
 
 	public String getLink(Key key) {

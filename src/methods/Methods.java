@@ -35,12 +35,14 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextPane;
@@ -55,6 +57,7 @@ import org.w3c.dom.NodeList;
 import component.BgPanel;
 import component.CustomPanel;
 import component.MenuPanel;
+import component.CustomTextField;
 import component.CustomDialog;
 import component.CustomLabel;
 import customui.PanelCustomUI;
@@ -71,7 +74,6 @@ public class Methods extends JFrame {
 	private Test[] tests;
 
 	private int currentTestGroup = 0;
-	private int currentTest = 0;
 
 	private int iconsSpace = 10;
 
@@ -161,9 +163,118 @@ public class Methods extends JFrame {
 			}
 		};
 
-		composeWindow(true);
+		//composeWindow(true);
 
-		showGroups();
+		//showGroups();
+		
+		showFirstScreen();
+	}
+	
+	// TODO show first screen
+	public void showFirstScreen() {
+		currentMethod = "showFirstScreen";
+		paramTypes = new Class[] {};
+		args = new Object[] {};
+
+		panel = new BgPanel(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.FIRST_SCREEN), width, height);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+		createWindowButtons();
+
+		if (!resized) {
+			windowPanel.addMouseListener(draggingMouseListener);
+			windowPanel.addMouseMotionListener(draggingMouseMotionListener);
+		}
+
+		JPanel p = new JPanel();
+		p.setOpaque(false);
+		p.setLayout(new GridBagLayout());
+		JLabel heading = new JLabel();
+		String t = "<html><div style='font: bold 24pt Arial Narrow; color: rgb(176, 190, 197);'>"
+				+ InterfaceTextDefaults.getInstance().getDefault("authorization") + "</div></html>";
+		heading.setText(t);
+
+		CustomTextField pass = new CustomTextField(30, InterfaceTextDefaults.getInstance().getDefault("password"));
+		CustomTextField login = new CustomTextField(30,
+				InterfaceTextDefaults.getInstance().getDefault("name_surname_patronymic"));
+
+		JButton start = new JButton(InterfaceTextDefaults.getInstance().getDefault("enter2"));
+		start.setUI(new ButtonCustomUI(new Color(38, 166, 154)));
+		start.setBorder(null);
+		start.setOpaque(false);
+		start.setPreferredSize(new Dimension(73, 40));
+		start.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		start.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+
+		GridBagConstraints c = new GridBagConstraints();
+
+		c.anchor = GridBagConstraints.WEST;
+		c.fill = GridBagConstraints.NONE;
+		c.gridheight = 1;
+		c.gridwidth = GridBagConstraints.REMAINDER;
+		c.gridx = 0;
+		c.gridy = 1;
+		c.insets = new Insets((int) Math.round(height / 14), (int) Math.round(width / 2.39), 0, 0);
+		c.ipadx = 0;
+		c.ipady = 0;
+		c.weightx = 0.0;
+		c.weighty = 0.0;
+
+		JLabel logo = new JLabel();
+		ImageIcon icon = Utils
+				.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.KOMPLIMED));
+		logo.setIcon(icon);
+
+		p.add(logo, c);
+
+		c.gridx = 0;
+		c.gridy = 3;
+		c.insets = new Insets((int) Math.round(height / 3.5), (int) Math.round(width / 3.09), 0, 0);
+		c.weightx = 0.0;
+
+		p.add(heading, c);
+
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.insets = new Insets(10, (int) Math.round(width / 3.09), 0, 0);
+		c.gridwidth = 2;
+		c.gridy = 5;
+		c.gridx = 0;
+		p.add(login, c);
+
+		c.gridy = 6;
+		p.add(pass, c);
+
+		c.fill = GridBagConstraints.NONE;
+		c.insets = new Insets(10, 0, 0, 0);
+		c.anchor = GridBagConstraints.EAST;
+		c.gridx = 0;
+		c.gridy = 7;
+		p.add(start, c);
+
+		JLabel copyright = new JLabel();
+		icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.COPYRIGHT));
+		copyright.setIcon(icon);
+
+		c.insets = new Insets((int) Math.round(height / 15), (int) Math.round(width / 3.09), 0, 0);
+		c.anchor = GridBagConstraints.CENTER;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 8;
+		p.add(copyright, c);
+
+		p.revalidate();
+		p.repaint();
+
+		// panel.add(Box.createVerticalStrut(10));
+		panel.add(windowPanel);
+		panel.add(p);
+		setContentPane(panel);
+		panel.revalidate();
+		panel.repaint();
 	}
 
 	private void composeWindow(boolean firstTime) {
@@ -473,13 +584,13 @@ public class Methods extends JFrame {
 		String keyNumber = Utils.getLicenceKey();
 
 		// days left
-		// int days = HTTPClient.daysLeft(keyNumber, name);
+		int days = HTTPClient.daysLeft(keyNumber, name);
 		// TODO replace, later
-		int days = 10;
+		//int days = 10;
 
-		// String from = HTTPClient.getFrom(keyNumber, name);
+		 String from = HTTPClient.getFrom(keyNumber, name);
 		// TODO replace, later
-		String from = "10.12.15";
+		//String from = "10.12.15";
 
 		showedTest = null;
 		JLabel heading = new JLabel();
@@ -1277,7 +1388,6 @@ public class Methods extends JFrame {
 		public void mouseClicked(MouseEvent e) {
 			JLabel l = (JLabel) e.getSource();
 			int i = Integer.parseInt(l.getName());
-			currentTest = i;
 			showTest(i);
 		}
 

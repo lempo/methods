@@ -1,32 +1,24 @@
 package methods;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 
 public class HTTPClient {
 
 	private final static String USER_AGENT = "Mozilla/5.0";
-	private static String SERVER = "https://reabilitation.herokuapp.com";
+	private static String SERVER = "https://methods-complimed.herokuapp.com";
 	// private final static String SERVER = "http://localhost:3000";
 
 	public static String makeRequest(String url) {
@@ -64,17 +56,17 @@ public class HTTPClient {
 		catch (IOException e) {
 			e.printStackTrace();
 			Object[] options = { "OK" };
-			JOptionPane.showOptionDialog(null, "РќРµ СѓРґР°Р»РѕСЃСЊ СЃРѕРµРґРёРЅРёС‚СЊСЃСЏ СЃ СЃРµСЂРІРµСЂРѕРј!", "РћС€РёР±РєР°",
+			JOptionPane.showOptionDialog(null, "Не удалось соединиться с сервером!", "Ошибка",
 					JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		}
 
 		return response.toString();
 	}
 
-	public static boolean loginSpec(String name, String pass) {
+	public static boolean loginUser(String name, String pass) {
 		String url = null;
 		try {
-			url = SERVER + "/api/loginspec.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
+			url = SERVER + "/api/loginuser.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
 					+ URLEncoder.encode(pass, "UTF8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -87,58 +79,10 @@ public class HTTPClient {
 			return false;
 	}
 
-	public static boolean loginPatient(String name, String pass) {
+	public static void newUser(String name, String pass) {
 		String url = null;
 		try {
-			url = SERVER + "/api/loginpatient.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
-					+ URLEncoder.encode(pass, "UTF8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		String response = makeRequest(url);
-
-		if (response.equals("1"))
-			return true;
-		else
-			return false;
-	}
-
-	public static String[][] listPatients() {
-		String url = SERVER + "/api/listpatients.xml";
-		String response = makeRequest(url);
-
-		ArrayList<String[]> rows = new ArrayList<String[]>();
-
-		Document doc = Utils.openXMLFromString(response);
-		NodeList n = doc.getElementsByTagName("patient");
-		for (int i = 0; i < n.getLength(); i++) {
-			NodeList n1 = n.item(i).getChildNodes();
-			String name = null;
-			String number = null;
-			for (int j = 0; j < n1.getLength(); j++) {
-				if (n1.item(j).getNodeName().equals("name"))
-					name = n1.item(j).getTextContent();
-				if (n1.item(j).getNodeName().equals("pass"))
-					number = n1.item(j).getTextContent();
-			}
-
-			String s[] = { number, name };
-			rows.add(s);
-		}
-
-		String r[][];
-		r = new String[rows.size()][];
-
-		for (int i = 0; i < rows.size(); i++)
-			r[i] = rows.get(i);
-
-		return r;
-	}
-
-	public static void newPatient(String name, String pass) {
-		String url = null;
-		try {
-			url = SERVER + "/api/newpatient.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
+			url = SERVER + "/api/newuser.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
 					+ URLEncoder.encode(pass, "UTF8");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -146,10 +90,10 @@ public class HTTPClient {
 		makeRequest(url);
 	}
 
-	public static void deletePatient(String name, String pass) {
+	public static void deleteUser(String name, String pass) {
 		String url = null;
 		try {
-			url = SERVER + "/api/deletepatient.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
+			url = SERVER + "/api/deleteuser.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
 					+ URLEncoder.encode(pass, "UTF8");
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
@@ -157,126 +101,10 @@ public class HTTPClient {
 		makeRequest(url);
 	}
 
-	public static void saveResult(String name, String pass, String taskName, int result, String taskGroup) {
-		String url = null;
-
-		// do we have such group?
-		try {
-			url = SERVER + "/api/groupexists.xml?name=" + URLEncoder.encode(taskGroup, "UTF8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		String response = makeRequest(url);
-		// we don't, so need to add
-		if (response.equals("0")) {
-			try {
-				url = SERVER + "/api/addgroup.xml?name=" + URLEncoder.encode(taskGroup, "UTF8");
-			} catch (UnsupportedEncodingException e1) {
-				e1.printStackTrace();
-			}
-			makeRequest(url);
-		}
-
-		// do we have such task?
-		try {
-			url = SERVER + "/api/taskexists.xml?name=" + URLEncoder.encode(taskName, "UTF8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		response = makeRequest(url);
-		// we don't, so need to add
-		if (response.equals("0")) {
-			try {
-				url = SERVER + "/api/addtask.xml?name=" + URLEncoder.encode(taskName, "UTF8") + "&group_name="
-						+ URLEncoder.encode(taskGroup, "UTF8");
-			} catch (UnsupportedEncodingException e1) {
-				e1.printStackTrace();
-			}
-			makeRequest(url);
-		}
-
-		// now add result
-		try {
-			url = SERVER + "/api/addresult.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
-					+ URLEncoder.encode(pass, "UTF8") + "&task_name=" + URLEncoder.encode(taskName, "UTF8") + "&result="
-					+ result;
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		makeRequest(url);
-	}
-
-	public static String[][] findResults(String name, String pass) {
+	public static void editUser(String name, String pass, String nameNew, String passNew) {
 		String url = null;
 		try {
-			url = SERVER + "/api/findresults.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
-					+ URLEncoder.encode(pass, "UTF8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		String response = makeRequest(url);
-
-		ArrayList<String[]> rows = new ArrayList<String[]>();
-
-		Document doc = Utils.openXMLFromString(response);
-		NodeList n = doc.getElementsByTagName("result");
-
-		for (int i = 0; i < n.getLength(); i++) {
-			NodeList n1 = n.item(i).getChildNodes();
-			String taskId = null;
-			String taskName = null;
-			String taskGroup = null;
-			String date = null;
-			String result = null;
-			for (int j = 0; j < n1.getLength(); j++) {
-				if (n1.item(j).getNodeName().equals("task-id"))
-					taskId = n1.item(j).getTextContent();
-				if (n1.item(j).getNodeName().equals("created-at"))
-					date = n1.item(j).getTextContent();
-				if (n1.item(j).getNodeName().equals("result"))
-					result = n1.item(j).getTextContent();
-			}
-
-			if (taskId == null)
-				continue;
-
-			try {
-				url = SERVER + "/api/findtaskgroup.xml?id=" + URLEncoder.encode(taskId, "UTF8");
-			} catch (UnsupportedEncodingException e1) {
-				e1.printStackTrace();
-			}
-
-			response = makeRequest(url);
-			Document d = Utils.openXMLFromString(response);
-			taskGroup = d.getElementsByTagName("name").item(0).getTextContent();
-
-			try {
-				url = SERVER + "/api/findtaskname.xml?id=" + URLEncoder.encode(taskId, "UTF8");
-			} catch (UnsupportedEncodingException e1) {
-				e1.printStackTrace();
-			}
-
-			response = makeRequest(url);
-			d = Utils.openXMLFromString(response);
-			taskName = d.getElementsByTagName("name").item(0).getTextContent();
-
-			String s[] = { date, taskGroup, taskName, result };
-			rows.add(s);
-		}
-
-		String r[][];
-		r = new String[rows.size()][];
-
-		for (int i = 0; i < rows.size(); i++)
-			r[i] = rows.get(i);
-
-		return r;
-	}
-
-	public static void editPatient(String name, String pass, String nameNew, String passNew) {
-		String url = null;
-		try {
-			url = SERVER + "/api/editpatient.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
+			url = SERVER + "/api/edituser.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
 					+ URLEncoder.encode(pass, "UTF8") + "&name_new=" + URLEncoder.encode(nameNew, "UTF8") + "&pass_new="
 					+ URLEncoder.encode(passNew, "UTF8");
 		} catch (UnsupportedEncodingException e1) {
@@ -285,12 +113,13 @@ public class HTTPClient {
 		makeRequest(url);
 	}
 
-	public static boolean registerKey(String key, String userName) {
+	public static boolean registerKey(String key, String userName, String name, String pass) {
 		String url = null;
 		String hddSerial = Utils.getHDDSerialNumber();
 		try {
 			url = SERVER + "/api/registerkey.xml?key=" + URLEncoder.encode(key, "UTF8") + "&user_name="
-					+ URLEncoder.encode(userName, "UTF8") + "&hddserial=" + URLEncoder.encode(hddSerial, "UTF8");
+					+ URLEncoder.encode(userName, "UTF8") + "&hddserial=" + URLEncoder.encode(hddSerial, "UTF8")
+					+ URLEncoder.encode(name, "UTF8") + "&pass=" + URLEncoder.encode(pass, "UTF8");
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
