@@ -17,6 +17,7 @@ public class CustomTextField extends JTextField {
 	private static final long serialVersionUID = -4303240544556069274L;
 	Color back = new Color(245, 235, 233);
 	Color border = new Color(144, 106, 96);
+	Color text = new Color(144, 106, 96);
 
 	String hiht;
 
@@ -38,7 +39,7 @@ public class CustomTextField extends JTextField {
 				String s = getText().trim();
 				if (s.equals(hint)) {
 					setText("");
-					setForeground(new Color(144, 106, 96));
+					setForeground(text);
 				}
 			}
 
@@ -51,6 +52,13 @@ public class CustomTextField extends JTextField {
 				}
 			}
 		});
+	}
+	
+	public CustomTextField(int i, String hint, Color back, Color border, Color text) {
+		this(i, hint);
+		this.back = back;
+		this.border = border;
+		this.text = text;
 	}
 
 	@Override

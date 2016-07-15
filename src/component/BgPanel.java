@@ -20,10 +20,11 @@ public class BgPanel extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
 		Image im = null;
 		try {
 			im = ImageIO.read(getClass().getResource(image));
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("problem reading file " + image);
 		}

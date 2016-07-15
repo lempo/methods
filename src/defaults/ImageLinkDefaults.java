@@ -14,6 +14,7 @@ public class ImageLinkDefaults {
 	}
 
 	public enum Key {
+		FIRSTSCREEN,
 		BACKGROUND,
 		CLOSE,
 		RESTORE,
@@ -45,7 +46,6 @@ public class ImageLinkDefaults {
 		RAVEN,
 		EYSENCK,
 		EXCEPTION,
-		FIRST_SCREEN,
 		KOMPLIMED,
 		COPYRIGHT;
 	}
@@ -55,6 +55,7 @@ public class ImageLinkDefaults {
 	private ImageLinkDefaults() {
 		links = new HashMap<Key, String>();
 
+		links.put(Key.FIRSTSCREEN, "resources/image/background1.png");
 		links.put(Key.BACKGROUND, "resources/image/background.png");
 		links.put(Key.CLOSE, "resources/image/close.png");
 		links.put(Key.RESTORE, "resources/image/restore.png");
@@ -86,7 +87,6 @@ public class ImageLinkDefaults {
 		links.put(Key.RAVEN, "resources/image/raven/");
 		links.put(Key.EYSENCK, "resources/image/eysenck/");
 		links.put(Key.EXCEPTION, "resources/image/exception/");
-		links.put(Key.FIRST_SCREEN, "resources/image/first_screen.png");
 		links.put(Key.KOMPLIMED, "resources/image/komplimed.png");
 		links.put(Key.COPYRIGHT, "resources/image/copyright.png");
 	}

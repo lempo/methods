@@ -41,6 +41,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -163,20 +164,20 @@ public class Methods extends JFrame {
 			}
 		};
 
-		//composeWindow(true);
+		// composeWindow(true);
 
-		//showGroups();
-		
+		// showGroups();
+
 		showFirstScreen();
 	}
-	
+
 	// TODO show first screen
 	public void showFirstScreen() {
 		currentMethod = "showFirstScreen";
 		paramTypes = new Class[] {};
 		args = new Object[] {};
 
-		panel = new BgPanel(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.FIRST_SCREEN), width, height);
+		panel = new BgPanel(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.FIRSTSCREEN), width, height);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		createWindowButtons();
@@ -194,9 +195,10 @@ public class Methods extends JFrame {
 				+ InterfaceTextDefaults.getInstance().getDefault("authorization") + "</div></html>";
 		heading.setText(t);
 
-		CustomTextField pass = new CustomTextField(30, InterfaceTextDefaults.getInstance().getDefault("password"));
-		CustomTextField login = new CustomTextField(30,
-				InterfaceTextDefaults.getInstance().getDefault("name_surname_patronymic"));
+		CustomTextField pass = new CustomTextField(30, InterfaceTextDefaults.getInstance().getDefault("password"),
+				Color.WHITE, new Color(204, 204, 204), Color.BLACK);
+		CustomTextField login = new CustomTextField(30, InterfaceTextDefaults.getInstance().getDefault("login"),
+				Color.WHITE, new Color(204, 204, 204), Color.BLACK);
 
 		JButton start = new JButton(InterfaceTextDefaults.getInstance().getDefault("enter2"));
 		start.setUI(new ButtonCustomUI(new Color(38, 166, 154)));
@@ -206,7 +208,17 @@ public class Methods extends JFrame {
 		start.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				try {
+					if (HTTPClient.loginUser(login.getText().trim(), pass.getText().trim())) {
+						composeWindow(true);
+						showGroups();
+					}
+				} catch (IOException e1) {
+					Object[] options = { "OK" };
+					JOptionPane.showOptionDialog(null, "Не удалось соединиться с сервером!", "Ошибка",
+							JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+					e1.printStackTrace();
+				}
 			}
 		});
 
@@ -221,7 +233,7 @@ public class Methods extends JFrame {
 		c.insets = new Insets((int) Math.round(height / 14), (int) Math.round(width / 2.39), 0, 0);
 		c.ipadx = 0;
 		c.ipady = 0;
-		c.weightx = 0.0;
+		c.weightx = 1.0;
 		c.weighty = 0.0;
 
 		JLabel logo = new JLabel();
@@ -238,7 +250,7 @@ public class Methods extends JFrame {
 
 		p.add(heading, c);
 
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.fill = GridBagConstraints.NONE;
 		c.insets = new Insets(10, (int) Math.round(width / 3.09), 0, 0);
 		c.gridwidth = 2;
 		c.gridy = 5;
@@ -249,8 +261,6 @@ public class Methods extends JFrame {
 		p.add(pass, c);
 
 		c.fill = GridBagConstraints.NONE;
-		c.insets = new Insets(10, 0, 0, 0);
-		c.anchor = GridBagConstraints.EAST;
 		c.gridx = 0;
 		c.gridy = 7;
 		p.add(start, c);
@@ -260,7 +270,6 @@ public class Methods extends JFrame {
 		copyright.setIcon(icon);
 
 		c.insets = new Insets((int) Math.round(height / 15), (int) Math.round(width / 3.09), 0, 0);
-		c.anchor = GridBagConstraints.CENTER;
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 8;
@@ -584,13 +593,25 @@ public class Methods extends JFrame {
 		String keyNumber = Utils.getLicenceKey();
 
 		// days left
-		int days = HTTPClient.daysLeft(keyNumber, name);
-		// TODO replace, later
-		//int days = 10;
+		int days = 0;
+		try {
+			days = HTTPClient.daysLeft(keyNumber, name);
+		} catch (IOException e2) {
+			Object[] options = { "OK" };
+			JOptionPane.showOptionDialog(null, "Не удалось соединиться с сервером!", "Ошибка",
+					JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			e2.printStackTrace();
+		}
 
-		 String from = HTTPClient.getFrom(keyNumber, name);
-		// TODO replace, later
-		//String from = "10.12.15";
+		String from = null;
+		try {
+			from = HTTPClient.getFrom(keyNumber, name);
+		} catch (IOException e2) {
+			Object[] options = { "OK" };
+			JOptionPane.showOptionDialog(null, "Не удалось соединиться с сервером!", "Ошибка",
+					JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			e2.printStackTrace();
+		}
 
 		showedTest = null;
 		JLabel heading = new JLabel();
@@ -679,7 +700,15 @@ public class Methods extends JFrame {
 				DateFormat format = new SimpleDateFormat("dd.MM.yy");
 				Utils.setLastCheckUpdates(format.format(new Date()));
 				// ask DB for updates
-				String location = HTTPClient.getVersion(dd);
+				String location = null;
+				try {
+					location = HTTPClient.getVersion(dd);
+				} catch (IOException e2) {
+					Object[] options = { "OK" };
+					JOptionPane.showOptionDialog(null, "Не удалось соединиться с сервером!", "Ошибка",
+							JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+					e2.printStackTrace();
+				}
 				if (location != null) {
 					// update
 					// show dialog
@@ -1130,7 +1159,8 @@ public class Methods extends JFrame {
 		else
 			setBounds(50, 50, width, height);
 
-		composeWindow(false);
+		if (!currentMethod.equals("showFirstScreen"))
+			composeWindow(false);
 
 		if (showedTest != null) {
 			actualPanel.revalidate();
@@ -1153,6 +1183,8 @@ public class Methods extends JFrame {
 			JLabel l = (JLabel) e.getSource();
 			switch (l.getName()) {
 			case "close":
+				if (currentMethod.equals("showFirstScreen"))
+					System.exit(0);
 				CustomDialog d = new CustomDialog(methods, InterfaceTextDefaults.getInstance().getDefault("sure_exit"),
 						InterfaceTextDefaults.getInstance().getDefault("exit"),
 						InterfaceTextDefaults.getInstance().getDefault("cancel"), true);
@@ -1232,7 +1264,12 @@ public class Methods extends JFrame {
 			JLabel l = (JLabel) e.getSource();
 			switch (l.getName()) {
 			case "exit":
-				// TODO logout, dialog, later
+				CustomDialog d = new CustomDialog(methods,
+						InterfaceTextDefaults.getInstance().getDefault("sure_logout"),
+						InterfaceTextDefaults.getInstance().getDefault("exit"),
+						InterfaceTextDefaults.getInstance().getDefault("cancel"), true);
+				if (d.getAnswer() == 1)
+					showFirstScreen();
 				break;
 			case "help":
 				if (showedTest != null && !showedTest.isDontShowBreakingDialog()) {

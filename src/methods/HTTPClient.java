@@ -18,10 +18,10 @@ import org.w3c.dom.Document;
 public class HTTPClient {
 
 	private final static String USER_AGENT = "Mozilla/5.0";
-	private static String SERVER = "https://methods-complimed.herokuapp.com";
+	private static String SERVER = "https://komplimed.herokuapp.com";
 	// private final static String SERVER = "http://localhost:3000";
 
-	public static String makeRequest(String url) {
+	public static String makeRequest(String url) throws IOException {
 		URL obj = null;
 		StringBuffer response = null;
 		try {
@@ -58,12 +58,13 @@ public class HTTPClient {
 			Object[] options = { "OK" };
 			JOptionPane.showOptionDialog(null, "Не удалось соединиться с сервером!", "Ошибка",
 					JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			throw e;
 		}
 
 		return response.toString();
 	}
 
-	public static boolean loginUser(String name, String pass) {
+	public static boolean loginUser(String name, String pass) throws IOException {
 		String url = null;
 		try {
 			url = SERVER + "/api/loginuser.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
@@ -79,7 +80,7 @@ public class HTTPClient {
 			return false;
 	}
 
-	public static void newUser(String name, String pass) {
+	public static void newUser(String name, String pass) throws IOException {
 		String url = null;
 		try {
 			url = SERVER + "/api/newuser.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
@@ -90,7 +91,7 @@ public class HTTPClient {
 		makeRequest(url);
 	}
 
-	public static void deleteUser(String name, String pass) {
+	public static void deleteUser(String name, String pass) throws IOException {
 		String url = null;
 		try {
 			url = SERVER + "/api/deleteuser.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
@@ -101,7 +102,7 @@ public class HTTPClient {
 		makeRequest(url);
 	}
 
-	public static void editUser(String name, String pass, String nameNew, String passNew) {
+	public static void editUser(String name, String pass, String nameNew, String passNew) throws IOException {
 		String url = null;
 		try {
 			url = SERVER + "/api/edituser.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
@@ -113,12 +114,12 @@ public class HTTPClient {
 		makeRequest(url);
 	}
 
-	public static boolean registerKey(String key, String userName, String name, String pass) {
+	public static boolean registerKey(String key, String userName, String name, String pass) throws IOException {
 		String url = null;
 		String hddSerial = Utils.getHDDSerialNumber();
 		try {
 			url = SERVER + "/api/registerkey.xml?key=" + URLEncoder.encode(key, "UTF8") + "&user_name="
-					+ URLEncoder.encode(userName, "UTF8") + "&hddserial=" + URLEncoder.encode(hddSerial, "UTF8")
+					+ URLEncoder.encode(userName, "UTF8") + "&hddserial=" + URLEncoder.encode(hddSerial, "UTF8") + "&name="
 					+ URLEncoder.encode(name, "UTF8") + "&pass=" + URLEncoder.encode(pass, "UTF8");
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
@@ -130,7 +131,7 @@ public class HTTPClient {
 			return false;
 	}
 
-	public static boolean checkKey(String key, String userName) {
+	public static boolean checkKey(String key, String userName) throws IOException {
 		String url = null;
 		String hddSerial = Utils.getHDDSerialNumber();
 		try {
@@ -147,7 +148,7 @@ public class HTTPClient {
 			return false;
 	}
 
-	public static int daysLeft(String key, String userName) {
+	public static int daysLeft(String key, String userName) throws IOException {
 		String url = null;
 		String hddSerial = Utils.getHDDSerialNumber();
 		try {
@@ -162,7 +163,7 @@ public class HTTPClient {
 		return Integer.parseInt(response);
 	}
 
-	public static String getFrom(String key, String userName) {
+	public static String getFrom(String key, String userName) throws IOException {
 		String url = null;
 		String hddSerial = Utils.getHDDSerialNumber();
 		try {
@@ -185,7 +186,7 @@ public class HTTPClient {
 		return response;
 	}
 
-	public static String getVersion(String date) {
+	public static String getVersion(String date) throws IOException {
 		String url = null;
 		try {
 			url = SERVER + "/api/getversion.xml?date=" + URLEncoder.encode(date, "UTF8");

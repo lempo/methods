@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <interface>
+<string key="name_surname_patronymic" value="Владелец ключа (ФИО)"/>
+<string key="create_login" value="Придумайте логин для входа в программу"/>
+<string key="create_pass" value="Придумайте пароль"/>
+<string key="login" value="Логин"/>
 <string key="time_left" value="Осталось времени"/>
 <string key="results_ER" value="Эффективность работы"/>
 <string key="results_VR" value="Степень врабатываемости"/>
@@ -14,7 +18,6 @@
 <string key="age" value="Возраст"/>
 <string key="male" value="мужчина"/>
 <string key="female" value="женщина"/>
-<string key="pause" value="ПАУЗА"/>
 <string key="answers" value="ПРАВИЛЬНЫЕ_ОТВЕТЫ"/>
 <string key="words" value="СЛОВА:"/>
 <string key="placement" value="РАСПОЛОЖЕНИЕ_ЯЧЕЕК:"/>
@@ -29,9 +32,7 @@
 <string key="users" value="ПОЛЬЗОВАТЕЛИ"/>
 <string key="number" value="№"/>
 <string key="password" value="Пароль"/>
-<string key="login_spec_text" value="ВВЕДИТЕ_ЛОГИН_И_ПАРОЛЬ ДЛЯ_УПРАВЛЕНИЯ_ПОЛЬЗОВАТЕЛЯМИ"/>
 <string key="user" value="Пользователь"/>
-<string key="edit_user" value="РЕДАКТИРОВАНИЕ ПОЛЬЗОВАТЕЛЯ"/>
 <string key="editing" value="Редактирование"/>
 <string key="deleting" value="Удаление"/>
 <string key="authorization" value="АВТОРИЗАЦИЯ"/>
@@ -64,9 +65,6 @@
 <string key="exit" value="Выйти"/>
 <string key="results" value="РЕЗУЛЬТАТЫ"/>
 <string key="your_result" value="ВАШ_РЕЗУЛЬТАТ:"/>
-<string key="results_dynamic" value="ДИНАМИКА РЕЗУЛЬТАТОВ УЛУЧШЕНИЯ ПРОХОЖДЕНИЯ ЗАДАНИЙ"/>
-<string key="filter" value="ФИЛЬТР"/>
-<string key="interval" value="Интервал"/>
 <string key="show" value="Показать"/>
 <string key="date" value="Дата"/>
 <string key="exersize" value="Упражнение"/>
@@ -98,41 +96,4 @@
 <string key="finalize" value="Завершить"/>
 <string key="continue" value="Продолжить"/>
 <string key="next" value="Далее"/>
-<string key="sound_level" value="ГРОМКОСТЬ ЗВУКА"/>
-<string key="coincidences_easy_question" value="Совпадают ли карточки по цвету фигур?"/>
-<string key="coincidences_middle_question" value="Совпадают ли карточки по цвету и форме фигур?"/>
-<string key="coincidences_hard_question" value="Совпадают ли карточки по цвету, форме и количеству фигур?"/>
-<string key="comparison_question" value="Выберите картинку, которая в точности совпадает с предложенной слева"/>
-<string key="categories_task" value="Распределите слова по категориям"/>
-<string key="categories_info" value="На экране будут показаны слова. Распределите их по категориям, прежде чем они исчезнут."/>
-<string key="dictionary_task" value="Составьте слова, выбирая слоги по очереди"/>
-<string key="dictionary_task_2" value=". Выбирайте сначала первый слог, затем второй, чтобы образовать слово."/>
-<string key="dictionary_task_3" value=". Выбирайте сначала первый слог, затем второй, затем третий, чтобы образовать слово."/>
-<string key="first_syllable" value="Первый слог"/>
-<string key="second_syllable" value="Второй слог"/>
-<string key="third_syllable" value="Третий слог"/>
-<string key="choose_category" value="Выберите_категорию"/>
-<string key="listen_task" value="Определите_источник_звука"/>
-<string key="listen_info" value="Определите источник звука, выбрав картинку с изображением предполагаемого источника звука."/>
-<string key="travel_task_1" value="Перетаскивая, разместите названия. Кликнув по названию, можно вернуть его в спсиок слева."/>
-<string key="travel_task_2" value="Перетаскивая, разместите изображения. Кликнув по изображению, можно вернуть его в спсиок слева."/>
-<string key="travel_info" value="Запомните расположение достопримечательностей и их названия, а затем восстановите."/>
-<string key="words_task_1" value="Запомните_слова_и_их_расположение"/>
-<string key="matrix_task_1" value="Запомните_изображения_и_их_расположение"/>
-<string key="words_info_1" value="Вам будут показаны слова. Запомните слова и их расположение на сетке."/>
-<string key="matrix_info_1" value="Вам будут показаны изображения. Запомните изображения и их расположение на сетке."/>
-<string key="words_info_2" value="Вам будут показаны слова. Вспомните, видели Вы уже это слово, или оно является новым."/>
-<string key="matrix_info_2" value="Вам будут показаны изображения. Вспомните, видели Вы уже это изображение, или оно является новым."/>
-<string key="old_word" value="Запомненное слово"/>
-<string key="new_word" value="Новое слово"/>
-<string key="old_picture" value="Запомненное изображение"/>
-<string key="new_picture" value="Новое изображение"/>
-<string key="words_task_2" value="Вспомните, видели Вы уже это слово, или оно является новым."/>
-<string key="matrix_task_2" value="Вспомните, видели Вы уже это изображение, или оно является новым."/>
-<string key="words_task_3" value="Выберите ячейки, в которых были слова."/>
-<string key="matrix_task_3" value="Выберите ячейки, в которых были изображения."/>
-<string key="words_task_4" value="Перетаскивая,_разместите_слова._Кликнув_по_слову,_можно_вернуть_его_в_список_слева."/>
-<string key="matrix_task_4" value="Перетаскивая,_разместите_изображения._Кликнув_по_изображению,_можно_вернуть_его_в_список_слева."/>
-<string key="figures_where_am_i" value="Где Вы находитесь? Выберите точку зрения на изображении справа."/>
-<string key="figures_what_i_see" value="Что вы видите? Выберите изображение справа."/>
 </interface>
