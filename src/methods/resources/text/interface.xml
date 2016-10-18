@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <interface>
-<string key="name_surname_patronymic" value="Владелец ключа (ФИО)"/>
+<string key="name_surname_patronymic" value="Зарегистрировано на имя"/>
 <string key="create_login" value="Придумайте логин для входа в программу"/>
 <string key="create_pass" value="Придумайте пароль"/>
 <string key="login" value="Логин"/>
+<string key="login_error" value="Ошибка_авторизации! Неверный_логин_или_пароль."/>
 <string key="time_left" value="Осталось времени"/>
 <string key="results_ER" value="Эффективность работы"/>
 <string key="results_VR" value="Степень врабатываемости"/>

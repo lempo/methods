@@ -4,9 +4,12 @@ import java.awt.Component;
 import java.awt.Container;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Constructor;
@@ -256,15 +259,27 @@ public class Utils {
 	}
 
 	public static void writeFile(String contents, String path) {
-		File file = new File(path);
-		FileWriter fileWriter;
+//		File file = new File(path);
+//		FileWriter fileWriter;
+//		try {
+//			fileWriter = new FileWriter(file);
+//			fileWriter.write(contents);
+//			fileWriter.flush();
+//			fileWriter.close();
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
+		
+		File f = new File(path);
+		OutputStreamWriter bufferedWriter;
 		try {
-			fileWriter = new FileWriter(file);
-			fileWriter.write(contents);
-			fileWriter.flush();
-			fileWriter.close();
-		} catch (IOException e1) {
-			e1.printStackTrace();
+			bufferedWriter = new OutputStreamWriter(new FileOutputStream(f), "UTF8");
+			bufferedWriter.append(contents);
+			bufferedWriter.flush();
+			bufferedWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	
 	}
 }

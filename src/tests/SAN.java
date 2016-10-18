@@ -118,6 +118,8 @@ public class SAN extends AbstractTest {
 
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (buttonSelected == Integer.MIN_VALUE)
+					return;
 				switch (Integer.parseInt(nodelist.item(currentQuestionNumber).getAttributes()
 						.getNamedItem("scale").getNodeValue())) {
 				case 1:
@@ -184,6 +186,7 @@ public class SAN extends AbstractTest {
 
 	public void showQuestion() {
 		// Cleanup form previous question
+		buttonSelected = Integer.MIN_VALUE;
 		for (int i = 0; i < answers.length; i++) ((BorderButtonCustomUI) answers[i].getUI()).setBorderColor(new Color(144, 106, 96));
 
 		int t = Integer.parseInt(nodelist.item(currentQuestionNumber).getTextContent());
@@ -192,8 +195,8 @@ public class SAN extends AbstractTest {
 			answers[i].setName(Integer.toString(Math.abs(i - t)));
 		}
 		
-		((BorderButtonCustomUI) answers[3].getUI()).setBorderColor(new Color(0, 168, 155));
-		buttonSelected = Integer.parseInt(answers[3].getName());
+		//((BorderButtonCustomUI) answers[3].getUI()).setBorderColor(new Color(0, 168, 155));
+		//buttonSelected = Integer.parseInt(answers[3].getName());
 
 		leftButton.setText(nodelist.item(currentQuestionNumber).getAttributes().getNamedItem("left").getNodeValue()
 				.toString());

@@ -45,7 +45,7 @@ public class Exception extends AbstractTest {
 
 	private final int TABLESIZE = 2;
 
-	private int selected = 0;
+	private int selected = -1;
 	
 	public Exception(Methods methods, int width, int height, Test test) {
 		super(methods, width, height, test);
@@ -87,6 +87,8 @@ public class Exception extends AbstractTest {
 
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (selected < 0)
+					return;
 				if (selected + 1 == Integer.parseInt(doc.getElementsByTagName("q").item(currentQuestionNumber).getAttributes().getNamedItem("answer").getNodeValue()))
 					summ++;
 				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength() - 1) {
@@ -140,19 +142,20 @@ public class Exception extends AbstractTest {
 	}
 
 	public void showQuestion() {
-		selected = 0;
+		selected = -1;
 
 		Node n = doc.getElementsByTagName("q").item(currentQuestionNumber);
 
 		NodeList pic = n.getChildNodes();
 		
-		ImageIcon icon = Utils
-				.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.EXCEPTION)
-						+ pic.item(0).getTextContent().replaceAll(".png", "_rollover.png"));
-		answers[0].setIcon(icon);
-		answers[0].setName("0");
+		ImageIcon icon;
+//		ImageIcon icon = Utils
+//				.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.EXCEPTION)
+//						+ pic.item(0).getTextContent().replaceAll(".png", "_rollover.png"));
+//		answers[0].setIcon(icon);
+//		answers[0].setName("0");
 		
-		for (int i = 1; i < pic.getLength(); i++) {
+		for (int i = 0; i < pic.getLength(); i++) {
 			icon = Utils
 					.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.EXCEPTION)
 							+ pic.item(i).getTextContent());
@@ -242,6 +245,40 @@ public class Exception extends AbstractTest {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+//			JLabel l = (JLabel) e.getSource();
+//			selected = Integer.parseInt(l.getName());
+//			for (Component a : answersPanel.getComponents()) {
+//				String iconName = ((JLabel) a).getIcon().toString()
+//						.split(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.EXCEPTION))[1]
+//								.replaceAll("_rollover", "");
+//				ImageIcon icon = Utils
+//						.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.EXCEPTION)
+//								+ iconName);
+//				((JLabel) a).setIcon(icon);
+//			}
+//			String iconName = l.getIcon().toString()
+//					.split(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.EXCEPTION))[1]
+//							.replaceAll(".png", "_rollover.png");
+//			ImageIcon icon = Utils
+//					.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.EXCEPTION)
+//							+ iconName);
+//			l.setIcon(icon);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
 			JLabel l = (JLabel) e.getSource();
 			selected = Integer.parseInt(l.getName());
 			for (Component a : answersPanel.getComponents()) {
@@ -260,22 +297,6 @@ public class Exception extends AbstractTest {
 					.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.EXCEPTION)
 							+ iconName);
 			l.setIcon(icon);
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
 		}
 
 	}

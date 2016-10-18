@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 import component.CustomDialog;
 import defaults.InterfaceTextDefaults;
@@ -77,6 +78,8 @@ public class Main {
 			// not registered yet
 			else {
 				// licence dialog
+				UIManager.put("OptionPane.cancelButtonText", InterfaceTextDefaults.getInstance().getDefault("cancel"));
+				UIManager.put("OptionPane.okButtonText", InterfaceTextDefaults.getInstance().getDefault("ok"));
 				JTextField name = new JTextField();
 				JTextField key = new JTextField();
 				JTextField login = new JTextField();

@@ -22,6 +22,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -63,6 +66,8 @@ public class Raven extends AbstractTest {
 	private final int TIME = 30;
 
 	private int selected;
+	
+	private JLabel taskText;
 
 	public Raven(Methods methods, int width, int height, Test test) {
 		super(methods, width, height, test);
@@ -76,6 +81,15 @@ public class Raven extends AbstractTest {
 	@Override
 	public void showTest() {
 		currentQuestionNumber = 0;
+		
+		taskText = new JLabel();
+		NodeList d1 = doc.getElementsByTagName("d");
+		String t1 = "<html><div style='font: 20pt Arial Narrow; color: rgb(144, 106, 96); text-align: right;'>"
+				+ d1.item(1).getTextContent() + "<br>" 
+				+ "</div></html>";
+		Border margin = new EmptyBorder(10, 0, 10, 0);
+		taskText.setText(t1);
+		taskText.setBorder(margin);
 
 		task = new JLabel();
 		set = new JLabel();
@@ -94,6 +108,8 @@ public class Raven extends AbstractTest {
 
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (selected < 0)
+					return;
 				if (selected + 1 == Integer.parseInt(doc.getElementsByTagName("q").item(currentQuestionNumber).getAttributes().getNamedItem("answer").getNodeValue()))
 						summ++;
 				if (currentQuestionNumber >= doc.getElementsByTagName("q").getLength() - 1) {
@@ -213,6 +229,9 @@ public class Raven extends AbstractTest {
 		cards.add(question);
 		question.setAlignmentX(Component.LEFT_ALIGNMENT);
 
+		cards.add(taskText);
+		taskText.setAlignmentX(Component.LEFT_ALIGNMENT);
+
 		answers.removeAll();
 		NodeList a = n.getChildNodes();
 		answers.setLayout(new GridLayout(2, a.getLength() / 2));
@@ -231,11 +250,11 @@ public class Raven extends AbstractTest {
 		cards.add(answers);
 		answers.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		selected = 0;
-		Dimension d = answers.getComponents()[0].getPreferredSize();
-		((JLabel) answers.getComponents()[0])
-				.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(38, 166, 154)));
-		answers.getComponents()[0].setPreferredSize(d);
+		selected = -1;
+//		Dimension d = answers.getComponents()[0].getPreferredSize();
+//		((JLabel) answers.getComponents()[0])
+//				.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(38, 166, 154)));
+//		answers.getComponents()[0].setPreferredSize(d);
 
 		this.revalidate();
 		this.repaint();
@@ -320,14 +339,14 @@ public class Raven extends AbstractTest {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			JLabel l = (JLabel) e.getSource();
-			selected = Integer.parseInt(l.getName());
-			for (Component a : answers.getComponents()) {
-				((JLabel) a).setBorder(null);
-			}
-			Dimension d = l.getPreferredSize();
-			l.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(38, 166, 154)));
-			l.setPreferredSize(d);
+//			JLabel l = (JLabel) e.getSource();
+//			selected = Integer.parseInt(l.getName());
+//			for (Component a : answers.getComponents()) {
+//				((JLabel) a).setBorder(null);
+//			}
+//			Dimension d = l.getPreferredSize();
+//			l.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(38, 166, 154)));
+//			l.setPreferredSize(d);
 		}
 
 		@Override
@@ -344,6 +363,14 @@ public class Raven extends AbstractTest {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+			JLabel l = (JLabel) e.getSource();
+			selected = Integer.parseInt(l.getName());
+			for (Component a : answers.getComponents()) {
+				((JLabel) a).setBorder(null);
+			}
+			Dimension d = l.getPreferredSize();
+			l.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(38, 166, 154)));
+			l.setPreferredSize(d);
 		}
 
 	}

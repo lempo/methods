@@ -46,6 +46,8 @@ public class Spilberg extends AbstractTest {
 	JButton questionButton = new JButton();
 	ArrayList<JButton> answers = new ArrayList<JButton>();
 	JPanel answersPanel = new JPanel();
+	
+	boolean answered = false;
 
 	public Spilberg(Methods methods, int width, int height, Test test) {
 		super(methods, width, height, test);
@@ -88,6 +90,8 @@ public class Spilberg extends AbstractTest {
 
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (!answered)
+					return;
 				for (int i = 0; i < answers.size(); i++) {
 					if (((BorderButtonCustomUI) answers.get(i).getUI()).getBorderColor().equals(new Color(0, 168, 155))) {
 						switch (Integer.parseInt(doc.getElementsByTagName("q").item(currentQuestionNumber).getAttributes().getNamedItem("scale").getNodeValue())){
@@ -154,7 +158,7 @@ public class Spilberg extends AbstractTest {
 			answers.add(b);
 		}
 		
-		((BorderButtonCustomUI) answers.get(0).getUI()).setBorderColor(new Color(0, 168, 155));
+		//((BorderButtonCustomUI) answers.get(0).getUI()).setBorderColor(new Color(0, 168, 155));
 
 		// Myetod: "chje-rjez zhoo-puu"......
 		c.insets = new Insets(10, 60, 10, 15);
@@ -189,6 +193,11 @@ public class Spilberg extends AbstractTest {
 	}
 
 	public void showQuestion() {
+		answered = false;
+		for (JButton a : answers) {
+			((BorderButtonCustomUI) a.getUI()).setBorderColor(new Color(144, 106, 96));
+			a.repaint();
+		}
 		Node q = doc.getElementsByTagName("q").item(currentQuestionNumber);
 		questionButton.setText(q.getTextContent());
 		Font f = new Font("Arial Narrow", Font.BOLD, 17);
@@ -274,6 +283,7 @@ public class Spilberg extends AbstractTest {
 
 	class AnswersListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			answered = true;
 			JButton b = (JButton) e.getSource();
 			for (JButton a : answers) {
 				((BorderButtonCustomUI) a.getUI()).setBorderColor(new Color(144, 106, 96));

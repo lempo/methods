@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -22,7 +23,10 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -35,7 +39,6 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -43,7 +46,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextPane;
@@ -55,14 +57,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.NodeList;
 
-import component.BgPanel;
-import component.CustomPanel;
-import component.MenuPanel;
-import component.CustomTextField;
 import component.CustomDialog;
 import component.CustomLabel;
-import customui.PanelCustomUI;
+import component.CustomPanel;
+import component.CustomPasswordField;
+import component.CustomTextField;
+import component.MenuPanel;
 import customui.ButtonCustomUI;
+import customui.PanelCustomUI;
 import customui.ScrollBarCustomUI;
 import defaults.ImageLinkDefaults;
 import defaults.InterfaceTextDefaults;
@@ -103,7 +105,7 @@ public class Methods extends JFrame {
 	// menu labels
 	JLabel exitLabel;
 	JLabel aboutLabel;
-	JLabel helpLabel;
+	//JLabel helpLabel;
 	JLabel tasksLabel;
 
 	// window labels
@@ -195,7 +197,7 @@ public class Methods extends JFrame {
 				+ InterfaceTextDefaults.getInstance().getDefault("authorization") + "</div></html>";
 		heading.setText(t);
 
-		CustomTextField pass = new CustomTextField(30, InterfaceTextDefaults.getInstance().getDefault("password"),
+		CustomPasswordField pass = new CustomPasswordField(30, InterfaceTextDefaults.getInstance().getDefault("password"),
 				Color.WHITE, new Color(204, 204, 204), Color.BLACK);
 		CustomTextField login = new CustomTextField(30, InterfaceTextDefaults.getInstance().getDefault("login"),
 				Color.WHITE, new Color(204, 204, 204), Color.BLACK);
@@ -209,9 +211,13 @@ public class Methods extends JFrame {
 		start.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (HTTPClient.loginUser(login.getText().trim(), pass.getText().trim())) {
+					if (HTTPClient.loginUser(login.getText().trim(), pass.getPass())) {
 						composeWindow(true);
 						showGroups();
+					}
+					else {
+						new CustomDialog(methods, InterfaceTextDefaults.getInstance().getDefault("login_error"),
+								InterfaceTextDefaults.getInstance().getDefault("ok"), null, false);
 					}
 				} catch (IOException e1) {
 					Object[] options = { "OK" };
@@ -333,36 +339,39 @@ public class Methods extends JFrame {
 		restoreLabel = new JLabel();
 		hideLabel = new JLabel();
 		WindowMouseListener l = new WindowMouseListener();
+		
+		int border = (int) Math.round(width * 0.011);
 
 		ImageIcon icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.CLOSE));
 		closeLabel.setIcon(icon);
 		closeLabel.setName("close");
 		closeLabel.addMouseListener(l);
 		closeLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		closeLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+		closeLabel.setBorder(BorderFactory.createEmptyBorder(border, border, border, border));
 
 		icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.RESTORE));
 		restoreLabel.setIcon(icon);
 		restoreLabel.setName("restore");
 		restoreLabel.addMouseListener(l);
 		restoreLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		restoreLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+		restoreLabel.setBorder(BorderFactory.createEmptyBorder(border, border, border, border));
 
 		icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.HIDE));
 		hideLabel.setIcon(icon);
 		hideLabel.setName("hide");
 		hideLabel.addMouseListener(l);
 		hideLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		hideLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+		hideLabel.setBorder(BorderFactory.createEmptyBorder(border, border, border, border));
 
 		windowPanel.removeAll();
 		windowPanel.setPreferredSize(new Dimension(width, (int) Math.round(height * 0.038)));
 		windowPanel.setLayout(new BoxLayout(windowPanel, BoxLayout.X_AXIS));
 		windowPanel.add(Box.createHorizontalGlue());
 
-		float space = (float) (width * 0.032);
-		if (resized)
-			space *= 1.05;
+		float space = (float) (width * 0.015);
+		//float space = 0;
+//		if (resized)
+//			space *= 1.05;
 
 		windowPanel.add(hideLabel);
 		hideLabel.setAlignmentY(BOTTOM_ALIGNMENT);
@@ -372,7 +381,7 @@ public class Methods extends JFrame {
 		windowPanel.add(Box.createHorizontalStrut((int) Math.round(space)));
 		windowPanel.add(closeLabel);
 		closeLabel.setAlignmentY(BOTTOM_ALIGNMENT);
-		windowPanel.add(Box.createHorizontalStrut((int) Math.round(space * 0.89)));
+		windowPanel.add(Box.createHorizontalStrut((int) Math.round(space)));
 
 		windowPanel.revalidate();
 		windowPanel.repaint();
@@ -384,7 +393,7 @@ public class Methods extends JFrame {
 
 		exitLabel = new JLabel();
 		aboutLabel = new JLabel();
-		helpLabel = new JLabel();
+		//helpLabel = new JLabel();
 		tasksLabel = new JLabel();
 
 		MenuMouseListener l = new MenuMouseListener();
@@ -402,11 +411,11 @@ public class Methods extends JFrame {
 		aboutLabel.addMouseListener(l);
 		aboutLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-		icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.MAIN_MENU_HELP));
-		helpLabel.setIcon(icon);
-		helpLabel.setName("help");
-		helpLabel.addMouseListener(l);
-		helpLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+//		icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.MAIN_MENU_HELP));
+//		helpLabel.setIcon(icon);
+//		helpLabel.setName("help");
+//		helpLabel.addMouseListener(l);
+//		helpLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.MAIN_MENU_TASKS));
 		tasksLabel.setIcon(icon);
@@ -441,8 +450,8 @@ public class Methods extends JFrame {
 		logoSpace = (int) Math.round(width * 0.28);
 
 		menuPanel.add(tasksLabel);
-		menuPanel.add(Box.createHorizontalStrut(iconsSpace));
-		menuPanel.add(helpLabel);
+//		menuPanel.add(Box.createHorizontalStrut(iconsSpace));
+//		menuPanel.add(helpLabel);
 		menuPanel.add(Box.createHorizontalStrut(iconsSpace));
 		menuPanel.add(aboutLabel);
 		menuPanel.add(Box.createHorizontalStrut(iconsSpace));
@@ -457,9 +466,13 @@ public class Methods extends JFrame {
 
 		menuPanel.revalidate();
 		menuPanel.repaint();
-		menuPanel.setX1(width - iconsSpace * 5 - exitLabel.getIcon().getIconWidth() - helpLabel.getIcon().getIconWidth()
+//		menuPanel.setX1(width - iconsSpace * 5 - exitLabel.getIcon().getIconWidth() - helpLabel.getIcon().getIconWidth()
+//				- tasksLabel.getIcon().getIconWidth() - aboutLabel.getIcon().getIconWidth() - 3);
+//		menuPanel.setX2(width - iconsSpace * 5 - exitLabel.getIcon().getIconWidth() - helpLabel.getIcon().getIconWidth()
+//				- aboutLabel.getIcon().getIconWidth() + 3);
+		menuPanel.setX1(width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth()
 				- tasksLabel.getIcon().getIconWidth() - aboutLabel.getIcon().getIconWidth() - 3);
-		menuPanel.setX2(width - iconsSpace * 5 - exitLabel.getIcon().getIconWidth() - helpLabel.getIcon().getIconWidth()
+		menuPanel.setX2(width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth()
 				- aboutLabel.getIcon().getIconWidth() + 3);
 		menuPanel.repaint();
 
@@ -870,7 +883,9 @@ public class Methods extends JFrame {
 	}
 
 	public void showHelp() {
-		menuPanel.setX1(width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth() - helpLabel.getIcon().getIconWidth()
+//		menuPanel.setX1(width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth() - helpLabel.getIcon().getIconWidth()
+//				- aboutLabel.getIcon().getIconWidth() - 3);
+		menuPanel.setX1(width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth()
 				- aboutLabel.getIcon().getIconWidth() - 3);
 		menuPanel.setX2(
 				width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth() - aboutLabel.getIcon().getIconWidth() + 3);
@@ -1014,8 +1029,8 @@ public class Methods extends JFrame {
 			testsLabels[j].setVerticalTextPosition(JLabel.BOTTOM);
 			testsLabels[j].setVerticalAlignment(SwingConstants.TOP);
 			testsLabels[j]
-					.setPreferredSize(new Dimension(icon.getIconWidth() + 200, (int) (icon.getIconHeight() + 300)));
-			testsLabels[j].setMaximumSize(new Dimension(icon.getIconWidth() + 200, (int) (icon.getIconHeight() + 300)));
+					.setPreferredSize(new Dimension(icon.getIconWidth() + 200, (int) (icon.getIconHeight() + 360)));
+			testsLabels[j].setMaximumSize(new Dimension(icon.getIconWidth() + 200, (int) (icon.getIconHeight() + 360)));
 			testsLabels[j].setName(Integer.toString(j));
 			testsLabels[j].addMouseListener(l);
 			testsLabels[j].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -1031,7 +1046,7 @@ public class Methods extends JFrame {
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.insets = new Insets(30, 0, 0, 0);
+		c.insets = new Insets(15, 0, 0, 0);
 		c.ipadx = 0;
 		c.ipady = 0;
 		c.weightx = 1.0;
@@ -1475,5 +1490,30 @@ public class Methods extends JFrame {
 			}
 		}
 
+	}
+	
+	public class BgPanel extends JPanel {
+		String image;
+		private int width;
+		private int height;
+
+		public BgPanel(String image, int width, int height) {
+			super();
+			this.image = image;
+			this.width = width;
+			this.height = height;
+		}
+
+		public void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			Image im = null;
+			try {
+				im = ImageIO.read(getClass().getResource(image));
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("problem reading file " + image);
+			}
+			g.drawImage(im, 0, 0, width, height, this);
+		}
 	}
 }
