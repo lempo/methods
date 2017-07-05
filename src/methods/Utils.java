@@ -16,6 +16,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -31,6 +34,9 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import defaults.TextLinkDefaults;
+import exception.DiskPermissionsException;
+import exception.HddSerialScriptException;
+import exception.ProgramFilesBrokenException;
 
 public class Utils {
 	public static Document openXML(String path) {
@@ -106,7 +112,6 @@ public class Utils {
 
 	public static Object createObject(Constructor constructor, Object[] arguments) {
 		Object object = null;
-
 		try {
 			object = constructor.newInstance(arguments);
 			return object;
@@ -146,31 +151,54 @@ public class Utils {
 		return doc;
 	}
 
-	public static String getHDDSerialNumber() {
+	public static String getHDDSerialNumber()
+			throws DiskPermissionsException, ProgramFilesBrokenException, HddSerialScriptException {
 		String result = "";
+		File file;
+		FileWriter fw;
+		String vbs = "";
+		Scanner in;
+		Process p;
+
 		try {
-			File file = File.createTempFile("realhowto", ".vbs");
+			file = File.createTempFile("realhowto", ".vbs");
 			file.deleteOnExit();
-			FileWriter fw = new java.io.FileWriter(file);
+			fw = new java.io.FileWriter(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new DiskPermissionsException(e);
+		}
 
-			String vbs = "";
-			Scanner in = new Scanner(Utils.class.getResource("resources/text/script.txt").openStream());
-			while (in.hasNext())
-				vbs += in.nextLine() + "\r\n";
-			in.close();
+		try {
+			in = new Scanner(Utils.class.getResource("resources/text/script.txt").openStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new ProgramFilesBrokenException(e);
+		}
+		while (in.hasNext())
+			vbs += in.nextLine() + "\r\n";
+		in.close();
 
+		try {
 			fw.write(vbs);
 			fw.close();
-			Process p = Runtime.getRuntime().exec("cscript //NoLogo " + file.getPath());
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new DiskPermissionsException(e);
+		}
+
+		try {
+			p = Runtime.getRuntime().exec("cscript //NoLogo " + file.getPath());
 			BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
 			String line;
-			while ((line = input.readLine()) != null) {
+			while ((line = input.readLine()) != null)
 				result += line;
-			}
 			input.close();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			e.printStackTrace();
+			throw new HddSerialScriptException(e);
 		}
+
 		return result.trim();
 	}
 
@@ -178,27 +206,35 @@ public class Utils {
 		return new File("").getAbsolutePath();
 	}
 
-	public static String getLicenceKey() {
+	public static String getLicenceKey() throws ProgramFilesBrokenException {
 		Document doc = Utils.openXMLAbsolutePath(Utils.getFilePath() + "/config");
 		NodeList n = doc.getElementsByTagName("key");
+		if (n.item(0) == null)
+			throw new ProgramFilesBrokenException();
 		return n.item(0).getTextContent();
 	}
 
-	public static String getLicenceUserName() {
+	public static String getLicenceUserName() throws ProgramFilesBrokenException {
 		Document doc = Utils.openXMLAbsolutePath(Utils.getFilePath() + "/config");
 		NodeList n = doc.getElementsByTagName("username");
+		if (n.item(0) == null)
+			throw new ProgramFilesBrokenException();
 		return n.item(0).getTextContent();
 	}
 
-	public static String getVersion() {
+	public static String getVersion() throws ProgramFilesBrokenException {
 		Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.VERSION));
 		NodeList n = doc.getElementsByTagName("version");
+		if (n.item(0) == null)
+			throw new ProgramFilesBrokenException();
 		return n.item(0).getTextContent();
 	}
 
-	public static String getLastCheckUpdates() {
+	public static String getLastCheckUpdates() throws ProgramFilesBrokenException {
 		Document doc = Utils.openXMLAbsolutePath(Utils.getFilePath() + "/config");
 		NodeList n = doc.getElementsByTagName("lastCheck");
+		if (n.item(0) == null)
+			throw new ProgramFilesBrokenException();
 		return n.item(0).getTextContent();
 	}
 
@@ -207,34 +243,42 @@ public class Utils {
 		s = s.replaceAll("<lastCheck>.*</lastCheck>", "<lastCheck>" + d + "</lastCheck>");
 		Utils.writeFile(s, Utils.getFilePath() + "/config");
 	}
-	
+
 	public static void setLastDownloadUpdates(String d) {
 		String s = Utils.readFile(Utils.getFilePath() + "/config");
 		s = s.replaceAll("<lastDownload>.*</lastDownload>", "<lastDownload>" + d + "</lastDownload>");
 		Utils.writeFile(s, Utils.getFilePath() + "/config");
 	}
 
-	public static String getLastDownloadUpdates() {
+	public static String getLastDownloadUpdates() throws ProgramFilesBrokenException {
 		Document doc = Utils.openXMLAbsolutePath(Utils.getFilePath() + "/config");
 		NodeList n = doc.getElementsByTagName("lastDownload");
+		if (n.item(0) == null)
+			throw new ProgramFilesBrokenException();
 		return n.item(0).getTextContent();
 	}
 
-	public static String getVersionDate() {
+	public static String getVersionDate() throws ProgramFilesBrokenException {
 		Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.VERSION));
 		NodeList n = doc.getElementsByTagName("date");
+		if (n.item(0) == null)
+			throw new ProgramFilesBrokenException();
 		return n.item(0).getTextContent();
 	}
 
-	public static String getAppServer() {
+	public static String getAppServer() throws ProgramFilesBrokenException {
 		Document doc = Utils.openXML(TextLinkDefaults.getInstance().getLink(TextLinkDefaults.Key.SERVER));
 		NodeList n = doc.getElementsByTagName("app");
+		if (n.item(0) == null)
+			throw new ProgramFilesBrokenException();
 		return n.item(0).getTextContent();
 	}
 
-	public static Boolean getCheckUpdatesAuto() {
+	public static Boolean getCheckUpdatesAuto() throws ProgramFilesBrokenException {
 		Document doc = Utils.openXMLAbsolutePath(Utils.getFilePath() + "/config");
 		NodeList n = doc.getElementsByTagName("checkUpdatesAuto");
+		if (n.item(0) == null)
+			throw new ProgramFilesBrokenException();
 		if (n.item(0).getTextContent().equals("true"))
 			return true;
 		else
@@ -259,17 +303,17 @@ public class Utils {
 	}
 
 	public static void writeFile(String contents, String path) {
-//		File file = new File(path);
-//		FileWriter fileWriter;
-//		try {
-//			fileWriter = new FileWriter(file);
-//			fileWriter.write(contents);
-//			fileWriter.flush();
-//			fileWriter.close();
-//		} catch (IOException e1) {
-//			e1.printStackTrace();
-//		}
-		
+		// File file = new File(path);
+		// FileWriter fileWriter;
+		// try {
+		// fileWriter = new FileWriter(file);
+		// fileWriter.write(contents);
+		// fileWriter.flush();
+		// fileWriter.close();
+		// } catch (IOException e1) {
+		// e1.printStackTrace();
+		// }
+
 		File f = new File(path);
 		OutputStreamWriter bufferedWriter;
 		try {
@@ -280,6 +324,26 @@ public class Utils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	
+	}
+
+	public static void createConfigFile(File f, String name, String key) throws DiskPermissionsException {
+		DateFormat format = new SimpleDateFormat("dd.MM.yy");
+		try {
+			f.createNewFile();
+			OutputStreamWriter bufferedWriter = new OutputStreamWriter(new FileOutputStream(f), "UTF8");
+			bufferedWriter.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
+			bufferedWriter.append("<config>\n");
+			bufferedWriter.append("<username>" + name + "</username>\n");
+			bufferedWriter.append("<key>" + key + "</key>\n");
+			bufferedWriter.append("<checkUpdatesAuto>false</checkUpdatesAuto>");
+			bufferedWriter.append("<lastCheck>" + format.format(new Date()) + "</lastCheck>\n");
+			bufferedWriter.append("<lastDownload>" + format.format(new Date()) + "</lastDownload>\n");
+			bufferedWriter.append("</config>");
+			bufferedWriter.flush();
+			bufferedWriter.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new DiskPermissionsException(e);
+		}
 	}
 }

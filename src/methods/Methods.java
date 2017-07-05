@@ -69,6 +69,11 @@ import customui.ScrollBarCustomUI;
 import defaults.ImageLinkDefaults;
 import defaults.InterfaceTextDefaults;
 import defaults.TextLinkDefaults;
+import dialogs.Dialogs;
+import exception.DiskPermissionsException;
+import exception.HddSerialScriptException;
+import exception.ProgramFilesBrokenException;
+import exception.ServerConnectionException;
 import tests.AbstractTest;
 
 public class Methods extends JFrame {
@@ -105,7 +110,7 @@ public class Methods extends JFrame {
 	// menu labels
 	JLabel exitLabel;
 	JLabel aboutLabel;
-	//JLabel helpLabel;
+	// JLabel helpLabel;
 	JLabel tasksLabel;
 
 	// window labels
@@ -131,8 +136,51 @@ public class Methods extends JFrame {
 
 	public Methods() {
 		super("Methods");
-
 		methods = this;
+
+		// may be error retrieving info from config
+		boolean needCheckUpdates = false;
+		try {
+			needCheckUpdates = Utils.getCheckUpdatesAuto();
+		} catch (ProgramFilesBrokenException e3) {
+			e3.printStackTrace();
+			Dialogs.showFilesBrokenErrorDialog(e3);
+		}
+		if (needCheckUpdates) {
+			DateFormat format = new SimpleDateFormat("dd.MM.yy");
+			// may be error writing to disk
+			Utils.setLastCheckUpdates(format.format(new Date()));
+			// may be internet error
+			String location = null;
+			try {
+				location = HTTPClient.getVersion(Utils.getVersionDate());
+			} catch (ServerConnectionException e2) {
+				e2.printStackTrace();
+				Dialogs.showServerConnectionErrorDialog(e2);
+			} catch (ProgramFilesBrokenException e1) {
+				e1.printStackTrace();
+				Dialogs.showFilesBrokenErrorDialog(e1);
+			}
+			if (location != null) {
+				// update
+				// show dialog
+				CustomDialog d1 = new CustomDialog(methods, InterfaceTextDefaults.getInstance().getDefault("do_update"),
+						InterfaceTextDefaults.getInstance().getDefault("yes"),
+						InterfaceTextDefaults.getInstance().getDefault("no"), false);
+				if (d1.getAnswer() == 1) {
+					try {
+						// may be error writing to disk
+						Utils.setLastDownloadUpdates(format.format(new Date()));
+						// may be error executing command?
+						Process proc = Runtime.getRuntime().exec("java -jar updater.jar " + location);
+						System.exit(0);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				} else
+					return;
+			}
+		}
 
 		setBounds(50, 50, width, height);
 		setResizable(false);
@@ -197,8 +245,9 @@ public class Methods extends JFrame {
 				+ InterfaceTextDefaults.getInstance().getDefault("authorization") + "</div></html>";
 		heading.setText(t);
 
-		CustomPasswordField pass = new CustomPasswordField(30, InterfaceTextDefaults.getInstance().getDefault("password"),
-				Color.WHITE, new Color(204, 204, 204), Color.BLACK);
+		CustomPasswordField pass = new CustomPasswordField(30,
+				InterfaceTextDefaults.getInstance().getDefault("password"), Color.WHITE, new Color(204, 204, 204),
+				Color.BLACK);
 		CustomTextField login = new CustomTextField(30, InterfaceTextDefaults.getInstance().getDefault("login"),
 				Color.WHITE, new Color(204, 204, 204), Color.BLACK);
 
@@ -214,16 +263,13 @@ public class Methods extends JFrame {
 					if (HTTPClient.loginUser(login.getText().trim(), pass.getPass())) {
 						composeWindow(true);
 						showGroups();
-					}
-					else {
+					} else {
 						new CustomDialog(methods, InterfaceTextDefaults.getInstance().getDefault("login_error"),
 								InterfaceTextDefaults.getInstance().getDefault("ok"), null, false);
 					}
-				} catch (IOException e1) {
-					Object[] options = { "OK" };
-					JOptionPane.showOptionDialog(null, "Не удалось соединиться с сервером!", "Ошибка",
-							JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+				} catch (ServerConnectionException e1) {
 					e1.printStackTrace();
+					Dialogs.showServerConnectionErrorDialog(e1);
 				}
 			}
 		});
@@ -308,11 +354,8 @@ public class Methods extends JFrame {
 		if (firstTime)
 			actualPanel = new JPanel();
 		actualPanel.setOpaque(false);
-		actualPanel
-				.setPreferredSize(new Dimension(width,
-						(int) (height - windowPanel.getPreferredSize().getHeight()
-								- menuPanel.getPreferredSize().getHeight()
-								- headerPanel.getPreferredSize().getHeight())));
+		actualPanel.setPreferredSize(new Dimension(width, (int) (height - windowPanel.getPreferredSize().getHeight()
+				- menuPanel.getPreferredSize().getHeight() - headerPanel.getPreferredSize().getHeight())));
 
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		panel.add(windowPanel);
@@ -339,7 +382,7 @@ public class Methods extends JFrame {
 		restoreLabel = new JLabel();
 		hideLabel = new JLabel();
 		WindowMouseListener l = new WindowMouseListener();
-		
+
 		int border = (int) Math.round(width * 0.011);
 
 		ImageIcon icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.CLOSE));
@@ -369,9 +412,9 @@ public class Methods extends JFrame {
 		windowPanel.add(Box.createHorizontalGlue());
 
 		float space = (float) (width * 0.015);
-		//float space = 0;
-//		if (resized)
-//			space *= 1.05;
+		// float space = 0;
+		// if (resized)
+		// space *= 1.05;
 
 		windowPanel.add(hideLabel);
 		hideLabel.setAlignmentY(BOTTOM_ALIGNMENT);
@@ -393,7 +436,7 @@ public class Methods extends JFrame {
 
 		exitLabel = new JLabel();
 		aboutLabel = new JLabel();
-		//helpLabel = new JLabel();
+		// helpLabel = new JLabel();
 		tasksLabel = new JLabel();
 
 		MenuMouseListener l = new MenuMouseListener();
@@ -411,11 +454,12 @@ public class Methods extends JFrame {
 		aboutLabel.addMouseListener(l);
 		aboutLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-//		icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.MAIN_MENU_HELP));
-//		helpLabel.setIcon(icon);
-//		helpLabel.setName("help");
-//		helpLabel.addMouseListener(l);
-//		helpLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		// icon =
+		// Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.MAIN_MENU_HELP));
+		// helpLabel.setIcon(icon);
+		// helpLabel.setName("help");
+		// helpLabel.addMouseListener(l);
+		// helpLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		icon = Utils.createImageIcon(ImageLinkDefaults.getInstance().getLink(ImageLinkDefaults.Key.MAIN_MENU_TASKS));
 		tasksLabel.setIcon(icon);
@@ -450,8 +494,8 @@ public class Methods extends JFrame {
 		logoSpace = (int) Math.round(width * 0.28);
 
 		menuPanel.add(tasksLabel);
-//		menuPanel.add(Box.createHorizontalStrut(iconsSpace));
-//		menuPanel.add(helpLabel);
+		// menuPanel.add(Box.createHorizontalStrut(iconsSpace));
+		// menuPanel.add(helpLabel);
 		menuPanel.add(Box.createHorizontalStrut(iconsSpace));
 		menuPanel.add(aboutLabel);
 		menuPanel.add(Box.createHorizontalStrut(iconsSpace));
@@ -466,14 +510,19 @@ public class Methods extends JFrame {
 
 		menuPanel.revalidate();
 		menuPanel.repaint();
-//		menuPanel.setX1(width - iconsSpace * 5 - exitLabel.getIcon().getIconWidth() - helpLabel.getIcon().getIconWidth()
-//				- tasksLabel.getIcon().getIconWidth() - aboutLabel.getIcon().getIconWidth() - 3);
-//		menuPanel.setX2(width - iconsSpace * 5 - exitLabel.getIcon().getIconWidth() - helpLabel.getIcon().getIconWidth()
-//				- aboutLabel.getIcon().getIconWidth() + 3);
+		// menuPanel.setX1(width - iconsSpace * 5 -
+		// exitLabel.getIcon().getIconWidth() -
+		// helpLabel.getIcon().getIconWidth()
+		// - tasksLabel.getIcon().getIconWidth() -
+		// aboutLabel.getIcon().getIconWidth() - 3);
+		// menuPanel.setX2(width - iconsSpace * 5 -
+		// exitLabel.getIcon().getIconWidth() -
+		// helpLabel.getIcon().getIconWidth()
+		// - aboutLabel.getIcon().getIconWidth() + 3);
 		menuPanel.setX1(width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth()
 				- tasksLabel.getIcon().getIconWidth() - aboutLabel.getIcon().getIconWidth() - 3);
-		menuPanel.setX2(width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth()
-				- aboutLabel.getIcon().getIconWidth() + 3);
+		menuPanel.setX2(
+				width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth() - aboutLabel.getIcon().getIconWidth() + 3);
 		menuPanel.repaint();
 
 		currentMethod = "showGroups";
@@ -598,32 +647,70 @@ public class Methods extends JFrame {
 		args = new Object[] {};
 
 		// read version
-		String v = Utils.getVersion();
-		String dd = Utils.getVersionDate();
+		String v = null;
+		try {
+			v = Utils.getVersion();
+		} catch (ProgramFilesBrokenException e4) {
+			e4.printStackTrace();
+			Dialogs.showFilesBrokenErrorDialog(e4);
+		}
+		String dd = null;
+		try {
+			dd = Utils.getVersionDate();
+		} catch (ProgramFilesBrokenException e4) {
+			e4.printStackTrace();
+			Dialogs.showFilesBrokenErrorDialog(e4);
+		}
 
 		// read config
-		String name = Utils.getLicenceUserName();
-		String keyNumber = Utils.getLicenceKey();
+		String name = null;
+		try {
+			name = Utils.getLicenceUserName();
+		} catch (ProgramFilesBrokenException e3) {
+			e3.printStackTrace();
+			Dialogs.showFilesBrokenErrorDialog(e3);
+		}
+		String keyNumber = null;
+		try {
+			keyNumber = Utils.getLicenceKey();
+		} catch (ProgramFilesBrokenException e3) {
+			e3.printStackTrace();
+			Dialogs.showFilesBrokenErrorDialog(e3);
+		}
 
 		// days left
 		int days = 0;
 		try {
 			days = HTTPClient.daysLeft(keyNumber, name);
-		} catch (IOException e2) {
-			Object[] options = { "OK" };
-			JOptionPane.showOptionDialog(null, "Не удалось соединиться с сервером!", "Ошибка",
-					JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-			e2.printStackTrace();
+		} catch (DiskPermissionsException e3) {
+			e3.printStackTrace();
+			Dialogs.showDiskPermissionsErrorDialog(e3);
+		} catch (ProgramFilesBrokenException e3) {
+			e3.printStackTrace();
+			Dialogs.showFilesBrokenErrorDialog(e3);
+		} catch (HddSerialScriptException e3) {
+			e3.printStackTrace();
+			Dialogs.showHddSerialErrorDialog(e3);
+		} catch (ServerConnectionException e3) {
+			e3.printStackTrace();
+			Dialogs.showServerConnectionErrorDialog(e3);
 		}
 
 		String from = null;
 		try {
 			from = HTTPClient.getFrom(keyNumber, name);
-		} catch (IOException e2) {
-			Object[] options = { "OK" };
-			JOptionPane.showOptionDialog(null, "Не удалось соединиться с сервером!", "Ошибка",
-					JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-			e2.printStackTrace();
+		} catch (DiskPermissionsException e3) {
+			e3.printStackTrace();
+			Dialogs.showDiskPermissionsErrorDialog(e3);
+		} catch (ProgramFilesBrokenException e3) {
+			e3.printStackTrace();
+			Dialogs.showFilesBrokenErrorDialog(e3);
+		} catch (HddSerialScriptException e3) {
+			e3.printStackTrace();
+			Dialogs.showHddSerialErrorDialog(e3);
+		} catch (ServerConnectionException e3) {
+			e3.printStackTrace();
+			Dialogs.showServerConnectionErrorDialog(e3);
 		}
 
 		showedTest = null;
@@ -663,17 +750,31 @@ public class Methods extends JFrame {
 				+ InterfaceTextDefaults.getInstance().getDefault("from") + " " + from + "</span></div></html>";
 		licenze.setText(t);
 
+		String lCheckUpdates = null;
+		try {
+			lCheckUpdates = Utils.getLastCheckUpdates();
+		} catch (ProgramFilesBrokenException e3) {
+			e3.printStackTrace();
+			Dialogs.showFilesBrokenErrorDialog(e3);
+		}
 		JLabel lastCheckUpdates = new JLabel();
 		t = "<html><div style='font: bold 14pt Arial Narrow; color: rgb(70, 110, 122);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("last_check_updates")
-				+ ": <span style='font: 15pt Arial Narrow; color: rgb(115, 84, 73);'>" + Utils.getLastCheckUpdates()
+				+ ": <span style='font: 15pt Arial Narrow; color: rgb(115, 84, 73);'>" + lCheckUpdates
 				+ "</span></div></html>";
 		lastCheckUpdates.setText(t);
 
+		String lDownloadUpdates = null;
+		try {
+			lDownloadUpdates = Utils.getLastDownloadUpdates();
+		} catch (ProgramFilesBrokenException e3) {
+			e3.printStackTrace();
+			Dialogs.showFilesBrokenErrorDialog(e3);
+		}
 		JLabel lastDownloadUpdates = new JLabel();
 		t = "<html><div style='font: bold 14pt Arial Narrow; color: rgb(70, 110, 122);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("last_download_updates")
-				+ ": <span style='font: 15pt Arial Narrow; color: rgb(115, 84, 73);'>" + Utils.getLastDownloadUpdates()
+				+ ": <span style='font: 15pt Arial Narrow; color: rgb(115, 84, 73);'>" + lDownloadUpdates
 				+ "</span></div></html>";
 		lastDownloadUpdates.setText(t);
 
@@ -715,12 +816,13 @@ public class Methods extends JFrame {
 				// ask DB for updates
 				String location = null;
 				try {
-					location = HTTPClient.getVersion(dd);
-				} catch (IOException e2) {
-					Object[] options = { "OK" };
-					JOptionPane.showOptionDialog(null, "Не удалось соединиться с сервером!", "Ошибка",
-							JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+					location = HTTPClient.getVersion(Utils.getVersionDate());
+				} catch (ServerConnectionException e2) {
 					e2.printStackTrace();
+					Dialogs.showServerConnectionErrorDialog(e2);
+				} catch (ProgramFilesBrokenException e1) {
+					e1.printStackTrace();
+					Dialogs.showFilesBrokenErrorDialog(e1);
 				}
 				if (location != null) {
 					// update
@@ -752,7 +854,14 @@ public class Methods extends JFrame {
 		JCheckBox checkAuto = new JCheckBox("<html><div style='font: 15pt Arial Narrow; color: rgb(115, 84, 73);'>"
 				+ InterfaceTextDefaults.getInstance().getDefault("check_updates_auto") + "</div></html>");
 		checkAuto.setOpaque(false);
-		checkAuto.setSelected(Utils.getCheckUpdatesAuto());
+		boolean checkUpdatesAuto = false;
+		try {
+			checkUpdatesAuto = Utils.getCheckUpdatesAuto();
+		} catch (ProgramFilesBrokenException e2) {
+			e2.printStackTrace();
+			Dialogs.showFilesBrokenErrorDialog(e2);
+		}
+		checkAuto.setSelected(checkUpdatesAuto);
 		checkAuto.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				String s = Utils.readFile(Utils.getFilePath() + "/config");
@@ -883,10 +992,12 @@ public class Methods extends JFrame {
 	}
 
 	public void showHelp() {
-//		menuPanel.setX1(width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth() - helpLabel.getIcon().getIconWidth()
-//				- aboutLabel.getIcon().getIconWidth() - 3);
-		menuPanel.setX1(width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth()
-				- aboutLabel.getIcon().getIconWidth() - 3);
+		// menuPanel.setX1(width - iconsSpace * 4 -
+		// exitLabel.getIcon().getIconWidth() -
+		// helpLabel.getIcon().getIconWidth()
+		// - aboutLabel.getIcon().getIconWidth() - 3);
+		menuPanel.setX1(
+				width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth() - aboutLabel.getIcon().getIconWidth() - 3);
 		menuPanel.setX2(
 				width - iconsSpace * 4 - exitLabel.getIcon().getIconWidth() - aboutLabel.getIcon().getIconWidth() + 3);
 		menuPanel.repaint();
@@ -1316,11 +1427,9 @@ public class Methods extends JFrame {
 				Point xy = tasksLabel.getLocationOnScreen();
 				MenuPanel p = new MenuPanel(popup, methods);
 				popupMenuPanel = p;
-				popup = fac
-						.getPopup(tasksLabel, p,
-								(int) ((int) xy.getX() - popupMenuPanel.getPreferredSize().getWidth()
-										+ tasksLabel.getWidth()),
-								(int) Math.round(xy.getY() + tasksLabel.getHeight() + height * 0.02));
+				popup = fac.getPopup(tasksLabel, p,
+						(int) ((int) xy.getX() - popupMenuPanel.getPreferredSize().getWidth() + tasksLabel.getWidth()),
+						(int) Math.round(xy.getY() + tasksLabel.getHeight() + height * 0.02));
 				popup.show();
 				break;
 			}
@@ -1491,7 +1600,7 @@ public class Methods extends JFrame {
 		}
 
 	}
-	
+
 	public class BgPanel extends JPanel {
 		String image;
 		private int width;

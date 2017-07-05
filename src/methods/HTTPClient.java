@@ -15,13 +15,22 @@ import javax.swing.JOptionPane;
 
 import org.w3c.dom.Document;
 
+import exception.DiskPermissionsException;
+import exception.HddSerialScriptException;
+import exception.KeyAlreadyRegisteredException;
+import exception.KeyNotExistException;
+import exception.KeyNotRegisteredException;
+import exception.LisenceExpiredException;
+import exception.ProgramFilesBrokenException;
+import exception.ServerConnectionException;
+
 public class HTTPClient {
 
 	private final static String USER_AGENT = "Mozilla/5.0";
 	private static String SERVER = "https://komplimed.herokuapp.com";
 	// private final static String SERVER = "http://localhost:3000";
 
-	public static String makeRequest(String url) throws IOException {
+	public static String makeRequest(String url) throws ServerConnectionException {
 		URL obj = null;
 		StringBuffer response = null;
 		try {
@@ -55,16 +64,13 @@ public class HTTPClient {
 
 		catch (IOException e) {
 			e.printStackTrace();
-			Object[] options = { "OK" };
-			JOptionPane.showOptionDialog(null, "Не удалось соединиться с сервером!", "Ошибка",
-					JOptionPane.PLAIN_MESSAGE, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-			throw e;
+			throw new ServerConnectionException(e);
 		}
 
 		return response.toString();
 	}
 
-	public static boolean loginUser(String name, String pass) throws IOException {
+	public static boolean loginUser(String name, String pass) throws ServerConnectionException {
 		String url = null;
 		try {
 			url = SERVER + "/api/loginuser.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
@@ -80,41 +86,9 @@ public class HTTPClient {
 			return false;
 	}
 
-	public static void newUser(String name, String pass) throws IOException {
-		String url = null;
-		try {
-			url = SERVER + "/api/newuser.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
-					+ URLEncoder.encode(pass, "UTF8");
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		makeRequest(url);
-	}
-
-	public static void deleteUser(String name, String pass) throws IOException {
-		String url = null;
-		try {
-			url = SERVER + "/api/deleteuser.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
-					+ URLEncoder.encode(pass, "UTF8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		makeRequest(url);
-	}
-
-	public static void editUser(String name, String pass, String nameNew, String passNew) throws IOException {
-		String url = null;
-		try {
-			url = SERVER + "/api/edituser.xml?name=" + URLEncoder.encode(name, "UTF8") + "&pass="
-					+ URLEncoder.encode(pass, "UTF8") + "&name_new=" + URLEncoder.encode(nameNew, "UTF8") + "&pass_new="
-					+ URLEncoder.encode(passNew, "UTF8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		makeRequest(url);
-	}
-
-	public static boolean registerKey(String key, String userName, String name, String pass) throws IOException {
+	public static void registerKey(String key, String userName, String name, String pass) throws 
+				DiskPermissionsException, ProgramFilesBrokenException, HddSerialScriptException, 
+				ServerConnectionException, KeyNotExistException, KeyAlreadyRegisteredException {
 		String url = null;
 		String hddSerial = Utils.getHDDSerialNumber();
 		try {
@@ -126,12 +100,16 @@ public class HTTPClient {
 		}
 		String response = makeRequest(url);
 		if (response.equals("1"))
-			return true;
+			return;
+		else if (response.equals("2"))
+			throw new KeyAlreadyRegisteredException();
 		else
-			return false;
+			throw new KeyNotExistException();
 	}
 
-	public static boolean checkKey(String key, String userName) throws IOException {
+	public static void checkKey(String key, String userName) throws 
+				DiskPermissionsException, ProgramFilesBrokenException, HddSerialScriptException, 
+				ServerConnectionException, KeyNotRegisteredException, LisenceExpiredException {
 		String url = null;
 		String hddSerial = Utils.getHDDSerialNumber();
 		try {
@@ -143,12 +121,15 @@ public class HTTPClient {
 		String response = makeRequest(url);
 
 		if (response.equals("1"))
-			return true;
+			return;
+		else if (response.equals("3"))
+			throw new LisenceExpiredException();
 		else
-			return false;
+			throw new KeyNotRegisteredException();
 	}
 
-	public static int daysLeft(String key, String userName) throws IOException {
+	public static int daysLeft(String key, String userName) throws DiskPermissionsException, 
+					ProgramFilesBrokenException, HddSerialScriptException, ServerConnectionException {
 		String url = null;
 		String hddSerial = Utils.getHDDSerialNumber();
 		try {
@@ -163,7 +144,8 @@ public class HTTPClient {
 		return Integer.parseInt(response);
 	}
 
-	public static String getFrom(String key, String userName) throws IOException {
+	public static String getFrom(String key, String userName)
+			throws DiskPermissionsException, ProgramFilesBrokenException, HddSerialScriptException, ServerConnectionException {
 		String url = null;
 		String hddSerial = Utils.getHDDSerialNumber();
 		try {
@@ -186,7 +168,7 @@ public class HTTPClient {
 		return response;
 	}
 
-	public static String getVersion(String date) throws IOException {
+	public static String getVersion(String date) throws ServerConnectionException {
 		String url = null;
 		try {
 			url = SERVER + "/api/getversion.xml?date=" + URLEncoder.encode(date, "UTF8");
